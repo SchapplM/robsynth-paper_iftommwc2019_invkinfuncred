@@ -3,7 +3,7 @@
 clear
 clc
 
-RobotNames = {'kuka5dof', 'S_UPS1'};
+RobotNames = {'kuka5dof', 'S_UPS1', 'lwr4p'};
 
 %% Alle Robotermodelle durchgehen
 for mdlname2 = RobotNames
@@ -26,9 +26,7 @@ for mdlname2 = RobotNames
   
   %% Funktionen testweise aufrufen
   
-  %% Inverse Kinematik prüfen
-  % Normale Inverse Kinematik
-
+  %% Normale Inverse Kinematik prüfen
   for m = 1:2 % Nach zwei Methoden prüfen
     if RS.NJ >= 6 % Normale IK geht nur mit 6 Roboter-FG oder mehr
       for i = 1:size(TSS.Q,1)
@@ -54,14 +52,15 @@ for mdlname2 = RobotNames
       fprintf('%s: Inverse Kinematik Variante %d nicht getestet\n', mdlname, m);
     end
   end
+  %% Prüfe IK mit Aufgabenredundanz
   n_iO = 0;
   for i = 1:size(TSS.Q,1)
-    % Prüfe mit Aufgabenredundanz
+    
     q = TSS.Q(i,:)';
     T_E = RS.fkineEE(q);
     xE = [T_E(1:3,4); r2rpy(T_E(1:3,1:3))];
     xE(6) = 0; % Rotation um z-Achse des EE interessiert nicht.
-    q0 = q-0.1*(0.5-rand(RS.NQJ,1));
+    q0 = q-20*pi/180*(0.5-rand(RS.NQJ,1)); % Anfangswinkel 10° neben der Endstellung
     T_E0 = RS.fkineEE(q0);
     q_test = RS.invkin2(xE, q0, true);
     T_E_test = RS.fkineEE(q_test);
@@ -76,4 +75,7 @@ for mdlname2 = RobotNames
   end
   fprintf('%s: Inverse Kinematik Variante 2 mit Aufgabenredundanz=1 getestet. %d/%d erfolgreich\n', ...
     mdlname, n_iO, size(TSS.Q,1));
+  %% TODO: Prüfe IK mit Aufgabenredundanz und Nebenbedingungen
+  
+  %% TODO: Prüfe IK mit Aufgabenredundanz für Trajektorie
 end
