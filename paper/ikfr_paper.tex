@@ -1,7 +1,15 @@
 \documentclass[twocolumn,10pt]{IFTOMM}
-\newcommand{\gbf}[1] {\mbox{\boldmath${#1}$\unboldmath}}% inserts 'g'reek 'b'old 'f'ace symbols eg. \gbf{\alpha}.
-\newcommand{\R}{\hbox{I \kern -.5em R}}
-\usepackage{epsfig}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%\newcommand{\gbf}[1] {\mbox{\boldmath${#1}$\unboldmath}}% inserts 'g'reek 'b'old 'f'ace symbols eg. \gbf{\alpha}.
+\newcommand{\bm}[1]{\boldsymbol{#1}}
+
+\newcommand{\ortvek}[4]{{ }_{(#1)}{\boldsymbol{#2}}^{#3}_{#4} }
+\newcommand{\vek}[3]{\boldsymbol{#1}^{#2}_{#3}}
+\newcommand{\rotmat}[2]{{{ }^{#1}\boldsymbol{R}}_{#2}}
+\newcommand{\transp}[0]{{\mathrm{T}}}
 
 % Für Deutsche Umlaute
 \usepackage{ngerman}
@@ -92,14 +100,192 @@ Simulative results for the inverse kinematics of serial robots in 3T2R tasks is 
 \section{Using reciprocal Euler Angles for Robot Kinematics}
 \label{sec:RecEulAng}
 
+The core of solving the inverse kinematics problem of robot manipulators for tasks with only two rotational degrees of freedom is the nonlinearity of rotation.
+Rotation can be described using Euler angles, axis and angle, quaternions and rotation matrices. All of 
+
 \subsection{Kinematics Description}
 
+%\begin{equation}
+%\bm{x}
+%=
+%\begin{pmatrix}
+%\bm{x}_{\mathrm{t}} \\
+%\bm{x}_{\mathrm{r}}
+%\end{pmatrix}
+%\end{equation}  
+
+\begin{equation}
+\bm{x}
+=
+\bm{f} (\bm{q})
+\end{equation}  
+
+\begin{equation}
+\bm{x}
+=
+\begin{pmatrix}
+\bm{x}_{\mathrm{t}} & \bm{x}_{\mathrm{r}}
+\end{pmatrix}^\transp
+, 
+\bm{x}_{\mathrm{t}}
+=
+\ortvek{0}{r}{}{0E}
+,
+\bm{x}_{\mathrm{r}}
+=
+\begin{pmatrix}
+\beta_1  & \beta_2 & \beta_3
+\end{pmatrix}^{\mathrm{T}}
+\end{equation}  
+
+
+\begin{equation}
+\rotmat{0}{E}=\bm{R}(\bm{x}_{\mathrm{r}})
+\end{equation}  
+
+
+\begin{equation}
+\bm{R}(\bm{\beta}) = \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \bm{R}_z(\alpha_3) \in \mathrm{SO(3)}
+\end{equation}
+
+Definition der Abweichung zwischen $\bm{x}$ und $\bm{f}(\bm{q})$
+
+$\bm{\Phi}=\begin{pmatrix}
+\bm{\Phi}_{\mathrm{t}} & \bm{\Phi}_{\mathrm{r}}
+\end{pmatrix}^\transp \in {\mathbb{R}}^{6}$
+
+\begin{equation}
+\bm{\Phi}_{\mathrm{t}}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{x}) \in {\mathbb{R}}^{3}
+\end{equation}
+
+\cite{GoldenbergBenFen1985}
+
+\begin{equation}
+\bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) = \bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{3}
+\end{equation}
+
+
+\begin{equation}
+\bm{R}(\bm{\alpha}) := \bm{R}_x(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_z(\alpha_3) \in \mathrm{SO(3)}
+\end{equation}
+
+Discussion: Why this does not work: Reference axis of the Euler angles
+
+
+\begin{align}
+\rotmat{Ex}{Eq}(\bm{x},\bm{q}) 
+& = \rotmat{0}{Ex}^\transp (\bm{x})\rotmat{0}{Eq}(\bm{q}) \\
+&={}_{(Ex)}\begin{pmatrix}
+\vek{n}{}{Eq}(\bm{x}_{\mathrm{r}}) & \vek{o}{}{Eq}(\bm{x}_{\mathrm{r}}) & \vek{a}{}{Eq}(\bm{x}_{\mathrm{r}})
+\end{pmatrix}
+\end{align}
 
 \subsection{Effect of the reciprocal Euler Angles}
+
+
+\begin{equation}
+\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1)
+\end{equation}
+
+\begin{align}
+\rotmat{0}{Eq}(\bm{q})
+&= \rotmat{0}{Ex}(\bm{x}) \rotmat{Ex}{Eq}(\bm{q},\bm{x}) \nonumber \\
+&= \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2)\bm{R}_x(\alpha_1) \nonumber \\
+&= \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3 + \alpha_3) \bm{R}_y(\alpha_2)\bm{R}_x(\alpha_1) \nonumber 
+\end{align} 
+
+\begin{equation}
+\beta_3 = - \alpha_3
+\end{equation}  
+
+\begin{equation}
+\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) = \rotmat{0}{Eq}(\bm{q})
+\bm{R}_x^\transp(\alpha_1)\bm{R}_y^\transp(\alpha_2) 
+\end{equation} 
+
+
+\begin{equation}
+\bm{\eta}
+=
+\begin{pmatrix}
+\bm{\eta}_{\mathrm{t}} \\
+\bm{\eta}_{\mathrm{r}}
+\end{pmatrix}
+\end{equation}  
+
+\begin{equation}
+\bm{\eta}_{\mathrm{t}}
+=
+\ortvek{0}{r}{}{0E}
+\end{equation}  
+
+\begin{equation}
+\bm{\eta}_{\mathrm{r}}
+=
+\begin{pmatrix}
+\beta_1  & \beta_2
+\end{pmatrix}^\transp
+\end{equation}
+
+
+\begin{equation}
+\bm{\eta}_{\mathrm{r}}
+=
+\bm{\eta}_{\mathrm{r}}
+(\alpha_1, \alpha_2, \bm{q})
+\end{equation}
+
+
 
 \subsection{Application on 3T2R Tasks}
 
 \subsection{Remarks on the Implementation}
+
+\subsection{Equations}
+
+%\begin{equation}
+%{\bf At} = {\bf B}\dot{\gbf{\theta}}\label{e:kinematics}
+%\end{equation}
+
+\begin{equation}
+\bm{x}
+\end{equation} 
+
+\begin{equation}
+\bm{x}_{\mathrm{t}}
+\end{equation} 
+
+
+\begin{equation}
+\ortvek{0}{r}{}{0E}
+\end{equation} 
+
+\begin{equation}
+\rotmat{0}{E}
+\end{equation} 
+
+\begin{equation}
+\bm{x}
+=
+\begin{pmatrix}
+\bm{x}_{\mathrm{t}} & \bm{x}_{\mathrm{r}}
+\end{pmatrix}^\transp
+\end{equation}  
+
+\begin{equation}
+\bm{x}_{\mathrm{t}}
+=
+\ortvek{0}{r}{}{0E}
+\end{equation}  
+
+\begin{equation}
+\bm{x}_{\mathrm{r}}
+=
+\begin{pmatrix}
+\beta_1  & \beta_2 & \beta_3
+\end{pmatrix}^{\mathrm{T}}
+\end{equation}
+
 
 \section{Resolving functional Redundancy for 3T2R Tasks}
 \label{sec:ResFuncRed}
