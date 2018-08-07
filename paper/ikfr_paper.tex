@@ -1,0 +1,52 @@
+\documentclass[twocolumn,10pt]{IFTOMM}
+\newcommand{\gbf}[1] {\mbox{\boldmath${#1}$\unboldmath}}% inserts 'g'reek 'b'old 'f'ace symbols eg. \gbf{\alpha}.
+\newcommand{\R}{\hbox{I \kern -.5em R}}
+\usepackage{epsfig}
+
+% Für Deutsche Umlaute
+\usepackage{ngerman}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+%PAPER NUMBER: will be provided by the organization for accepted paper
+\def\papernumber{IK xxx}
+\def\conference_name{15th IFToMM World Congress, Krakow, Poland, 30 June--4 July, 2019}
+%PAPER TITLE
+%\title{Format for LaTeX-Produced IFToMM Papers for Conference Proceedings}
+\title{Resolution of Functional Redundancy for 3T2R Robot Tasks  \\ using Two Sets of Reciprocal Euler Angles}
+%use \\ for long title as:
+%\title{Paper format guide for IFToMM World Congress\\
+%Paper format guide for IFToMM World Congress}
+
+\author{
+    \begin{tabular}{cccc}
+    M.\ Schappler\thanks{moritz.schappler@imes.uni-hannover.de}
+& S.\ Tappe\thanks{svenja.tappe@imes.uni-hannover.de}
+& T.\ Ortmaier\thanks{tobias.ortmaier@imes.uni-hannover.de}\\
+    Leibniz Universität & Leibniz Universität & Leibniz Universität\\
+Hannover, Germany & Hannover, Germany & Hannover, Germany
+    \end{tabular}
+}
+
+%ESSENTIAL, will not work otherwise
+\maketitle
+
+%ABSTRACT
+\begin{abstract}
+Abstract
+\end{abstract}
+
+%KEYWORDS
+\begin{keywords}
+functional redundancy, redundancy resolution, reciprocal Euler angles, inverse kinematics, robots
+\end{keywords}
+
+\section{Introduction}
+
+Das sind alle Quellen: \cite{Baron2000,HuoBar2005,Huo2006,HuoBar2008,Huo2009,HuoBar2011,GoldenbergBenFen1985,Zlajpah2017,Yoshikawa1984,LegerAng2016,LegerAng2015}
+
+% BIBLIOGRAPHY
+\bibliographystyle{ieeetr}
+\bibliography{ikfr_ref}
+
+\end{document}
