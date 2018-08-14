@@ -40,7 +40,7 @@
 Robotic tasks like welding or drilling with three translational and only two rotational degrees of freedom (``3T2R'') are of high industrial relevance but are rather scarcely addressed in scientific publications.
 Existing solutions for the resolution of the functional redundancy of robotic manipulators performing these tasks either expand the full kinematic formulation or reduce it in intermediate steps.
 The present paper presents an approach to reduce the kinematic formulation from the start to solve the problem in a simple way.
-This is done by using a different set of reciprocal Euler angles to describe the end-effector orientation and the orientation error in inverse kinematics.
+This is done by using a set of reciprocal Euler angles to describe the end-effector orientation and the orientation error in inverse kinematics.
 \end{abstract}
 
 %KEYWORDS
@@ -50,24 +50,24 @@ functional redundancy, redundancy resolution, reciprocal Euler angles, inverse k
 
 \section{Introduction}
 
-Since the first papers in the 1980s the fields of inverse kinematics \cite{GoldenbergBenFen1985} and the resolution of intrinsic redundancy \cite{Yoshikawa1984} in robotics have been extensively elaborated upon.
-Inverse kinematics for robot manipulators can be approached with gradient-based numeric approaches on the level of joint positions and velocity.
+Since the first papers in the 1980s the fields of inverse kinematics \cite{GoldenbergBenFen1985} and the resolution of \emph{intrinsic} redundancy \cite{Yoshikawa1984} in robotics have been extensively elaborated upon.
+Inverse kinematics for robot manipulators can be approached with gradient-based numeric approaches on the level of joint positions and joint velocity.
 Due to the nonlinearity of rotation on position level \cite{GoldenbergBenFen1985}, the latter is usually preferred.
 
-The kinematics of robots performing tasks with less than five instead of six degrees of freedom (DoF) has drawn much less attention, even if many industrial relevant tasks only require 5-DoF such as the class of 3T2R-tasks where the task rotation is axis-symmetric.
+The kinematics of robots performing tasks with five instead of six degrees of freedom (DoF) has drawn much less attention, even if many industrial relevant tasks only require 5-DoF such as the class of 3T2R-tasks where the task rotation is axis-symmetric.
 These tasks comprise amongst others arc welding \cite{HuoBar2005}, drilling \cite{ZhuQuCaoYan2013,GuoDonKe2015}, spray-painting \cite{FromGra2010}, laser-cutting, milling, glueing and deburring and are transfered to a greater extend to robotic manipulators in the automotive or aviation industry.
 
 Since the standard industrial robots have six DoF, one degree of \emph{functional} redundancy exists which allows to improve performance characteristics of the robots while achieving a valid pose to perform one of the aforementioned tasks.
 To be able to incorporate performance optimization into inverse kinematics via the well-established gradient projection method \cite{Yoshikawa1984}, either the joint space can be augmented or the task space can be reduced \cite{Huo2009}.
-Augmenting the joint space is possible by inserting an additional joint for the rotation around the axis of symmetry (``tool axis'') \cite{Baron2000}.
+Augmenting the joint space is possible by inserting an additional joint for the rotation around the task's axis of symmetry (``tool axis'') \cite{Baron2000}.
 Reducing the task space can be performed by orthogonal decomposition of the end-effector twist \cite{HuoBar2005}, removing the row of the Jacobian corresponding to the tool axis \cite{Zlajpah2017}, the construction of the Jacobian Nullspace based upon geometric properties of the task \cite{LegerAng2016} or constructing a cone or pyramid resulting from the tool axis with an additional range of tolerance for tilt angles \cite{FromGra2010}.
 
 Another possibility for the resolution of the functional redundancy is a cascaded optimization where the inner loop calculates the inverse kinematics with standard methods and the outer loop optimizes the performance index.
 The optimization can be performed by evaluating the index on a range of rotation angles around the tool axis \cite{ZhuQuCaoYan2013} or by using the incremental change of the rotation around the tool axis directly to adapt the joint angles \cite{GuoDonKe2015}.
 
-The choice of performance indices aims to improve the task execution with measures such as quadratic \cite{HuoBar2005} or hyperbolic \cite{ZhuQuCaoYan2013} distance from the joint limits, singularity avoidance via Frobenius-norm condition number \cite{ZhuQuCaoYan2013}, squared condition number \cite{LegerAng2016} or a combination of manipulability and condition number \cite{HuoBar2008} or stiffness \cite{GuoDonKe2015}.
+The choice of performance indices aims to improve the task execution with measures such as the joint positions quadratic \cite{HuoBar2005} or hyperbolic \cite{ZhuQuCaoYan2013} distances from the their limits, singularity avoidance via Frobenius-norm condition number \cite{ZhuQuCaoYan2013}, squared condition number \cite{LegerAng2016} or a combination of manipulability and condition number of the Jacobian \cite{HuoBar2008} or stiffness \cite{GuoDonKe2015}.
 
-The characteristic length required to normalize the Jacobian for the performance indices can be either chosen constant regarding the robot geometry \cite{ZhuQuCaoYan2013} or as an optimization parameter \cite{LegerAng2016}.
+The characteristic length required to normalize the Jacobian for the performance indices can be either chosen constant regarding the robot geometry \cite{ZhuQuCaoYan2013} or as an additional optimization parameter \cite{LegerAng2016}.
 
 The existing methods each have drawbacks that are avoided by using the new method presented in this paper:
 \begin{itemize}
@@ -75,19 +75,19 @@ The existing methods each have drawbacks that are avoided by using the new metho
     \item Using a nested optimization \cite{ZhuQuCaoYan2013,GuoDonKe2015} does not allow using the well-proven gradient projection method and does not work if the tool axis is aligned parallel to the last robot joint (``pointing configuration'') \cite{GuoDonKe2015}.
     \item In \cite{Zlajpah2017} the tool-axis rotation of the end-effector has to be calculated and canceled out in the null-space.
     \item Describing the tool axis with two points requires to define a distance between these points, which has to be chosen to gain a good conditioning of the optimization problem \cite{LegerAng2016}.
-    \item All methods have a high mathematical level of abstraction e.\,g. using orthogonal decomposition \cite{HuoBar2008}, linear matrix inequalities and convex optimization \cite{FromGra2010}, rotation and component-selection of the vector part of the quaternion orientation error \cite{Zlajpah2017}, sequential quadratic programming \cite{LegerAng2016}.
+    \item All methods have a high mathematical level of abstraction e.\,g. using orthogonal decomposition \cite{HuoBar2008}, linear matrix inequalities and convex optimization \cite{FromGra2010}, rotation and component-selection of the vector part of the quaternion orientation error \cite{Zlajpah2017} or sequential quadratic programming \cite{LegerAng2016}.
 \end{itemize}
 
 As an alternative to the existing methods, we present an approach of expressing the orientation of the end-effector and the orientation error between desired and actual end-effector orientation with a set of reciprocal Euler angles.
 Reciprocity for sets of Euler angles is defined in this paper as successive rotations around elementary axes that have mutually switched order.
-By this definition, the rotation component belonging to the symmetrical tool axis in 3T2R tasks is always the same for the absolute orientation and for the orientation error.
-The effect of the tool axis can be eliminated from the kinematic equations.
+By this definition, the rotation component belonging to the tool axis in 3T2R tasks is always the same for the absolute orientation and for the orientation error.
+The effect of the tool axis can then be eliminated from the kinematic equations.
 This allows to express the kinematics equation in minimal form which makes it easy to use the gradient projection method to incorporate performance indices.
 
 The contributions of this paper are
 \begin{itemize}
     \item A new formulation for the kinematics problem for robots performing 3T2R-tasks,
-    \item an application leading to an efficient solution for inverse kinematics with functional redundancy
+    \item an application of the formulation leading to an efficient solution for inverse kinematics with functional redundancy,
     \item examples on the performance of the implementation regarding computation and convergence,
     \item the extension of the formalism on parallel robots.
 \end{itemize}
@@ -95,7 +95,7 @@ The contributions of this paper are
 The remainder of the paper is structured as follows: The idea of kinematics description using sets of reciprocal Euler angles is elaborated upon in Sec.\, \ref{sec:RecEulAng}.
 The application on resolving the functional redundancy in inverse kinematics of 3T2R tasks is shown in Sec.\,\ref{sec:ResFuncRed}.
 Sec.\,\ref{sec:ParRobKinConstr} gives an outlook to the definition of kinematic constraints for parallel robots. 
-Simulative results for the inverse kinematics of serial robots in 3T2R tasks is presented in Sec.\,\ref{sec:SimEvalSerRobIK} to support the presented approach.
+Simulative results for the inverse kinematics of serial robots in 3T2R tasks is presented in Sec.\,\ref{sec:SimEvalSerRobIK} to support the presented approach. Sec.\,\ref{sec:Conclusion} concludes the paper.
 
 \section{Using reciprocal Euler Angles for Robot Kinematics}
 \label{sec:RecEulAng}
