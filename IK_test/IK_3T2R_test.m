@@ -101,9 +101,9 @@ for mdlname2 = RobotNames
     R_Ex_Eq = (R_0_TA*rotz(xE(6)))' * R_0_Eq;
     % manuelle Berechnung der Winkel der ZYX-Euler-Notation
     % Siehe Aufzeichnungen vom 14.08.2018
-    alpha1=atan2(R_Ex_Eq(3,2), R_Ex_Eq(3,3));
-    alpha2=atan2(-R_Ex_Eq(3,1), sqrt(R_Ex_Eq(1,1)^2+R_Ex_Eq(2,1)^2));
-    alpha3=atan2(R_Ex_Eq(2,1),R_Ex_Eq(1,1));
+    alpha1=atan2(R_Ex_Eq(3,2), R_Ex_Eq(3,3)); % 14.8., Gl. 20
+    alpha2=atan2(-R_Ex_Eq(3,1), sqrt(R_Ex_Eq(1,1)^2+R_Ex_Eq(2,1)^2)); % 14.8., Gl. 22
+    alpha3=atan2(R_Ex_Eq(2,1),R_Ex_Eq(1,1)); % 14.8., Gl. 23
     % ZB selbst nachgerechnet (Weg 2)
     Phi2 = [Phi1(1:3); alpha1; alpha2; alpha3];
     % Bild 3, Weg 0 -> Eq -> Ex (über alpha1,alpha2,alpha3+beta3)
@@ -118,31 +118,27 @@ for mdlname2 = RobotNames
     if any(abs(Phi_test) > 1e-10)
       error('Die Winkel alpha stimmen nicht');
     end
-    continue
+%     continue
     %% Versuch 2: Nachvollziehen der Transformation nur über Symm.-Achse
     % TODO: Das funktioniert noch nicht!
     % 0 -> TA -> Eq -> 0
     % ZB auf Weg 2 (nur xy-Winkel auf beiden Wegen)
     % Bild 3, Weg 0 -> TA (über beta1,beta2)
     R_0_TA = rotx(xE(4)) * roty(xE(5));
+    % Bild 3, Weg TA -> Ex (über beta3)
+    R_0_Ex = R_0_TA*rotz(xE(6));
     % Bild 3, Weg TA -> 0 -> Eq (über beta1,beta2)
-    R_TA_Eq = (R_0_TA)' * R_0_Eq; % *rotz(xE(6)
+    R_Ex_Eq = (R_0_Ex)' * R_0_Eq; % *rotz(xE(6)
     
     % manuelle Berechnung der Winkel der YX-Euler-Notation
-    % Siehe Aufzeichnungen vom 15.08.2018
-    alpha1a=atan2(R_TA_Eq(3,2), R_TA_Eq(3,3));
-    alpha2a=atan2(-R_TA_Eq(3,1), sqrt(R_TA_Eq(1,1)^2+R_Ex_Eq(2,1)^2));
-    % 15.08. / Gl. 25
-    alpha1=atan2(-R_TA_Eq(3,2),sqrt(R_TA_Eq(3,1)^2+R_TA_Eq(3,3)^2));
-    % 15.08. / Gl. 26
-    alpha2=atan2(R_TA_Eq(3,1), R_TA_Eq(3,3));
+    % alpha1,alpha2,alpha3 siehe vorheriger Abschnitt (aus R_Ex_Eq)
     % ZB selbst nachgerechnet (Weg 2)
     Phi2 = [Phi1(1:3); alpha1; alpha2; NaN];
     
     % Bild 3, Weg 0 -> Eq -> TA (über alpha2,alpha1)
     R_0_TA_test = R_0_Eq * (roty(alpha2) * rotx(alpha1))';
     R_0_Eq_test = R_0_TA * (roty(alpha2) * rotx(alpha1));
-    R_0_Eq_test - R_0_Eq
+    % R_0_Eq_test - R_0_Eq;
     R_test = R_0_TA - R_0_TA_test;
     if any(abs(R_test(:,3)) > 1e-10)
       error('Die z-Achse stimmt nicht');
@@ -152,8 +148,7 @@ for mdlname2 = RobotNames
       error('Die Winkel alpha stimmen nicht');
     end
     delta_phiz = r2rpy(R_0_TA \ R_0_TA_test);
-    normalize_angle(+xE(6)+Phi1(6))
-    return
+%     normalize_angle(+xE(6)+Phi1(6))
   end
   %% TODO: Prüfe IK mit Aufgabenredundanz und Nebenbedingungen
   
