@@ -118,37 +118,26 @@ for mdlname2 = RobotNames
     if any(abs(Phi_test) > 1e-10)
       error('Die Winkel alpha stimmen nicht');
     end
-%     continue
+
     %% Versuch 2: Nachvollziehen der Transformation nur über Symm.-Achse
-    % TODO: Das funktioniert noch nicht!
-    % 0 -> TA -> Eq -> 0
-    % ZB auf Weg 2 (nur xy-Winkel auf beiden Wegen)
+    % ZB auf Weg 2 (nur xy-Winkel auf alpha-Weg)
     % Bild 3, Weg 0 -> TA (über beta1,beta2)
     R_0_TA = rotx(xE(4)) * roty(xE(5));
-    % Bild 3, Weg TA -> Ex (über beta3)
-    R_0_Ex = R_0_TA*rotz(xE(6));
-    % Bild 3, Weg TA -> 0 -> Eq (über beta1,beta2)
-    R_Ex_Eq = (R_0_Ex)' * R_0_Eq; % *rotz(xE(6)
-    
-    % manuelle Berechnung der Winkel der YX-Euler-Notation
-    % alpha1,alpha2,alpha3 siehe vorheriger Abschnitt (aus R_Ex_Eq)
-    % ZB selbst nachgerechnet (Weg 2)
-    Phi2 = [Phi1(1:3); alpha1; alpha2; NaN];
     
     % Bild 3, Weg 0 -> Eq -> TA (über alpha2,alpha1)
-    R_0_TA_test = R_0_Eq * (roty(alpha2) * rotx(alpha1))';
-    R_0_Eq_test = R_0_TA * (roty(alpha2) * rotx(alpha1));
-    % R_0_Eq_test - R_0_Eq;
-    R_test = R_0_TA - R_0_TA_test;
+    R_0_TA2 = R_0_Eq * (roty(alpha2) * rotx(alpha1))';
+    R_test = R_0_TA - R_0_TA2;
     if any(abs(R_test(:,3)) > 1e-10)
-      error('Die z-Achse stimmt nicht');
+      error('Die z-Achse der Rotationsmatrix TA2 stimmt nicht');
     end
-    Phi_test = Phi1 - Phi2;
-    if any(abs(Phi_test) > 1e-10)
-      error('Die Winkel alpha stimmen nicht');
+
+    % Bild 3, Weg TA -> TA2 (über beta3,alpha3)
+    R_TA_TA2 = rotz(xE(6)+alpha3);
+    R_0_TA_test = R_0_TA2*R_TA_TA2';
+    R_test = R_0_TA - R_0_TA_test;
+    if any(abs(R_test(:)) > 1e-10)
+      error('Die Rotationsmatrix TA stimmt nicht');
     end
-    delta_phiz = r2rpy(R_0_TA \ R_0_TA_test);
-%     normalize_angle(+xE(6)+Phi1(6))
   end
   %% TODO: Prüfe IK mit Aufgabenredundanz und Nebenbedingungen
   
