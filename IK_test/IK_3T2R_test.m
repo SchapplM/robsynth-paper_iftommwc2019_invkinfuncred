@@ -3,7 +3,7 @@
 clear
 clc
 
-RobotNames = {'kuka5dof', 'S_UPS1', 'lwr4p'};
+RobotNames = {'kuka6dof', 'kuka5dof', 'S_UPS1', 'lwr4p'};
 
 %% Alle Robotermodelle durchgehen
 for mdlname2 = RobotNames
@@ -33,7 +33,7 @@ for mdlname2 = RobotNames
         q = TSS.Q(i,:)';
         T_E = RS.fkineEE(q);
         xE = [T_E(1:3,4); r2rpy(T_E(1:3,1:3))];
-        q0 = rand(RS.NQJ,1);
+        q0 = q-10*pi/180*(0.5-rand(RS.NQJ,1)); % Anfangswinkel 20° neben der Endstellung
         if m == 1
           q_test = RS.invkin1(xE, q0);
         else
@@ -60,7 +60,7 @@ for mdlname2 = RobotNames
     T_E = RS.fkineEE(q);
     xE = [T_E(1:3,4); r2rpy(T_E(1:3,1:3))];
     xE(6) = 0; % Rotation um z-Achse des EE interessiert nicht.
-    q0 = q-20*pi/180*(0.5-rand(RS.NQJ,1)); % Anfangswinkel 10° neben der Endstellung
+    q0 = q-20*pi/180*(0.5-rand(RS.NQJ,1)); % Anfangswinkel 20° neben der Endstellung
     T_E0 = RS.fkineEE(q0);
     q_test = RS.invkin2(xE, q0, true);
     T_E_test = RS.fkineEE(q_test);
@@ -75,6 +75,86 @@ for mdlname2 = RobotNames
   end
   fprintf('%s: Inverse Kinematik Variante 2 mit Aufgabenredundanz=1 getestet. %d/%d erfolgreich\n', ...
     mdlname, n_iO, size(TSS.Q,1));
+  
+  %% Vergleich Zwangsbedingungen mit selbst berechneten Winkeln
+  % Diese Berechnung ist Roboterunabhängig
+  for i = 2:size(TSS.Q,1)
+    % Rahmenbedingungen für folgende Berechnungen:
+    % valide direkte Kinematik berechnen für Soll-Pose xE
+    qx = TSS.Q(i-1,:)';
+    T_Ex = RS.fkineEE(qx);
+    xE = [T_Ex(1:3,4); r2rpy(T_Ex(1:3,1:3))];
+    
+    % zufälliger anderer Winkel für Aufstellung der Zwangsbedingungen
+    q = TSS.Q(i,:)';
+    T_E = RS.fkineEE(q);
+    R_0_Eq = T_E(1:3,1:3);
+    
+    % Zwangsbedingungen auf Weg 1 (volle Euler-Winkelkonvention)
+    Phi1 = RS.constr2(q, xE);
+    %% Versuch 1: Nachvollziehen der vollen Transformation
+    % 0 -> TA -> Ex -> Eq -> 0
+    % ZB auf Weg 2 (nur xy-Winkel auf beiden Wegen)
+    % Bild 3, Weg 0 -> TA (über beta1,beta2)
+    R_0_TA = rotx(xE(4)) * roty(xE(5));
+    % Bild 3, Weg Ex -> TA -> 0 -> Eq (über beta3,beta2,beta1)
+    R_Ex_Eq = (R_0_TA*rotz(xE(6)))' * R_0_Eq;
+    % manuelle Berechnung der Winkel der ZYX-Euler-Notation
+    % Siehe Aufzeichnungen vom 14.08.2018
+    alpha1=atan2(R_Ex_Eq(3,2), R_Ex_Eq(3,3));
+    alpha2=atan2(-R_Ex_Eq(3,1), sqrt(R_Ex_Eq(1,1)^2+R_Ex_Eq(2,1)^2));
+    alpha3=atan2(R_Ex_Eq(2,1),R_Ex_Eq(1,1));
+    % ZB selbst nachgerechnet (Weg 2)
+    Phi2 = [Phi1(1:3); alpha1; alpha2; alpha3];
+    % Bild 3, Weg 0 -> Eq -> Ex (über alpha1,alpha2,alpha3+beta3)
+    R_0_TA_test = R_0_Eq * (rotz(alpha3+xE(6)) * roty(alpha2) * rotx(alpha1))';
+    
+    % Vergleich der Rotationsmatrix auf zwei Wegen berechnet
+    R_test = R_0_TA - R_0_TA_test;
+    if any(abs(R_test(:)) > 1e-10)
+      error('Die Rotationsmatrix stimmt nicht');
+    end
+    Phi_test = Phi1 - Phi2;
+    if any(abs(Phi_test) > 1e-10)
+      error('Die Winkel alpha stimmen nicht');
+    end
+    continue
+    %% Versuch 2: Nachvollziehen der Transformation nur über Symm.-Achse
+    % TODO: Das funktioniert noch nicht!
+    % 0 -> TA -> Eq -> 0
+    % ZB auf Weg 2 (nur xy-Winkel auf beiden Wegen)
+    % Bild 3, Weg 0 -> TA (über beta1,beta2)
+    R_0_TA = rotx(xE(4)) * roty(xE(5));
+    % Bild 3, Weg TA -> 0 -> Eq (über beta1,beta2)
+    R_TA_Eq = (R_0_TA)' * R_0_Eq; % *rotz(xE(6)
+    
+    % manuelle Berechnung der Winkel der YX-Euler-Notation
+    % Siehe Aufzeichnungen vom 15.08.2018
+    alpha1a=atan2(R_TA_Eq(3,2), R_TA_Eq(3,3));
+    alpha2a=atan2(-R_TA_Eq(3,1), sqrt(R_TA_Eq(1,1)^2+R_Ex_Eq(2,1)^2));
+    % 15.08. / Gl. 25
+    alpha1=atan2(-R_TA_Eq(3,2),sqrt(R_TA_Eq(3,1)^2+R_TA_Eq(3,3)^2));
+    % 15.08. / Gl. 26
+    alpha2=atan2(R_TA_Eq(3,1), R_TA_Eq(3,3));
+    % ZB selbst nachgerechnet (Weg 2)
+    Phi2 = [Phi1(1:3); alpha1; alpha2; NaN];
+    
+    % Bild 3, Weg 0 -> Eq -> TA (über alpha2,alpha1)
+    R_0_TA_test = R_0_Eq * (roty(alpha2) * rotx(alpha1))';
+    R_0_Eq_test = R_0_TA * (roty(alpha2) * rotx(alpha1));
+    R_0_Eq_test - R_0_Eq
+    R_test = R_0_TA - R_0_TA_test;
+    if any(abs(R_test(:,3)) > 1e-10)
+      error('Die z-Achse stimmt nicht');
+    end
+    Phi_test = Phi1 - Phi2;
+    if any(abs(Phi_test) > 1e-10)
+      error('Die Winkel alpha stimmen nicht');
+    end
+    delta_phiz = r2rpy(R_0_TA \ R_0_TA_test);
+    normalize_angle(+xE(6)+Phi1(6))
+    return
+  end
   %% TODO: Prüfe IK mit Aufgabenredundanz und Nebenbedingungen
   
   %% TODO: Prüfe IK mit Aufgabenredundanz für Trajektorie
