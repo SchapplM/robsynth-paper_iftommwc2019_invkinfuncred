@@ -15,6 +15,9 @@
 % Für Deutsche Umlaute
 \usepackage{ngerman}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{color}
+\graphicspath{{./figures/}}
 
 \begin{document}
 %PAPER NUMBER: will be provided by the organization for accepted paper
@@ -181,9 +184,19 @@ Discussion: Why this does not work for 3T2R: Reference axis of the Euler angles 
 
 \subsection{Effect of the reciprocal Euler Angles}
 
-TODO: Figure with frames from normal approach
+\begin{figure}[tb!]
+    \input{./figures/frame_comparison_6dof.pdf_tex}
+    \caption{overview of the different frames for 6-dof tasks with standard Euler-angle notation.}
+    \label{fig:frames_6dof}
+\end{figure} 
 
-TODO: Figure with frame with new approach
+
+\begin{figure}[tb!]
+    \input{./figures/frame_comparison_5dof.pdf_tex}
+    \caption{overview of the different frames for 5-dof tasks with reciprocal Euler-angle notation.}
+    \label{fig:frames_5dof}
+\end{figure} 
+
 
 %\begin{align}
 %\rotmat{Ex}{Eq}(\bm{x},\bm{q}) 
@@ -454,7 +467,7 @@ The expressions from REF are sparse matrices and can be calculated efficiently v
 \label{sec:ResFuncRed}
 
 
-If $\mathrm{dim}(\bm{\Psi})=5$ and $\mathrm{dim}(\bm{q})>5$, which presents the general case for solving typical 3T2R tasks in industry, at least one joint DoF is free for optimization additional criteria.
+If $\mathrm{dim}(\bm{\Psi})=5$ and $\mathrm{dim}(\bm{q})>5$, which presents the typical case for solving 3T2R tasks in industry, at least one joint DoF is free for optimization additional criteria.
 
 Example
 
