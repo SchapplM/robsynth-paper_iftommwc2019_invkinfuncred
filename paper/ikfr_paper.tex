@@ -2,7 +2,7 @@
 
 \usepackage{amsmath}
 \usepackage{amssymb}
-
+\usepackage{calrsfs} % Für Kalligraphie-F 
 %\newcommand{\gbf}[1] {\mbox{\boldmath${#1}$\unboldmath}}% inserts 'g'reek 'b'old 'f'ace symbols eg. \gbf{\alpha}.
 \newcommand{\bm}[1]{\boldsymbol{#1}}
 
@@ -10,6 +10,7 @@
 \newcommand{\vek}[3]{\boldsymbol{#1}^{#2}_{#3}}
 \newcommand{\rotmat}[2]{{{ }^{#1}\boldsymbol{R}}_{#2}}
 \newcommand{\transp}[0]{{\mathrm{T}}}
+\newcommand{\ks}[1]{{\mathcal{F}}_{#1}}
 
 % Für Deutsche Umlaute
 \usepackage{ngerman}
@@ -145,64 +146,65 @@ Rotation can be described using Euler angles, axis and angle, quaternions and ro
 
 
 \begin{equation}
-\bm{R}(\bm{\beta}) = \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \bm{R}_z(\alpha_3) \in \mathrm{SO(3)}
+\bm{R}(\bm{\beta}) = \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \in \mathrm{SO(3)}
 \end{equation}
 
 Definition der Abweichung zwischen $\bm{x}$ und $\bm{f}(\bm{q})$
 
-$\bm{\Phi}=\begin{pmatrix}
+\begin{equation}
+\bm{\Phi}=\begin{pmatrix}
 \bm{\Phi}_{\mathrm{t}} & \bm{\Phi}_{\mathrm{r}}
-\end{pmatrix}^\transp \in {\mathbb{R}}^{6}$
-
-\begin{equation}
-\bm{\Phi}_{\mathrm{t}}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{x}) \in {\mathbb{R}}^{3}
+\end{pmatrix}^\transp \in {\mathbb{R}}^{6}
 \end{equation}
 
-\cite{GoldenbergBenFen1985}
-
 \begin{equation}
-\bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) = \bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{3}
+\bm{\Phi}_{\mathrm{t}}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{x}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
 \end{equation}
 
+Approach from \cite{GoldenbergBenFen1985}
+
+\begin{align}
+\bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) &= \begin{pmatrix}
+\alpha_1  & \alpha_2 & \alpha_3
+\end{pmatrix}^\transp  \\
+&=\bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{3}
+\end{align}
+
+
+Intuitive standard approach:
 
 \begin{equation}
 \bm{R}(\bm{\alpha}) := \bm{R}_x(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_z(\alpha_3) \in \mathrm{SO(3)}
 \end{equation}
 
-Discussion: Why this does not work: Reference axis of the Euler angles
-
-
-\begin{align}
-\rotmat{Ex}{Eq}(\bm{x},\bm{q}) 
-& = \rotmat{0}{Ex}^\transp (\bm{x})\rotmat{0}{Eq}(\bm{q}) \\
-&={}_{(Ex)}\begin{pmatrix}
-\vek{n}{}{Eq}(\bm{x}_{\mathrm{r}}) & \vek{o}{}{Eq}(\bm{x}_{\mathrm{r}}) & \vek{a}{}{Eq}(\bm{x}_{\mathrm{r}})
-\end{pmatrix}
-\end{align}
+Discussion: Why this does not work for 3T2R: Reference axis of the Euler angles is always different, tool axis is not one constant reference axis of the Euler angles $\bm{\alpha}$.
 
 \subsection{Effect of the reciprocal Euler Angles}
 
+TODO: Figure with frames from normal approach
+
+TODO: Figure with frame with new approach
+
+%\begin{align}
+%\rotmat{Ex}{Eq}(\bm{x},\bm{q}) 
+%& = \rotmat{0}{Ex}^\transp (\bm{x})\rotmat{0}{Eq}(\bm{q}) \\
+%&={}_{(Ex)}\begin{pmatrix}
+%\vek{n}{}{Eq}(\bm{x}_{\mathrm{r}}) & \vek{o}{}{Eq}(\bm{x}_{\mathrm{r}}) & \vek{a}{}{Eq}(\bm{x}_{\mathrm{r}})
+%\end{pmatrix}
+%\end{align}
+
+It is apparent, that all three components of $\bm{x}_{\mathrm{r}}$ influence the three unit vectors $\bm{n}$, $\bm{o}$, $\bm{a}$ of the rotation matrix.
+
+now we choose the Euler angle convention $\bm{\alpha}$ for the orientation error to be 
 
 \begin{equation}
-\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1)
+\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1) \in \mathrm{SO(3)}
 \end{equation}
 
-\begin{align}
-\rotmat{0}{Eq}(\bm{q})
-&= \rotmat{0}{Ex}(\bm{x}) \rotmat{Ex}{Eq}(\bm{q},\bm{x}) \nonumber \\
-&= \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2)\bm{R}_x(\alpha_1) \nonumber \\
-&= \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3 + \alpha_3) \bm{R}_y(\alpha_2)\bm{R}_x(\alpha_1) \nonumber 
-\end{align} 
+This set of $Z$-$Y$-$X$-Euler angles is defined in this paper as being reciprocal to the $X$-$Y$-$Z$-convention $\bm{\beta}$ for the absolute orientation.
+Further we assume rotations around fixed axes for $\bm{\alpha}$ to have the third entry $\alpha_3$ correspond to the third entry $\beta_3$.
 
-\begin{equation}
-\beta_3 = - \alpha_3
-\end{equation}  
-
-\begin{equation}
-\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) = \rotmat{0}{Eq}(\bm{q})
-\bm{R}_x^\transp(\alpha_1)\bm{R}_y^\transp(\alpha_2) 
-\end{equation} 
-
+We define the task to have the coordinates
 
 \begin{equation}
 \bm{\eta}
@@ -213,8 +215,12 @@ Discussion: Why this does not work: Reference axis of the Euler angles
 \end{pmatrix}
 \end{equation}  
 
+with
+
 \begin{equation}
 \bm{\eta}_{\mathrm{t}}
+=
+\bm{x}_{\mathrm{t}}
 =
 \ortvek{0}{r}{}{0E}
 \end{equation}  
@@ -227,77 +233,455 @@ Discussion: Why this does not work: Reference axis of the Euler angles
 \end{pmatrix}^\transp
 \end{equation}
 
+The last rotation $\beta_3$ around the $Z$-axis corresponds to a rotation around the tool axis and is a degree of freedom which can be set arbitrarily. Therefore it is not included in $\bm{\eta}_{\mathrm{r}}$.
 
-\begin{equation}
-\bm{\eta}_{\mathrm{r}}
-=
-\bm{\eta}_{\mathrm{r}}
-(\alpha_1, \alpha_2, \bm{q})
-\end{equation}
 
+we now distinguish the frames $\ks{A1}$ and $\ks{A2}$ with
+
+
+\begin{align}
+\rotmat{0}{A1} 
+&= 
+\bm{R}_x(\beta_1) \bm{R}_y(\beta_2)\\
+&=
+\begin{pmatrix}
+\vek{n}{}{A1} & \vek{o}{}{A1} & \vek{a}{}{A1}
+\end{pmatrix} \nonumber
+\end{align}
+
+
+and
+
+\begin{align}
+\rotmat{0}{A2} 
+&= 
+\rotmat{0}{Eq}(\bm{q})
+\left(\bm{R}_x(\alpha_1) \bm{R}_y(\alpha_2)\right)^\transp \\ 
+&=
+\begin{pmatrix}
+\vek{n}{}{A2} & \vek{o}{}{A2} & \vek{a}{}{A2}
+\end{pmatrix}\nonumber
+\end{align}
+
+Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_3$ are defined around the same axis, $\beta_3$ only influences $\alpha_3$ and not $\alpha_1$ and $\alpha_2$ as described in the Appendix TODO.
+
+\begin{align}
+\alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) = \alpha_1(\bm{q},\bm{\eta})\\
+\alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) = \alpha_2(\bm{q},\bm{\eta}) \\
+\alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3) = \alpha_3(\bm{q},\bm{x})
+\end{align}
 
 
 \subsection{Application on 3T2R Tasks}
 
-\subsection{Remarks on the Implementation}
+%\subsubsection{Kinematics formulation}
 
-\subsection{Equations}
+We now describe the kinematic condition for the 3T2R problem as
+
+\begin{equation}
+\bm{\Psi}=\begin{pmatrix}
+\bm{\Psi}_{\mathrm{t}} & \bm{\Psi}_{\mathrm{r}}
+\end{pmatrix}^\transp \in {\mathbb{R}}^{5}
+\end{equation}
+
+\begin{equation}
+\bm{\Psi}_{\mathrm{t}}(\bm{q}_i,\bm{\eta}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{\eta}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
+\end{equation}
+
+
+
+\begin{align}
+\bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta}) &= 
+\begin{pmatrix}
+\alpha_1  & \alpha_2
+\end{pmatrix}^\transp  \\
+&=
+\begin{pmatrix} \bm{1}_{2 \times 2} & \bm{0}_{2 \times 1}\end{pmatrix} \bm{\Phi} (\bm{q},\bm{x}) \\
+&= \begin{pmatrix} \bm{1} & \bm{0}\end{pmatrix} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{2}
+\end{align}
+
+The condition $\bm{\Psi}=\bm{0}$ leads to a valid configuration of positioning the ed-effector and orientation of the tool-axis.
+
+
+
+
+%\begin{align}
+%\rotmat{0}{Eq}(\bm{q})
+%&= \rotmat{0}{Ex}(\bm{x}) \rotmat{Ex}{Eq}(\bm{x},\bm{q}) \nonumber \\
+%&= \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2)\bm{R}_x(\alpha_1) \nonumber \\
+%&= \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3 + \alpha_3) \bm{R}_y(\alpha_2)\bm{R}_x(\alpha_1) \nonumber 
+%\end{align} 
+%
+%Since 
+%
+%\begin{equation}
+%\beta_3 = - \alpha_3
+%\end{equation}  
+%
+%\begin{equation}
+%\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) = \rotmat{0}{Eq}(\bm{q})
+%\bm{R}_x^\transp(\alpha_1)\bm{R}_y^\transp(\alpha_2) 
+%\end{equation} 
 
 %\begin{equation}
-%{\bf At} = {\bf B}\dot{\gbf{\theta}}\label{e:kinematics}
+%\bm{\eta}_{\mathrm{r}}
+%=
+%\bm{\eta}_{\mathrm{r}}
+%(\alpha_1, \alpha_2, \bm{q})
 %\end{equation}
 
-\begin{equation}
-\bm{x}
-\end{equation} 
-
-\begin{equation}
-\bm{x}_{\mathrm{t}}
-\end{equation} 
+%\subsubsection{Inverse Kinematics}
 
 
-\begin{equation}
-\ortvek{0}{r}{}{0E}
-\end{equation} 
+Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots with 6-DoF can be derived with the Taylor series of the nonlinear function 
 
 \begin{equation}
-\rotmat{0}{E}
-\end{equation} 
-
-\begin{equation}
-\bm{x}
-=
-\begin{pmatrix}
-\bm{x}_{\mathrm{t}} & \bm{x}_{\mathrm{r}}
-\end{pmatrix}^\transp
-\end{equation}  
-
-\begin{equation}
-\bm{x}_{\mathrm{t}}
-=
-\ortvek{0}{r}{}{0E}
-\end{equation}  
-
-\begin{equation}
-\bm{x}_{\mathrm{r}}
-=
-\begin{pmatrix}
-\beta_1  & \beta_2 & \beta_3
-\end{pmatrix}^{\mathrm{T}}
+\bm{\Phi}(\bm{q}^{k+1},\bm{x}) = 
+\bm{\Phi}(\bm{q}^{k},\bm{x})
++
+\frac{\partial}{\partial \bm{q}} \bm{\Phi}(\bm{q}^k,\bm{x}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}_i^k)
 \end{equation}
+
+where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is the ``Jacobian matrix corresponding to the residual vector'' $\bm{\Phi}$ from REF.
+
+For 3T2R tasks we can define in the same way
+ 
+\begin{equation}
+\bm{\Psi}(\bm{q}^{k+1},\bm{x}) = 
+\bm{\Psi}(\bm{q}^{k},\bm{x})
++
+\frac{\partial}{\partial \bm{q}} \bm{\Psi}(\bm{q},\bm{x}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}_i^k)
+\end{equation}
+
+With the condition for solution of the inverse kinematics in the next step
+
+\begin{equation}
+\bm{\Psi}(\bm{q}^{k+1},\bm{x})=\bm{0}
+\end{equation}
+
+the increment of the joint angles towards this solution is
+
+\begin{equation}
+\Delta \bm{q}^k
+=
+\left(\frac{\partial \bm{\Psi}(\bm{q},\bm{x})}{\partial \bm{q}}\biggr\rvert_{\bm{q}^k}\right)^{\dagger}
+(\bm{0} - \bm{\Psi}(\bm{q}^{k},\bm{x}))
+\end{equation}  
+
+
+
+
+\subsection{Remarks on the Implementation}
+
+This approach does not use the classical geometric Jacobian of the serial link manipulator for the rotation part.
+However the partial derivatives ... in equations REF can be implemented efficiently by exploiting the chain rule an d sparsity.
+
+To simplify calculations, we write rotation matrices as vectors with
+
+\begin{equation}
+\bm{R}=\begin{pmatrix}
+\bm{n} & \bm{o} & \bm{a}
+\end{pmatrix}
+\Rightarrow
+\overline{\bm{R}}=\begin{pmatrix}
+\bm{n} \\ \bm{o} \\ \bm{a}
+\end{pmatrix}
+\end{equation}
+
+and we define the matrix product operator
+\begin{equation}
+\rotmat{1}{3}
+=
+\rotmat{1}{2}
+\rotmat{2}{3}
+\Rightarrow
+\overline{\rotmat{1}{3}}
+=
+\overline{\prod}\left[ \overline{\rotmat{1}{2}}, \overline{\rotmat{2}{3}}\right]
+\end{equation}
+
+and the transposition operator
+
+\begin{equation}
+\rotmat{2}{1}
+=
+\rotmat{1}{2}^\transp
+\Rightarrow
+\overline{\rotmat{2}{1}}
+=
+\bm{P}_\transp \overline{\rotmat{1}{2}}
+\end{equation}
+
+Then the Euler angles can be calculated from a rotation matrix with the symbol
+
+\begin{equation}
+\overline{\bm{\alpha}}(\overline{\bm{R}})
+=
+\bm{\alpha}(\bm{R})
+\end{equation}
+
+The gradient
+
+
+\begin{align}
+\frac{\partial}{\partial \bm{q}}\bm{\Phi}_{\mathrm{r}}
+&=
+\frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\rotmat{0}{Ex}^\transp(\bm{x}) \rotmat{0}{Eq}(\bm{q})\right) \nonumber \\
+\bm{\Phi}_{\mathrm{r},\partial\bm{q}} 
+&=
+\frac{\partial}{\partial \bm{q}} \overline{\bm{\alpha}}\left(\overline{\prod}\left[ \overline{\rotmat{0}{Ex}^\transp}(\bm{x}), \overline{\rotmat{0}{Eq}}(\bm{q})\right]\right) \nonumber \\
+&=
+\left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
+\left(\frac{\partial }{\partial \overline{\bm{R}_2}}
+\overline{\prod}\left[ \overline{R_1}, \overline{R_2}\right]\right)
+\left(\frac{\partial}{\partial \bm{q}} \overline{\rotmat{0}{Eq}}(\bm{q})\right)  \nonumber
+\end{align}
+
+The gradient
+\begin{equation}
+\bm{\Psi}_{\mathrm{r},\partial\bm{q}}
+=
+\begin{pmatrix} \bm{1}_{2 \times 2} & \bm{0}_{2 \times 1}\end{pmatrix} \bm{\Phi}_{\mathrm{r},\partial\bm{q}}
+\end{equation}
+is calculated in the same way.
+
+$\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ corresponds to the translational part of the geometric Jacobian of the manipulator
+
+The expressions from REF are sparse matrices and can be calculated efficiently via computer algebra systems as shown in appendix REF.
 
 
 \section{Resolving functional Redundancy for 3T2R Tasks}
 \label{sec:ResFuncRed}
 
+
+If $\mathrm{dim}(\bm{\Psi})=5$ and $\mathrm{dim}(\bm{q})>5$, which presents the general case for solving typical 3T2R tasks in industry, at least one joint DoF is free for optimization additional criteria.
+
+Example
+
+\begin{equation}
+\bm{h}
+=
+\frac{1}{2} (\bm{q}-\bar{\bm{q}})^\transp\bm{W}(\bm{q}-\bar{\bm{q}})
+\end{equation}  
+%
+\begin{equation}
+\bm{h}_{\partial\bm{q}}
+=
+\frac{\partial \bm{h}}{\partial \bm{q}}
+=
+\bm{W}(\bm{q}-\bar{\bm{q}})
+\end{equation}
+
+With
+\begin{equation}
+\bm{h}_{\partial\bm{q}}=\frac{\partial \bm{h}}{\partial \bm{q}},
+\bm{\Psi}_{\partial\bm{q}}=\frac{\partial \bm{\Psi}}{\partial \bm{q}}
+\end{equation}
+
+
+With the gradient projection method the minimization of $\bm{h}$ in the Null space of the Jacobian $\bm{\Psi}_{\bm{q}}$ can be found
+
+\begin{align}
+\bm{\Delta}\bm{q}
+&=
+\bm{\Delta}\bm{q}_{\mathrm{T}} + \bm{\Delta}\bm{q}_{\mathrm{N}} \\
+&=
+\bm{\Psi}_{\partial\bm{q}}^{\dagger} (-\bm{\Psi}) + (\bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}) \bm{h}_{\partial\bm{q}}
+\end{align}
+
+where the Null-space incremental motion $\bm{\Delta}\bm{q}_{\mathrm{N}}$ does not influence the task achievement, which is only improved with $\bm{\Delta}\bm{q}_{\mathrm{T}}$.
+
 \section{Application on Kinematic Constraint Equations of Parallel Robots}
 \label{sec:ParRobKinConstr}
+
+Kinematic constraint equations are used in parallel robotics to relate end-effector and joint velocities, actuator and end-effector forces or to solve the inverse kinematics problem.
+
+Usually only the translational part of the constraint equations is defined and only the joint positions, velocities and forces associated with the translational motion are calculated. %  $\bm{q}'$
+
+Then the position of the platform coupling point $B$ relative to the base coupling point $A$ is used:
+
+\begin{equation}
+\bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) - \ortvek{0}{r}{}{A_iB_i}(\bm{x}_{\mathrm{t}})
+\end{equation}
+\begin{equation}
+\ortvek{0}{r}{}{A_iB_i}(\bm{x}) = 
+- \ortvek{0}{r}{}{0A_i}
++ \ortvek{0}{r}{}{0E}(\bm{x}_{\mathrm{t}}) + \rotmat{0}{E}(\bm{x}_{\mathrm{r}}) \ortvek{E}{r}{}{EB_i}
+\end{equation}
+
+The term $\rotmat{0}{E}(\bm{x}_{\mathrm{r}}$ depends on the full rotation description including the rotation about the tool axis.
+For a formulation without the tool axis rotation a different constraint definition can be used
+
+\begin{equation}
+\bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = 
+\ortvek{0}{r}{}{0E}(\bm{q}_i) - \ortvek{0}{r}{}{0E}(\bm{x}_{\mathrm{t}})
+\end{equation}
+
+where only the translational part $\bm{x}_{\mathrm{t}}$ of the end-effector coordinates occur and not the rotational part $\bm{x}_{\mathrm{r}}$.
+As a drawback, all joint angles $\bm{q}_i$ of the leg $i$ are now included, not only the coordinates of the first joints.
+
+\begin{equation}
+\ortvek{0}{r}{}{0E}(\bm{q}) = 
+\ortvek{0}{r}{}{0A_i}
++ \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) + \rotmat{0}{B_i}(\bm{q}_i) \ortvek{B_i}{r}{}{B_iE}
+\end{equation}
+
+To account for the increased number of included joints, also the rotational part of the kinematic constraints is needed to generate enough equations.
+
+Here again the definition is used
+
+\begin{align}
+\bm{\Phi}_{\mathrm{r}_i}(\bm{q},\bm{x})
+=\bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right)
+\end{align}
+
+The set of constraints $\bm{\Phi}_{i}$ for each leg of the PKM can again be reduced to $\bm{\Psi}_{i}$ by removing the last rotational component, as described in Sec.\,REF.
+
+The constraint equations for the PKM are assembled from all $m$ legs as
+
+
+\begin{equation}
+\bm{\Phi}
+=
+\begin{pmatrix}
+\bm{\Phi}_1 \\
+\bm{\Phi}_2 \\
+\vdots \\
+\bm{\Phi}_m \\
+\end{pmatrix}
+\end{equation}
+
+The constraints $\bm{\Phi}$ and $\bm{\Psi}$ can be used equally.
+The differential kinematics of the PKM is calculated with
+
+
+
+
+\begin{equation}
+\frac{\mathrm{d}}{\mathrm{d}t} \bm{\Phi}(\bm{q},\bm{x})
+=
+\bm{\Phi}_{\partial \bm{q}}  \dot{\bm{q}}
++
+\bm{\Phi}_{\partial \bm{x}} \dot{\bm{x}}
+\end{equation}
+%
+The diagonal elements $\bm{\Phi}_i$ of the direct kinematics Jacobian % $\bm{\Phi}_{\partial \bm{q}}$ 
+
+\begin{equation}
+\bm{\Phi}_{\partial \bm{q}}
+=
+\frac{\partial \bm{\Phi}}{\partial \bm{q}}
+=
+\begin{pmatrix}
+\frac{\partial \bm{\Phi}_1}{\partial \bm{q}_1}  & 0 & 0 & 0\\
+0 & \frac{\partial \bm{\Phi}_2}{\partial \bm{q}_2} & \ddots & 0  \\
+0 & \ddots & \ddots & 0  \\
+0 & 0 & 0 &\frac{\partial \bm{\Phi}_m}{\partial \bm{q}_m}
+\end{pmatrix}
+\end{equation}  
+
+correspond to the residual vector Jacobian from Sec.\,REF.
+The calculation of the inverse kinematics Jacobian
+
+\begin{equation}
+\bm{\Phi}_{\partial \bm{x}}
+=
+\frac{\partial \bm{\Phi}}{\partial \bm{x}}
+=
+\begin{pmatrix}
+\frac{\partial \bm{\Phi}_1}{\partial \bm{x}}\\
+\frac{\partial \bm{\Phi}_2}{\partial \bm{x}}\\
+\vdots \\
+\frac{\partial \bm{\Phi}_m}{\partial \bm{x}}\\
+\end{pmatrix}
+\end{equation}  
+
+can be simplified similar to the process described in Sec.\,REF with
+
+\begin{align}
+\frac{\partial}{\partial \bm{x}_{\mathrm{r}}}\bm{\Phi}_{\mathrm{r}_i}
+&=
+\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left((\rotmat{0}{Eq}^\transp(\bm{q}) \rotmat{0}{Ex}(\bm{x}_{\mathrm{r}}))^\transp\right) \nonumber \\
+\bm{\Phi}_{\mathrm{r}_i,\partial \bm{x}_{\mathrm{r}}} 
+&=
+\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \overline{\bm{\alpha}}\left(
+\bm{P}_{\mathrm{T}}
+\overline{\prod}\left[ \overline{\rotmat{0}{Eq}^\transp}(\bm{q}), \overline{\rotmat{0}{Ex}}(\bm{x}_{\mathrm{r}})\right]\right) \nonumber \\
+&=
+\left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
+\bm{P}_{\mathrm{T}}
+\left(\frac{\partial }{\partial \overline{\bm{R}_2}}
+\overline{\prod}\left[ \overline{R_1}, \overline{R_2}\right]\right)
+\left(\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \overline{\rotmat{0}{Ex}}(\bm{x}_{\mathrm{r}})\right) \nonumber
+\end{align}
+
+
+
+
 
 \section{Simulative Evaluation for solving Serial Robot inverse Kinematics in 3T2R Tasks}
 \label{sec:SimEvalSerRobIK}
 
 \section{Conclusions}
 \label{sec:Conclusion}
+
+\section*{APPENDIX}
+
+\subsection{Influence of reciprocal Euler angles}
+
+\subsection{Matrix operations for gradients}
+
+\begin{equation}
+\bm{\alpha}(\bm{R})
+=
+\overline{\bm{\alpha}}(\overline{\bm{R}})
+=
+\left[ \begin {array}{c} \arctan \left( -{a_y}/{a_z}
+\right) \\ \noalign{\medskip}\arctan \left( {\it a_x}/\sqrt {{{ 
+            a_y}}^{2}+{{ a_z}}^{2}} \right) \\ \noalign{\medskip}\arctan
+\left( -{ o_x}/{ n_x} \right) \end {array} \right] 
+\end{equation}
+
+\begin{equation}
+\left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
+=
+\left[ \begin {array}{ccccccccc} 0&0&0&0&0&0&0&m_{1,8}&m_{1,9}\\ 
+\noalign{\medskip}0&0&0&0&0&0&m_{2,7}&m_{2,8}&m_{2,9}\\ 
+m_{3,1}&0&0&m_{3,4}&0&0&0&0&0\end {array} \right] 
+\end{equation}
+
+\begin{align}
+m_{1,8}&=-{\frac {{ a_z}}{{
+            { a_y}}^{2}+{{ a_z}}^{2}}}\\
+m_{1,9}&={\frac {{ a_y}}{{{ a_y}}^{2
+        }+{{ a_z}}^{2}}}\\
+m_{2,7}&={\frac {\sqrt {{{
+                    a_y}}^{2}+{{ a_z}}^{2}}}{{{ a_x}}^{2}+{{ a_y}}^{2}+{{
+                a_z}}^{2}}} \\
+m_{2,8}&=-{\frac {{ a_x}\,{ a_y}}{\sqrt {{{ a_y}}^
+            {2}+{{ a_z}}^{2}} \left( {{ a_x}}^{2}+{{ a_y}}^{2}+{{ 
+                a_z}}^{2} \right) }}\\
+m_{2,9}&=-{\frac {{ a_x}\,{ a_z}}{\sqrt {{{ 
+                    a_y}}^{2}+{{ a_z}}^{2}} \left( {{ a_x}}^{2}+{{ a_y}}^{2}+
+        {{ a_z}}^{2} \right) }}\\
+m_{3,1}&=\frac {{ o_x}}{{{
+            n_x}}^{2}+{{ o_x}}^{2}} \\
+m_{3,4}&=-{\frac {{ n_x}}{{{ n_x}
+        }^{2}+{{ o_x}}^{2}}}
+\end{align}
+
+
+
+\begin{equation}
+\left(\frac{\partial }{\partial \overline{\bm{R}_2}}
+\overline{\prod}\left[ \overline{R_1}, \overline{R_2}\right]\right)
+=
+\begin{pmatrix}
+\bm{R}_1 & \bm{0} & \bm{0} \\
+\bm{0} & \bm{R}_1 & \bm{0} \\
+\bm{0} & \bm{0} & \bm{R}_1  \\
+\end{pmatrix}
+\end{equation}
 
 \section{Acknowledgements}
 
