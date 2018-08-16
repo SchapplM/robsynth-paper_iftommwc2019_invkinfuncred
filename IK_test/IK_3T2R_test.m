@@ -52,10 +52,37 @@ for mdlname2 = RobotNames
       fprintf('%s: Inverse Kinematik Variante %d nicht getestet\n', mdlname, m);
     end
   end
+  
+  %% Aufgabenredundanz: Prüfe, ob die Jacobi-Matrix durch beta3 beeinflusst wird
+  for i = 1:size(TSS.Q,1)
+    q = TSS.Q(i,:)';
+    xE_soll = rand(6,1);
+    for j = 1:10
+      xE_soll(6) = rand(); % zufälliger neuer EE-Winkel
+      % Prüfe Jacobi-Matrix
+      dpq=RS.constr2grad_rq(q, xE_soll);
+      dqp_IK = dpq(1:2,:);
+      if j > 2
+        if any(abs(dqp_IK_alt(:) - dqp_IK(:)) > 1e-10)
+          error('Jacobi-Matrix für Aufgabenredundanz hat sich durch anderen Winkel beta3 geändert. Darf nicht sein.');
+        end
+      end
+      dqp_IK_alt = dqp_IK;
+      % Prüfe ZB
+      Phi = RS.constr2(q, xE_soll);
+      Phi_IK = Phi(4:5,:);
+      if j > 2
+        if any(abs(Phi_IK(:) - Phi_IK_alt(:)) > 1e-10)
+          error('Rotatorische Zwangsbedingungen für Aufgabenredundanz hat sich durch anderen Winkel beta3 geändert. Darf nicht sein.');
+        end
+      end
+      Phi_IK_alt = Phi_IK;
+    end
+  end
   %% Prüfe IK mit Aufgabenredundanz
   n_iO = 0;
   for i = 1:size(TSS.Q,1)
-    
+    warning off
     q = TSS.Q(i,:)';
     T_E = RS.fkineEE(q);
     xE = [T_E(1:3,4); r2rpy(T_E(1:3,1:3))];
@@ -68,7 +95,8 @@ for mdlname2 = RobotNames
     test_T = test_T(:,[3,4]); % Spalten mit x-y-Einheitsvektoren lassen sich nicht vergleichen.
     if any(abs(test_T(:)) > 1e-10)
       % Teilweise konvergiert die IK nicht, wenn der Abstand zu groß ist.
-      warning('DK/IK stimmt nicht für Aufgabenredundanz');
+      warning on
+      warning('DK/IK stimmt nicht für Aufgabenredundanz. Delta_x = %1.5e, Delta_z = %1.5e', norm(test_T(:,2)), norm(test_T(:,1)));
     else
       n_iO = n_iO+1;
     end
@@ -121,22 +149,35 @@ for mdlname2 = RobotNames
 
     %% Versuch 2: Nachvollziehen der Transformation nur über Symm.-Achse
     % ZB auf Weg 2 (nur xy-Winkel auf alpha-Weg)
-    % Bild 3, Weg 0 -> TA (über beta1,beta2)
-    R_0_TA = rotx(xE(4)) * roty(xE(5));
+    % Bild 4, Weg 0 -> TA1 (über beta1,beta2)
+    R_0_TA1 = rotx(xE(4)) * roty(xE(5));
     
-    % Bild 3, Weg 0 -> Eq -> TA (über alpha2,alpha1)
+    R_TA1_Eq = (R_0_TA1*rotz(rand))' * R_0_Eq;
+    % manuelle Berechnung der Winkel der ZYX-Euler-Notation
+    % Siehe Aufzeichnungen vom 14.08.2018
+    % Die Winkel alpha sind die gleichen, werden aber anders berechnet
+    alpha1=atan2(R_TA1_Eq(3,2), R_TA1_Eq(3,3)); % 14.8., Gl. 20
+    alpha2=atan2(-R_TA1_Eq(3,1), sqrt(R_TA1_Eq(1,1)^2+R_TA1_Eq(2,1)^2)); % 14.8., Gl. 22
+
+    Phi2 = [Phi1(1:3); alpha1; alpha2; NaN];
+    
+    % Bild 4, Weg 0 -> Eq -> TA2 (über alpha2,alpha1)
     R_0_TA2 = R_0_Eq * (roty(alpha2) * rotx(alpha1))';
-    R_test = R_0_TA - R_0_TA2;
-    if any(abs(R_test(:,3)) > 1e-10)
+    R_TA_test = R_0_TA1 - R_0_TA2;
+    if any(abs(R_TA_test(:,3)) > 1e-10)
       error('Die z-Achse der Rotationsmatrix TA2 stimmt nicht');
     end
 
-    % Bild 3, Weg TA -> TA2 (über beta3,alpha3)
-    R_TA_TA2 = rotz(xE(6)+alpha3);
-    R_0_TA_test = R_0_TA2*R_TA_TA2';
-    R_test = R_0_TA - R_0_TA_test;
-    if any(abs(R_test(:)) > 1e-10)
+    % Bild 4, Weg TA -> TA2 (über beta3,alpha3)
+    R_TA1_TA2 = rotz(xE(6)+alpha3);
+    R_0_TA1_test = R_0_TA2*R_TA1_TA2';
+    R_TA1_test = R_0_TA1 - R_0_TA1_test;
+    if any(abs(R_TA1_test(:)) > 1e-10)
       error('Die Rotationsmatrix TA stimmt nicht');
+    end
+    Phi_test = Phi1 - Phi2;
+    if any(abs(Phi_test) > 1e-10)
+      error('Die Winkel alpha stimmen nicht');
     end
   end
   %% TODO: Prüfe IK mit Aufgabenredundanz und Nebenbedingungen
