@@ -164,12 +164,14 @@ The deviation between the desired end-effector frame $\ks{Ex}$ expressed with $\
 \bm{\Phi}=\begin{pmatrix}
 \bm{\Phi}_{\mathrm{t}} & \bm{\Phi}_{\mathrm{r}}
 \end{pmatrix}^\transp \in {\mathbb{R}}^{6}
+\label{equ:Phi_def}
 \end{equation}
 %
 where the translational part 
 %
 \begin{equation}
 \bm{\Phi}_{\mathrm{t}}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{x}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
+\label{equ:Phit_def}
 \end{equation}
 %
 is the vector from $\ks{Ex}$ to $\ks{Eq}$.
@@ -178,8 +180,9 @@ The rotational part
 \begin{align}
 \bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) &= \begin{pmatrix}
 \alpha_1  & \alpha_2 & \alpha_3
-\end{pmatrix}^\transp  \\
+\end{pmatrix}^\transp  \nonumber \\
 &=\bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{3}
+\label{equ:Phir_def}
 \end{align}
 %
 of this ``residual vector'' is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}.
@@ -262,6 +265,7 @@ relating to $\bm{x}$ and the modified rotational part
 \begin{pmatrix}
 \beta_1  & \beta_2
 \end{pmatrix}^\transp
+\label{equ:etar_def}
 \end{equation}
 %
 where the last rotation $\beta_3$ around the $z$-axis is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily.
@@ -308,119 +312,116 @@ which is also the tool axis as can be seen in Fig.\,\ref{fig:frames_5dof}.
 Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_3$ are defined around the same axis, $\beta_3$ only influences $\alpha_3$ and not $\alpha_1$ and $\alpha_2$ as derived in the appendix \ref{sec:appendix_eulerreciproc} and can be expressed by
 %
 \begin{align}
-\alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) = \alpha_1(\bm{q},\bm{\eta}) \label{equ:alpha1_dep_beta},\\
-\alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) = \alpha_2(\bm{q},\bm{\eta}) \label{equ:alpha2_dep_beta},\\
-\alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3) = \alpha_3(\bm{q},\bm{x})  \label{equ:alpha3_dep_beta}.
+\begin{pmatrix}
+\alpha_1 \\
+\alpha_2 \\
+\alpha_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+\alpha_1(\bm{q},\beta_1,\beta_2) \\
+\alpha_2(\bm{q},\beta_1,\beta_2) \\
+\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3)
+\end{pmatrix}
+=
+\begin{pmatrix}
+\alpha_1(\bm{q},\bm{\eta}) \\
+\alpha_2(\bm{q},\bm{\eta}) \\
+\alpha_3(\bm{q},\bm{x}) 
+\end{pmatrix}
+\label{equ:alpha_dep_beta}.
 \end{align}
 %
 This property of the reciprocal Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections
 
 \subsection{Application on 3T2R Tasks}
 
-%\subsubsection{Kinematics formulation}
-
-We now describe the kinematic condition for the 3T2R problem as
-
+The standard methods introduced in Sec.\,\ref{sec:Intro} for solving the inverse kinematics for 3T2R tasks and exploiting the functional redundancy struggle with the definition a Jacobian matrix for the problem with appropriate dimensions.
+To obtain a Jacobian with minimal row dimension we now describe the kinematic condition for the 3T2R problem in the coordinates $\bm{\eta}$ as
+%
 \begin{equation}
 \bm{\Psi}=\begin{pmatrix}
 \bm{\Psi}_{\mathrm{t}} & \bm{\Psi}_{\mathrm{r}}
 \end{pmatrix}^\transp \in {\mathbb{R}}^{5}
 \end{equation}
-
+%
+following the definition for $\bm{\Phi}$ from (\ref{equ:Phi_def}) with the translational part
+%
 \begin{equation}
-\bm{\Psi}_{\mathrm{t}}(\bm{q}_i,\bm{\eta}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{\eta}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
+\bm{\Psi}_{\mathrm{t}}(\bm{q},\bm{\eta}) 
+= 
+\bm{\Phi}_{\mathrm{t}}(\bm{q},\bm{x}) 
+=
+\ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{\eta}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
 \end{equation}
-
-
-
+%
+equal to (\ref{equ:Phit_def}) and the rotational part
+%
 \begin{align}
 \bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta}) &= 
 \begin{pmatrix}
 \alpha_1  & \alpha_2
-\end{pmatrix}^\transp  \\
+\end{pmatrix}^\transp \nonumber \\
 &=
-\begin{pmatrix} \bm{1}_{2 \times 2} & \bm{0}_{2 \times 1}\end{pmatrix} \bm{\Phi} (\bm{q},\bm{x}) \\
+\begin{pmatrix} \bm{1}_{2 \times 2} & \bm{0}_{2 \times 1}\end{pmatrix} \bm{\Phi} (\bm{q},\bm{x}) \nonumber \\
 &= \begin{pmatrix} \bm{1} & \bm{0}\end{pmatrix} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{2}
 \end{align}
-
-The condition $\bm{\Psi}=\bm{0}$ leads to a valid configuration of positioning the ed-effector and orientation of the tool-axis.
-
-
-
-
-%\begin{align}
-%\rotmat{0}{Eq}(\bm{q})
-%&= \rotmat{0}{Ex}(\bm{x}) \rotmat{Ex}{Eq}(\bm{x},\bm{q}) \nonumber \\
-%&= \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2)\bm{R}_x(\alpha_1) \nonumber \\
-%&= \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3 + \alpha_3) \bm{R}_y(\alpha_2)\bm{R}_x(\alpha_1) \nonumber 
-%\end{align} 
 %
-%Since 
+adapted from (\ref{equ:Phir_def}) by using (\ref{equ:alpha_dep_beta} and (\ref{equ:etar_def}).
+
+The condition $\bm{\Phi}=\bm{0}$ or $\bm{\Psi}=\bm{0}$ leads to a valid configuration of positioning the end-effector and the complete orientation of the end-effector (using $\bm{\Phi}$) or the orientation only of the tool-axis (using $\bm{\Psi}$).
+Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots with 6-DoF can be derived with the Taylor series of $\bm{\Phi}}(\bm{q},\bm{x})$ to
 %
-%\begin{equation}
-%\beta_3 = - \alpha_3
-%\end{equation}  
-%
-%\begin{equation}
-%\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) = \rotmat{0}{Eq}(\bm{q})
-%\bm{R}_x^\transp(\alpha_1)\bm{R}_y^\transp(\alpha_2) 
-%\end{equation} 
-
-%\begin{equation}
-%\bm{\eta}_{\mathrm{r}}
-%=
-%\bm{\eta}_{\mathrm{r}}
-%(\alpha_1, \alpha_2, \bm{q})
-%\end{equation}
-
-%\subsubsection{Inverse Kinematics}
-
-
-Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots with 6-DoF can be derived with the Taylor series of the nonlinear function 
-
 \begin{equation}
 \bm{\Phi}(\bm{q}^{k+1},\bm{x}) = 
 \bm{\Phi}(\bm{q}^{k},\bm{x})
 +
 \frac{\partial}{\partial \bm{q}} \bm{\Phi}(\bm{q}^k,\bm{x}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}_i^k)
+\label{equ:taylor_phi}
 \end{equation}
-
-where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is the ``Jacobian matrix corresponding to the residual vector'' $\bm{\Phi}$ from REF.
+%
+where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is called the ``Jacobian matrix corresponding to the residual vector'' in \cite{GoldenbergBenFen1985}.
 
 For 3T2R tasks we can define in the same way
- 
+%
 \begin{equation}
-\bm{\Psi}(\bm{q}^{k+1},\bm{x}) = 
-\bm{\Psi}(\bm{q}^{k},\bm{x})
+\bm{\Psi}(\bm{q}^{k+1},\bm{\eta}) = 
+\bm{\Psi}(\bm{q}^{k},\bm{\eta})
 +
-\frac{\partial}{\partial \bm{q}} \bm{\Psi}(\bm{q},\bm{x}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}_i^k)
+\frac{\partial}{\partial \bm{q}} \bm{\Psi}(\bm{q},\bm{\eta}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}_i^k)
 \end{equation}
-
-With the condition for solution of the inverse kinematics in the next step
-
+%
+with the condition
+%
 \begin{equation}
-\bm{\Psi}(\bm{q}^{k+1},\bm{x})=\bm{0}
+\bm{\Psi}(\bm{q}^{k+1},\bm{\eta})=\bm{0}
 \end{equation}
-
-the increment of the joint angles towards this solution is
-
+%
+for solution of the inverse kinematics in the next step $k+1$. The increment 
+%
 \begin{equation}
 \Delta \bm{q}^k
 =
 \left(\frac{\partial \bm{\Psi}(\bm{q},\bm{x})}{\partial \bm{q}}\biggr\rvert_{\bm{q}^k}\right)^{\dagger}
-(\bm{0} - \bm{\Psi}(\bm{q}^{k},\bm{x}))
-\end{equation}  
-
-
-
+(\bm{0} - \bm{\Psi}(\bm{q}^{k},\bm{\eta}))
+\label{equ:deltaq_psi}
+\end{equation}
+%
+of the joint angles towards this solution can be used in iterative algorithms like Newton-Raphson well-known in robotics literature.
 
 \subsection{Remarks on the Implementation}
 \label{sec:RecEulAng_implement}
-This approach does not use the classical geometric Jacobian of the serial link manipulator for the rotation part.
-However the partial derivatives ... in equations REF can be implemented efficiently by exploiting the chain rule an d sparsity.
 
-To simplify calculations, we write rotation matrices as vectors with
+This approach does not use the geometric Jacobian of the serial link manipulator for the rotation part.
+The Jacobian\footnote{$\bm{\Psi}_{\mathrm{r},\partial\bm{q}}
+    =
+    \begin{pmatrix} \bm{1} & \bm{0}\end{pmatrix} \bm{\Phi}_{\mathrm{r},\partial\bm{q}}$
+    is calculated in the same way w.l.o.g.} $\bm{\Phi}_{\partial\bm{q}}$ of (\ref{equ:taylor_phi}) consists of nested non-linear functions and does not use the geometric Jacobian of the serial link manipulator for the rotation part, which is easy to calculate. 
+%
+However $\bm{\Phi}_{\partial\bm{q}}$ can be implemented efficiently by exploiting the chain rule and sparsity of the matrices with partial derivatives as shown in the following.
 
+We define the column operator
+%
 \begin{equation}
 \bm{R}=\begin{pmatrix}
 \bm{n} & \bm{o} & \bm{a}
@@ -430,8 +431,10 @@ To simplify calculations, we write rotation matrices as vectors with
 \bm{n} \\ \bm{o} \\ \bm{a}
 \end{pmatrix}
 \end{equation}
-
-and we define the matrix product operator
+%
+for rotation matrices to avoid differentiating matrices or w.r.t matrices.
+matrix multiplication is expressed with the product operator
+%
 \begin{equation}
 \rotmat{1}{3}
 =
@@ -443,9 +446,9 @@ and we define the matrix product operator
 \overline{\prod}\left[ \overline{\rotmat{1}{2}}, \overline{\rotmat{2}{3}}\right]
 \label{equ:matprod}
 \end{equation}
-
-and the transposition operator
-
+%
+which can be seen as a function as well as the transposition operator
+%
 \begin{equation}
 \rotmat{2}{1}
 =
@@ -453,20 +456,19 @@ and the transposition operator
 \Rightarrow
 \overline{\rotmat{2}{1}}
 =
-\bm{P}_\transp \overline{\rotmat{1}{2}}
+\bm{P}_\transp \overline{\rotmat{1}{2}}.
 \end{equation}
-
-Then the Euler angles can be calculated from a rotation matrix with the symbol
-
+%
+Then the Euler angles can be calculated from a rotation matrix using these operators with
+%
 \begin{equation}
 \overline{\bm{\alpha}}(\overline{\bm{R}})
 =
-\bm{\alpha}(\bm{R})
+\bm{\alpha}(\bm{R}).
 \end{equation}
-
-The gradient
-
-
+%
+Finally applying this to the rotational part of the residual vector Jacobian and applying the chain rule for differentiation yields
+%
 \begin{align}
 \frac{\partial}{\partial \bm{q}}\bm{\Phi}_{\mathrm{r}}
 &=
@@ -478,21 +480,12 @@ The gradient
 \left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
 \left(\frac{\partial }{\partial \overline{\bm{R}_2}}
 \overline{\prod}\left[ \overline{R_1}, \overline{R_2}\right]\right)
-\left(\frac{\partial}{\partial \bm{q}} \overline{\rotmat{0}{Eq}}(\bm{q})\right)  \nonumber
+\left(\frac{\partial}{\partial \bm{q}} \overline{\rotmat{0}{Eq}}(\bm{q})\right).  \nonumber
 \end{align}
+The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ enclosed in the geometric Jacobian of the manipulator and is not regarded at this point.
 
-The gradient
-\begin{equation}
-\bm{\Psi}_{\mathrm{r},\partial\bm{q}}
-=
-\begin{pmatrix} \bm{1}_{2 \times 2} & \bm{0}_{2 \times 1}\end{pmatrix} \bm{\Phi}_{\mathrm{r},\partial\bm{q}}
-\end{equation}
-is calculated in the same way.
-
-$\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ corresponds to the translational part of the geometric Jacobian of the manipulator
-
-The expressions from REF are sparse matrices and can be calculated efficiently via computer algebra systems as shown in appendix \ref{sec:appendix_gradient_matrix}.
-
+The two first partial derivatives from (\ref{equ:grad_Phi_q}) are sparse matrices and can be calculated efficiently as shown in appendix \ref{sec:appendix_gradient_matrix}.
+The last partial derivative $(\partial \overline{\rotmat{0}{Eq}}) / (\partial \bm{q})$ can be derived efficiently with computer algebra systems.
 
 \section{Resolving functional Redundancy for 3T2R Tasks}
 \label{sec:ResFuncRed}
