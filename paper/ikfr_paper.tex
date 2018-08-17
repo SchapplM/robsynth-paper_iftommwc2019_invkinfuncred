@@ -214,6 +214,7 @@ now we choose the Euler angle convention $\bm{\alpha}$ for the orientation error
 
 \begin{equation}
 \bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1) \in \mathrm{SO(3)}
+\label{equ:def_rmat_zyxr}
 \end{equation}
 
 This set of $Z$-$Y$-$X$-Euler angles is defined in this paper as being reciprocal to the $X$-$Y$-$Z$-convention $\bm{\beta}$ for the absolute orientation.
@@ -387,7 +388,7 @@ the increment of the joint angles towards this solution is
 
 
 \subsection{Remarks on the Implementation}
-
+\label{sec:RecEulAng_implement}
 This approach does not use the classical geometric Jacobian of the serial link manipulator for the rotation part.
 However the partial derivatives ... in equations REF can be implemented efficiently by exploiting the chain rule an d sparsity.
 
@@ -413,6 +414,7 @@ and we define the matrix product operator
 \overline{\rotmat{1}{3}}
 =
 \overline{\prod}\left[ \overline{\rotmat{1}{2}}, \overline{\rotmat{2}{3}}\right]
+\label{equ:matprod}
 \end{equation}
 
 and the transposition operator
@@ -441,8 +443,8 @@ The gradient
 \begin{align}
 \frac{\partial}{\partial \bm{q}}\bm{\Phi}_{\mathrm{r}}
 &=
-\frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\rotmat{0}{Ex}^\transp(\bm{x}) \rotmat{0}{Eq}(\bm{q})\right) \nonumber \\
-\bm{\Phi}_{\mathrm{r},\partial\bm{q}} 
+\frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\rotmat{0}{Ex}^\transp(\bm{x}) \rotmat{0}{Eq}(\bm{q})\right) \label{equ:grad_Phi_q}\\
+\bm{\Phi}_{\mathrm{r},\partial\bm{q}}
 &=
 \frac{\partial}{\partial \bm{q}} \overline{\bm{\alpha}}\left(\overline{\prod}\left[ \overline{\rotmat{0}{Ex}^\transp}(\bm{x}), \overline{\rotmat{0}{Eq}}(\bm{q})\right]\right) \nonumber \\
 &=
@@ -462,7 +464,7 @@ is calculated in the same way.
 
 $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ corresponds to the translational part of the geometric Jacobian of the manipulator
 
-The expressions from REF are sparse matrices and can be calculated efficiently via computer algebra systems as shown in appendix REF.
+The expressions from REF are sparse matrices and can be calculated efficiently via computer algebra systems as shown in appendix \ref{sec:appendix_gradient_matrix}.
 
 
 \section{Resolving functional Redundancy for 3T2R Tasks}
@@ -616,7 +618,7 @@ can be simplified similar to the process described in Sec.\,REF with
 \begin{align}
 \frac{\partial}{\partial \bm{x}_{\mathrm{r}}}\bm{\Phi}_{\mathrm{r}_i}
 &=
-\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left((\rotmat{0}{Eq}^\transp(\bm{q}) \rotmat{0}{Ex}(\bm{x}_{\mathrm{r}}))^\transp\right) \nonumber \\
+\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left((\rotmat{0}{Eq}^\transp(\bm{q}) \rotmat{0}{Ex}(\bm{x}_{\mathrm{r}}))^\transp\right) (\label{equ:grad_Phi_x}) \\
 \bm{\Phi}_{\mathrm{r}_i,\partial \bm{x}_{\mathrm{r}}} 
 &=
 \frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \overline{\bm{\alpha}}\left(
@@ -667,7 +669,7 @@ as introduced in (\ref{equ:def_rmat_xyz}).
 With an additional rotation $\delta$ around the $z$-axis for the desired orientation, we have the new Euler angles
 %
 \begin{equation}
-\beta_1'=\beta_1, \beta_2'=\beta_2, \beta_3'=\beta_3-\delta.
+\beta_1'=\beta_1,  \quad \beta_2'=\beta_2,  \quad \beta_3'=\beta_3-\delta.
 \end{equation}
 %
 The additional rotation corresponds to the tool axis defined in Sec.\,\ref{sec:RecEulAng} % and does not influence 3T2R tasks.
@@ -676,9 +678,13 @@ and leads to a new residual orientation error expressed as a rotation matrix
 \begin{align}
 \rotmat{Ex}{Eq}(\bm{\beta}',\bm{q})
 &=
-\left(\rotmat{0}{Ex}(\bm{\beta})\bm{R}_z(-\delta)\right)^\transp \rotmat{0}{Eq}(\bm{q}) \\
+\rotmat{0}{Ex}^\transp (\bm{\beta}') \rotmat{0}{Eq}(\bm{q}) \nonumber\\
 &=
-\bm{R}_z(\delta) \rotmat{0}{Ex}^\transp (\bm{\beta}) \rotmat{0}{Eq}(\bm{q}). \nonumber
+\left(\rotmat{0}{Ex}(\bm{\beta})\bm{R}_z(-\delta)\right)^\transp \rotmat{0}{Eq}(\bm{q}) \nonumber \\
+&=
+\bm{R}_z(\delta) \rotmat{0}{Ex}^\transp (\bm{\beta}) \rotmat{0}{Eq}(\bm{q}) \nonumber \\
+&=
+\bm{R}_z(\delta) \rotmat{Ex}{Eq}(\bm{\beta},\bm{q}).
 \end{align}
 
 We define the first residual orientation error corresponding to $\bm{\beta}$ as a rotation matrix
@@ -693,6 +699,7 @@ and as an Z-Y-X-Euler angle representation around fixed frames
 \begin{align}
 \bm{\alpha} =
 \left[ \begin {array}{c} \arctan \left( {o_z},{a_z} \right)  \\ \noalign{\medskip}\arctan \left( -{n_z},\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ \noalign{\medskip}\arctan \left( {n_y},{ n_x} \right) \end {array} \right].
+\label{equ:alpha_xyz}
 \end{align}
 
 The error corresponding to $\bm{\beta}'$ only differs regarding the additional rotation $\delta$ with
@@ -703,7 +710,8 @@ The error corresponding to $\bm{\beta}'$ only differs regarding the additional r
 &\left[ \begin {array}{ccc} { C_{\delta}}\,{n_x}-{ S_{\delta}}\,{ n_y}&{ C_{\delta}}\,{o_x}-{ S_{\delta}}\,{o_y}&{ C_{\delta}}\,{ a_x}-{ S_{\delta}}\,{a_y}\\ \noalign{\medskip}{ C_{\delta}}\,{n_y}+ { S_{\delta}}\,{n_x}&{ C_{\delta}}\,{o_y}+{ S_{\delta}}\,{o_x}&{  C_{\delta}}\,{a_y}+{ S_{\delta}}\,{a_x}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] \nonumber
 \end{align}
 %
-and the Z-Y-X-Euler angles (fixed frames)
+where $C_{\delta}=\mathrm{cos}(\delta)$, $S_{\delta}=\mathrm{sin}(\delta)$.
+The Z-Y-X-Euler angles regarding fixed frames from this rotation matrix are
 %
 \begin{equation}
 \bm{\alpha}' =
@@ -716,57 +724,51 @@ where $\delta$  only influences the components $\alpha_1$ and $\alpha_2$.
 This allows the conclusion, that $\beta_3$only influences $\alpha_3$ and results in the dependencies
 %
 \begin{align}
-\alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) \\
-\alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) \\
-\alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3)
+\alpha_1'&=\alpha_1'(\bm{q},\beta_1,\beta_2) =\alpha_1\\
+\alpha_2'&=\alpha_2'(\bm{q},\beta_1,\beta_2) =\alpha_2\\
+\alpha_3'&=\alpha_3'(\bm{q},\beta_1,\beta_2,\beta_3)
 \end{align}
 %
 already displayed in (\ref{equ:alpha1_dep_beta})-(\ref{equ:alpha3_dep_beta}) with the consequences for the kinematic modeling of robots in 3T2R tasks described in Sec.\,\ref{sec:RecEulAng_effect}.
 
-\subsection{Matrix operations for gradients}
+\subsection{Matrix Operations for Partial Derivatives}
+\label{sec:appendix_gradient_matrix}
 
-TODO: Das sind die Formeln für Euler-XYZ!
+The single expressions derived in Sec.\,\ref{sec:RecEulAng_implement} for the serial chains and in Sec.\,xx for the parallel chains can be calculated with low computational effort from the definition of the X-Y-Z- and Z-Y-X-Euler angles from (\ref{equ:def_rmat_xyz}), (\ref{equ:def_rmat_zyxr}) and (\ref{equ:alpha_xyz}).
+
+The gradient in (\ref{equ:grad_Phi_q}) becomes
+%
 \begin{equation}
-\bm{\alpha}(\bm{R})
+\left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)^\transp
 =
-\overline{\bm{\alpha}}(\overline{\bm{R}})
-=
-\left[ \begin {array}{c} \arctan \left( -{a_y}/{a_z}
-\right) \\ \noalign{\medskip}\arctan \left( {\it a_x}/\sqrt {{{ 
-            a_y}}^{2}+{{ a_z}}^{2}} \right) \\ \noalign{\medskip}\arctan
-\left( -{ o_x}/{ n_x} \right) \end {array} \right] 
+ \left[ \begin {array}{ccc} -{\frac {{n_y}}{{{n_x}}^{2}+{{n_y }}^{2}}}&0&0\\ \noalign{\medskip}{\frac {{n_x}}{{{n_x}}^{2}+{{ n_y}}^{2}}}&0&0\\ \noalign{\medskip}0&-\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}}&0\\ \noalign{\medskip}0&0&0\\ \noalign{\medskip}0&0&0 \\ \noalign{\medskip}0&{\frac {{n_z}\,{o_z}}{\sqrt {{{a_z}}^{ 2}+{{o_z}}^{2}}}}&{\frac {{a_z}}{{{a_z}}^{2}+{{o_z}}^{2}}} \\ \noalign{\medskip}0&0&0\\ \noalign{\medskip}0&0&0 \\ \noalign{\medskip}0&{\frac {{n_z}\,{a_z}}{\sqrt {a_z^{2}+{{o_z}}^{2}}}}&-{\frac {o_z}{a_z^{2}+o_z^{2}} }\end {array} \right] 
 \end{equation}
-
-\begin{equation}
-\left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
-=
-\left[ \begin {array}{ccccccccc} 0&0&0&0&0&0&0&m_{1,8}&m_{1,9}\\ 
-\noalign{\medskip}0&0&0&0&0&0&m_{2,7}&m_{2,8}&m_{2,9}\\ 
-m_{3,1}&0&0&m_{3,4}&0&0&0&0&0\end {array} \right] 
-\end{equation}
-
+%
+and the inverse gradient in (\ref{equ:grad_Phi_x}) yields
+%
 \begin{align}
-m_{1,8}&=-{\frac {{ a_z}}{{
-            { a_y}}^{2}+{{ a_z}}^{2}}}\\
-m_{1,9}&={\frac {{ a_y}}{{{ a_y}}^{2
-        }+{{ a_z}}^{2}}}\\
-m_{2,7}&={\frac {\sqrt {{{
-                    a_y}}^{2}+{{ a_z}}^{2}}}{{{ a_x}}^{2}+{{ a_y}}^{2}+{{
-                a_z}}^{2}}} \\
-m_{2,8}&=-{\frac {{ a_x}\,{ a_y}}{\sqrt {{{ a_y}}^
-            {2}+{{ a_z}}^{2}} \left( {{ a_x}}^{2}+{{ a_y}}^{2}+{{ 
-                a_z}}^{2} \right) }}\\
-m_{2,9}&=-{\frac {{ a_x}\,{ a_z}}{\sqrt {{{ 
-                    a_y}}^{2}+{{ a_z}}^{2}} \left( {{ a_x}}^{2}+{{ a_y}}^{2}+
-        {{ a_z}}^{2} \right) }}\\
-m_{3,1}&=\frac {{ o_x}}{{{
-            n_x}}^{2}+{{ o_x}}^{2}} \\
-m_{3,4}&=-{\frac {{ n_x}}{{{ n_x}
-        }^{2}+{{ o_x}}^{2}}}
+&\left(\frac{\partial \overline{\bm{R}}(\bm{\beta})}{\partial \overline{\bm{\beta}}}\right)
+=\\
+\small
+&\begin{bmatrix}
+0&-{ S_2}\,{ C_3}&-{ C_2}\,{ S_3}
+\\ { C_1}\,{ S_2}\,{ C_3}-{ S_1}\,{ S_3}&{
+    S_1}\,{ C_2}\,{ C_3}&-{ S_1}\,{ S_2}\,{ S_3}+{ C_1}\,{
+    C_3}\\ { S_1}\,{ S_2}\,{ C_3}+{ C_1}\,{
+    S_3}&-{ C_1}\,{ C_2}\,{ C_3}&{ C_1}\,{ S_2}\,{ S_3}+{
+    S_1}\,{ C_3}\\ 0&{ S_2}\,{ S_3}&-{ C_2}\,
+{ C_3}\\ -{ C_1}\,{ S_2}\,{ S_3}-{ S_1}\,{
+    C_3}&-{ S_1}\,{ C_2}\,{ S_3}&-{ S_1}\,{ S_2}\,{ C_3}-{
+    C_1}\,{ S_3}\\ -{ S_1}\,{ S_2}\,{ S_3}+{
+    C_1}\,{ C_3}&{ C_1}\,{ C_2}\,{ S_3}&{ C_1}\,{ S_2}\,{
+    C_3}-{ S_1}\,{ S_3}\\ 0&{ C_2}&0
+\\ -{ C_1}\,{ C_2}&{ S_1}\,{ S_2}&0
+\\ -{ S_1}\,{ C_2}&-{ C_1}\,{ S_2}&0
+\end {bmatrix}  \nonumber
 \end{align}
-
-
-
+%
+with $C_i=\mathrm{cos}(\beta_i)$, $S_i=\mathrm{sin}(\beta_i)$.
+The gradient of the matrix product (\ref{equ:matprod}) in (\ref{equ:grad_Phi_x}) and (\ref{equ:grad_Phi_q}) is
 \begin{equation}
 \left(\frac{\partial }{\partial \overline{\bm{R}_2}}
 \overline{\prod}\left[ \overline{R_1}, \overline{R_2}\right]\right)
@@ -779,25 +781,6 @@ m_{3,4}&=-{\frac {{ n_x}}{{{ n_x}
 \end{equation}
 
 
-\begin{align}
-&\left(\frac{\partial \overline{\bm{R}}(\bm{\beta})}{\partial \overline{\bm{\beta}}}\right)
-=\\
-\small
-&\left[ \begin {array}{ccc} 0&-{\it S_2}\,{\it C_3}&-{\it C_2}\,{\it S_3}
-\\ \noalign{\medskip}{\it C_1}\,{\it S_2}\,{\it C_3}-{\it S_1}\,{\it S_3}&{
- \it S_1}\,{\it C_2}\,{\it C_3}&-{\it S_1}\,{\it S_2}\,{\it S_3}+{\it C_1}\,{
- \it C_3}\\ \noalign{\medskip}{\it S_1}\,{\it S_2}\,{\it C_3}+{\it C_1}\,{
- \it S_3}&-{\it C_1}\,{\it C_2}\,{\it C_3}&{\it C_1}\,{\it S_2}\,{\it S_3}+{
- \it S_1}\,{\it C_3}\\ \noalign{\medskip}0&{\it S_2}\,{\it S_3}&-{\it C_2}\,
-{\it C_3}\\ \noalign{\medskip}-{\it C_1}\,{\it S_2}\,{\it S_3}-{\it S_1}\,{
-    \it C_3}&-{\it S_1}\,{\it C_2}\,{\it S_3}&-{\it S_1}\,{\it S_2}\,{\it C_3}-{
-    \it C_1}\,{\it S_3}\\ \noalign{\medskip}-{\it S_1}\,{\it S_2}\,{\it S_3}+{
-    \it C_1}\,{\it C_3}&{\it C_1}\,{\it C_2}\,{\it S_3}&{\it C_1}\,{\it S_2}\,{
-    \it C_3}-{\it S_1}\,{\it S_3}\\ \noalign{\medskip}0&{\it C_2}&0
-\\ \noalign{\medskip}-{\it C_1}\,{\it C_2}&{\it S_1}\,{\it S_2}&0
-\\ \noalign{\medskip}-{\it S_1}\,{\it C_2}&-{\it C_1}\,{\it S_2}&0
-\end {array} \right]  \nonumber
-\end{align}
 
 \section{Acknowledgements}
 
