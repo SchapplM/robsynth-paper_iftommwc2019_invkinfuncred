@@ -53,7 +53,7 @@ functional redundancy, redundancy resolution, reciprocal Euler angles, inverse k
 \end{keywords}
 
 \section{Introduction}
-
+\label{sec:Intro}
 Since the first papers in the 1980s the fields of inverse kinematics \cite{GoldenbergBenFen1985} and the resolution of \emph{intrinsic} redundancy \cite{Yoshikawa1984} in robotics have been extensively elaborated upon.
 Inverse kinematics for robot manipulators can be approached with gradient-based numeric approaches on the level of joint positions and joint velocity.
 Due to the nonlinearity of rotation on position level \cite{GoldenbergBenFen1985}, the latter is usually preferred.
@@ -97,7 +97,7 @@ The contributions of this paper are
 \end{itemize}
 
 The remainder of the paper is structured as follows: The idea of kinematics description using sets of reciprocal Euler angles is elaborated upon in Sec.\, \ref{sec:RecEulAng}.
-The application on resolving the functional redundancy in inverse kinematics of 3T2R tasks is shown in Sec.\,\ref{sec:ResFuncRed}.
+Their application in resolving the functional redundancy in inverse kinematics of 3T2R tasks is shown in Sec.\,\ref{sec:ResFuncRed}.
 Sec.\,\ref{sec:ParRobKinConstr} gives an outlook to the definition of kinematic constraints for parallel robots. 
 Simulative results for the inverse kinematics of serial robots in 3T2R tasks is presented in Sec.\,\ref{sec:SimEvalSerRobIK} to support the presented approach. Sec.\,\ref{sec:Conclusion} concludes the paper.
 
@@ -105,92 +105,103 @@ Simulative results for the inverse kinematics of serial robots in 3T2R tasks is 
 \label{sec:RecEulAng}
 
 The core of solving the inverse kinematics problem of robot manipulators for tasks with only two rotational degrees of freedom is the nonlinearity of rotation.
-Rotation can be described using Euler angles, axis and angle, quaternions and rotation matrices. All of 
+Rotation can be described using rotation matrices, Euler angles, rotation axis and angle its derivations like quaternions or the Rodrigues vector.
+In contrast to all other notations, consecutive elementary rotations like Euler angles can be reduced to adapt for tasks only requiring two rotatory DoF.
 
 \subsection{Kinematics Description}
+\label{sec:RecEulAng_KinDesc}
 
-%\begin{equation}
-%\bm{x}
-%=
-%\begin{pmatrix}
-%\bm{x}_{\mathrm{t}} \\
-%\bm{x}_{\mathrm{r}}
-%\end{pmatrix}
-%\end{equation}  
-
-\begin{equation}
-\bm{x}
-=
-\bm{f} (\bm{q})
-\end{equation}  
-
+We assume a serial kinematic chain with joint positions $\bm{q}$ and the forward kinematics
+%
 \begin{equation}
 \bm{x}
 =
 \begin{pmatrix}
-\bm{x}_{\mathrm{t}} & \bm{x}_{\mathrm{r}}
+\bm{x}_{\mathrm{t}}^\transp & \bm{x}_{\mathrm{r}}^\transp
 \end{pmatrix}^\transp
-, 
+=
+\bm{f} (\bm{q})
+\end{equation}  
+%
+describing the end-effector frames $\ks{E}$ position 
+%
+\begin{equation}
 \bm{x}_{\mathrm{t}}
 =
 \ortvek{0}{r}{}{0E}
-,
+\label{equ:xt_def}
+\end{equation}  
+%
+and orientation 
+%
+\begin{equation}
+\rotmat{0}{E}=\bm{R}(\bm{x}_{\mathrm{r}})
+=
+\begin{pmatrix}\vek{n}{}{Ex} & \vek{o}{}{Ex} & \vek{a}{}{Ex}\end{pmatrix}
+\end{equation}  
+% 
+with respect to the base frame $\ks{0}$ expressed in a set $\bm{\beta}$ of X-Y-Z-Euler angles
+%
+\begin{equation}
 \bm{x}_{\mathrm{r}}
 =
 \begin{pmatrix}
 \beta_1  & \beta_2 & \beta_3
 \end{pmatrix}^{\mathrm{T}}
-\end{equation}  
-
-
+\label{equ:xr_def}
+\end{equation} 
+%
+using without loss of generality\footnote{other sets of Euler angles with the same properties may be used as well}
+%
 \begin{equation}
-\rotmat{0}{E}=\bm{R}(\bm{x}_{\mathrm{r}})
-\end{equation}  
-
-
-\begin{equation}
-\bm{R}(\bm{\beta}) = \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \in \mathrm{SO(3)}
+\bm{R}(\bm{\beta}) = \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \in \mathrm{SO(3)}.
 \label{equ:def_rmat_xyz}
 \end{equation}
-
-Definition der Abweichung zwischen $\bm{x}$ und $\bm{f}(\bm{q})$
-
+%
+The deviation between the desired end-effector frame $\ks{Ex}$ expressed with $\bm{x}$ and the actual robots end-effector frame $\ks{Eq}$ expressed with $\bm{f}(\bm{q})$ with 
+%
 \begin{equation}
 \bm{\Phi}=\begin{pmatrix}
 \bm{\Phi}_{\mathrm{t}} & \bm{\Phi}_{\mathrm{r}}
 \end{pmatrix}^\transp \in {\mathbb{R}}^{6}
 \end{equation}
-
+%
+where the translational part 
+%
 \begin{equation}
 \bm{\Phi}_{\mathrm{t}}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{x}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
 \end{equation}
-
-Approach from \cite{GoldenbergBenFen1985}
-
+%
+is the vector from $\ks{Ex}$ to $\ks{Eq}$.
+The rotational part
+%
 \begin{align}
 \bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) &= \begin{pmatrix}
 \alpha_1  & \alpha_2 & \alpha_3
 \end{pmatrix}^\transp  \\
 &=\bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{3}
 \end{align}
-
-
-Intuitive standard approach:
-
+%
+of this ``residual vector'' is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}.
+The Euler angle convention of the residual $\bm{\alpha}$ can be chosen independently of the choice for the orientation representation in $\rotmat{0}{E}$ or $\bm{x}_{\mathrm{r}}$.
+The intuitive approach of choosing
+%
 \begin{equation}
 \bm{R}(\bm{\alpha}) := \bm{R}_x(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_z(\alpha_3) \in \mathrm{SO(3)}
 \end{equation}
+%
+the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\,\ref{fig:frames_6dof} where the intermediate steps of the single elementary rotations are omitted since they have no technical meaning.
+Using this convention an adaption to tasks with functional redundancy is only possible with the methods described in Sec.\,\ref{sec:Intro}
 
-Discussion: Why this does not work for 3T2R: Reference axis of the Euler angles is always different, tool axis is not one constant reference axis of the Euler angles $\bm{\alpha}$.
+\begin{figure}[tb!]
+    \input{./figures/frame_comparison_6dof.pdf_tex}
+    \caption{Overview of the different frames for 6-dof tasks with standard Euler-angle notation.}
+    \label{fig:frames_6dof}
+\end{figure} 
 
 \subsection{Effect of the reciprocal Euler Angles}
 \label{sec:RecEulAng_effect}
 
-\begin{figure}[tb!]
-    \input{./figures/frame_comparison_6dof.pdf_tex}
-    \caption{overview of the different frames for 6-dof tasks with standard Euler-angle notation.}
-    \label{fig:frames_6dof}
-\end{figure} 
 
 
 \begin{figure}[tb!]
@@ -208,20 +219,22 @@ Discussion: Why this does not work for 3T2R: Reference axis of the Euler angles 
 %\end{pmatrix}
 %\end{align}
 
-It is apparent, that all three components of $\bm{x}_{\mathrm{r}}$ influence the three unit vectors $\bm{n}$, $\bm{o}$, $\bm{a}$ of the rotation matrix.
+It is apparent, that using $\bm{\alpha}$ as defined in the previous subsection\,\ref{sec:RecEulAng_KinDesc}, all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ influence the three unit vectors $\bm{n}_{Ex}$, $\bm{o}_{Ex}$, $\bm{a}_{Ex}$ of the rotation matrix $\rotmat{0}{E}(\bm{x})$.
 
-now we choose the Euler angle convention $\bm{\alpha}$ for the orientation error to be 
-
+To encounter this issue we now choose the Euler angle convention $\bm{\alpha}$ for the orientation error to be 
+%
 \begin{equation}
-\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1) \in \mathrm{SO(3)}
+\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1) \in \mathrm{SO(3)}.
 \label{equ:def_rmat_zyxr}
 \end{equation}
+%
+This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the $X$-$Y$-$Z$-convention $\bm{\beta}$ for the absolute orientation.
+The notation corresponds to successive $X$-$Y$-$Z$ rotations $\bm{\alpha}$ about \emph{fixed} axes with the ambition of having thecorresponding third entries $\alpha_3$ and $\beta_3$.
+The permutation in (\ref{equ:def_rmat_zyxr}) does not affect the calculation and the term ``$Z$-$Y$-$X$-Euler angles'' will be used further in this paper.
 
-This set of $Z$-$Y$-$X$-Euler angles is defined in this paper as being reciprocal to the $X$-$Y$-$Z$-convention $\bm{\beta}$ for the absolute orientation.
-Further we assume rotations around fixed axes for $\bm{\alpha}$ to have the third entry $\alpha_3$ correspond to the third entry $\beta_3$.
-
-We define the task to have the coordinates
-
+% from (\ref{equ:xt_def}),(\ref{equ:xr_def})
+Similar to the end-effector operational space coordinates $\bm{x}$ we define the task space to have the coordinates
+%
 \begin{equation}
 \bm{\eta}
 =
@@ -230,9 +243,9 @@ We define the task to have the coordinates
 \bm{\eta}_{\mathrm{r}}
 \end{pmatrix}
 \end{equation}  
-
-with
-
+%
+with the unchanged translational part
+%
 \begin{equation}
 \bm{\eta}_{\mathrm{t}}
 =
@@ -240,7 +253,9 @@ with
 =
 \ortvek{0}{r}{}{0E}
 \end{equation}  
-
+%
+relating to $\bm{x}$ and the modified rotational part
+%
 \begin{equation}
 \bm{\eta}_{\mathrm{r}}
 =
@@ -248,13 +263,11 @@ with
 \beta_1  & \beta_2
 \end{pmatrix}^\transp
 \end{equation}
+%
+where the last rotation $\beta_3$ around the $z$-axis is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily.
 
-The last rotation $\beta_3$ around the $Z$-axis corresponds to a rotation around the tool axis and is a degree of freedom which can be set arbitrarily. Therefore it is not included in $\bm{\eta}_{\mathrm{r}}$.
-
-
-we now distinguish the frames $\ks{A1}$ and $\ks{A2}$ with
-
-
+We now distinguish the frames $\ks{A1}$ and $\ks{A2}$ resulting from intermediate elementary rotations sketched in Fig.\,\ref{fig:frames_5dof} with the partial frame rotation to the desired frame
+%
 \begin{align}
 \rotmat{0}{A1} 
 &= 
@@ -264,10 +277,9 @@ we now distinguish the frames $\ks{A1}$ and $\ks{A2}$ with
 \vek{n}{}{A1} & \vek{o}{}{A1} & \vek{a}{}{A1}
 \end{pmatrix} \nonumber
 \end{align}
-
-
-and
-
+%
+and the partial frame rotation
+%
 \begin{align}
 \rotmat{0}{A2} 
 &= 
@@ -278,15 +290,30 @@ and
 \vek{n}{}{A2} & \vek{o}{}{A2} & \vek{a}{}{A2}
 \end{pmatrix}\nonumber
 \end{align}
+%
+from the actual frame and the $x$- and $y$-axis error components.
 
-Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_3$ are defined around the same axis, $\beta_3$ only influences $\alpha_3$ and not $\alpha_1$ and $\alpha_2$ as described in the Appendix \ref{sec:appendix_eulerreciproc}.
+The frames $\ks{A1}$, $\ks{A2}$ and $\ks{Ex}$ all share the same $z$-axis
+%
+\begin{equation}
+\vek{a}{}{Ex}
+=
+\vek{a}{}{A1}
+=
+\vek{a}{}{A2}
+\end{equation}
+%
+which is also the tool axis as can be seen in Fig.\,\ref{fig:frames_5dof}.
 
+Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_3$ are defined around the same axis, $\beta_3$ only influences $\alpha_3$ and not $\alpha_1$ and $\alpha_2$ as derived in the appendix \ref{sec:appendix_eulerreciproc} and can be expressed by
+%
 \begin{align}
-\alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) = \alpha_1(\bm{q},\bm{\eta}) \label{equ:alpha1_dep_beta}\\
-\alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) = \alpha_2(\bm{q},\bm{\eta}) \label{equ:alpha2_dep_beta}\\
-\alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3) = \alpha_3(\bm{q},\bm{x})  \label{equ:alpha3_dep_beta}
+\alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) = \alpha_1(\bm{q},\bm{\eta}) \label{equ:alpha1_dep_beta},\\
+\alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) = \alpha_2(\bm{q},\bm{\eta}) \label{equ:alpha2_dep_beta},\\
+\alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3) = \alpha_3(\bm{q},\bm{x})  \label{equ:alpha3_dep_beta}.
 \end{align}
-
+%
+This property of the reciprocal Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections
 
 \subsection{Application on 3T2R Tasks}
 
