@@ -97,7 +97,16 @@
 </Input>
 </Group>
 <Group view="code" labelreference="L2" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;struktsynth_bsp_path&quot;:</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read &quot;struktsynth_bsp_path&quot;:
+read &quot;maple_repo_path&quot;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2091" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/robotics/proc_r2eulzyx&quot;, struktsynth_bsp_path):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2092" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/transformation/proc_rotz&quot;, maple_repo_path):</Text-field>
 </Input>
 </Group></Presentation-Block>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Ableitung der Rotationsmatrix nach den Winkeln beta (Euler-XYZ)</Text-field></Title><Presentation-Block>
@@ -134,8 +143,114 @@ R2b_dphi := subs({sin(gama)=S3}, R2b_dphi):</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(R2b_dphi, &quot;R2b_dxyz.txt&quot;); </Text-field>
 </Input>
 </Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Umgedrehte Euler-ZYX</Text-field></Title><Presentation-Block>
+<Group view="code" hide-input="false" labelreference="L8" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/codeexport/rmat_diff_eulzyxrev&quot;,struktsynth_bsp_path);
+alpha:=alpha:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L17" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(alpha, &quot;R2alpha.txt&quot;); </Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">\303\234berpr\303\274fung des Einflusses von alpha3 und beta3</Font></Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L2082" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Beliebige Matrix als Platzhalter f\303\274r R_Ex_Eq, mit der der Winkelfehler alpha berechnet wird</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2080" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">noa := [&quot;n&quot;, &quot;o&quot;, &quot;a&quot;]: xyz :=[&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]:
+R1 := Matrix(3,3):
+for i from 1 to 3 do:
+  for j from 1 to 3 do:
+      R1(i,j) := parse(sprintf(&quot;%s%s&quot;, noa[j], xyz[i])):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2083" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R1;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2079" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Winkelfehler alpha aus dieser Matrix mit ZYX-Euler-Konvention (feste Achsen)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2084" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha1tmp := simplify(r2eulzyx(R1), 'trig'):
+alpha1 := alpha1tmp([3,2,1]);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2081" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Modifizierte Rotationsmatrix mit zus\303\244tzlicher Rotation delta um die symmetrische z-Achse</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2087" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2 := rotz(delta) . R1;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2088" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Winkelfehler mit dieser zus\303\244tzlichen z-Achse</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2085" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2tmp := simplify(r2eulzyx(R2)):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2090" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2 := alpha2tmp([3,2,1],1);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2093" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2_latex := R2:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2094" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2_latex := subs({cos(delta)=Cdelta}, R2_latex):
+R2_latex := subs({sin(delta)=Sdelta}, R2_latex):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2096" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2_latex := alpha2:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2097" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2_latex := subs({cos(delta)=Cdelta}, alpha2_latex):
+alpha2_latex := subs({sin(delta)=Sdelta}, alpha2_latex):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2102" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2_latex;</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" hide-input="false" labelreference="L2103" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha1;R1;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2095" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(alpha1, &quot;alpha1.txt&quot;); </Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2098" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(alpha2_latex, &quot;alpha2.txt&quot;); </Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2100" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(R1, &quot;R1.txt&quot;); </Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2101" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(R2_latex, &quot;R2.txt&quot;); </Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2099" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
 </Section><Presentation-Block>
-<Group view="code" labelreference="L8" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Group view="code" labelreference="L21" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block>

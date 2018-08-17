@@ -276,7 +276,7 @@ and
 \end{pmatrix}\nonumber
 \end{align}
 
-Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_3$ are defined around the same axis, $\beta_3$ only influences $\alpha_3$ and not $\alpha_1$ and $\alpha_2$ as described in the Appendix TODO.
+Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_3$ are defined around the same axis, $\beta_3$ only influences $\alpha_3$ and not $\alpha_1$ and $\alpha_2$ as described in the Appendix \ref{sec:appendix_eulerreciproc}.
 
 \begin{align}
 \alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) = \alpha_1(\bm{q},\bm{\eta})\\
@@ -638,12 +638,80 @@ can be simplified similar to the process described in Sec.\,REF with
 \section{Conclusions}
 \label{sec:Conclusion}
 
-\section*{APPENDIX}
+\section{APPENDIX}
 
 \subsection{Influence of reciprocal Euler angles}
+\label{sec:appendix_eulerreciproc}
+
+This section shows the effect of the reciprocity of Euler-angles.
+
+A given end-effector orientation $\beta_1$, $\beta_2$, $\beta_3$
+
+%$\bm{\alpha}\left(\rotmat{0}{Ex}$
+
+\begin{equation}
+\rotmat{Ex}{Eq}(\bm{\beta},\bm{q})
+= 
+\rotmat{0}{Ex}^\transp (\bm{\beta})\rotmat{0}{Eq}(\bm{q})
+\end{equation}
+
+\begin{equation}
+\rotmat{0}{Ex}^\transp(\bm{\beta})
+=
+\bm{R}_z(-\beta_3) \bm{R}_y(-\beta_2) \bm{R}_x(-\beta_1)
+\end{equation}
+
+$\beta_1'=\beta_1$, $\beta_2'=\beta_2$, $\beta_3'=\beta_3-\delta$
+
+\begin{align}
+\rotmat{Ex}{Eq}(\bm{\beta}',\bm{q})
+&=
+\left(\rotmat{0}{Ex}(\bm{\beta})\bm{R}_z(-\delta)\right)^\transp \rotmat{0}{Eq}(\bm{q}) \\
+&=
+\bm{R}_z(\delta) \rotmat{0}{Ex}^\transp (\bm{\beta}) \rotmat{0}{Eq}(\bm{q})
+\end{align}
+
+R
+\begin{align}
+\rotmat{Ex}{Eq}(\bm{\beta},\bm{q})
+=\left[ \begin {array}{ccc} {n_x}&{o_x}&{a_x} \\ \noalign{\medskip}{n_y}&{o_y}&{a_y}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] 
+\end{align}
+
+alpha
+
+\begin{align}
+\bm{\alpha} =
+\left[ \begin {array}{c} \arctan \left( {o_z},{a_z} \right)  \\ \noalign{\medskip}\arctan \left( -{n_z},\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ \noalign{\medskip}\arctan \left( {n_y},{ n_x} \right) \end {array} \right] 
+\end{align}
+
+
+
+R2
+\begin{align}
+&\rotmat{Ex}{Eq}(\bm{\beta}',\bm{q})
+= \\
+&\left[ \begin {array}{ccc} { C_{\delta}}\,{n_x}-{ S_{\delta}}\,{ n_y}&{ C_{\delta}}\,{o_x}-{ S_{\delta}}\,{o_y}&{ C_{\delta}}\,{ a_x}-{ S_{\delta}}\,{a_y}\\ \noalign{\medskip}{ C_{\delta}}\,{n_y}+ { S_{\delta}}\,{n_x}&{ C_{\delta}}\,{o_y}+{ S_{\delta}}\,{o_x}&{  C_{\delta}}\,{a_y}+{ S_{\delta}}\,{a_x}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] \nonumber
+\end{align}
+alpha2
+\begin{equation}
+\bm{\alpha}' =
+ \left[ \begin {array}{c} \arctan \left( {o_z},{a_z} \right)  \\
+  \noalign{\medskip}\arctan \left( -{n_z},\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\
+  \noalign{\medskip}\arctan \left( {  C_{\delta}}\,{n_y}+{ S_{\delta}}\,{n_x},{ C_{\delta}}\,{n_x}-{  S_{\delta}}\,{n_y} \right) \end {array} \right] 
+\end{equation}
+
+This results in
+
+\begin{align}
+\alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) \\
+\alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) \\
+\alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3)
+\end{align}
+
 
 \subsection{Matrix operations for gradients}
 
+TODO: Das sind die Formeln für Euler-XYZ!
 \begin{equation}
 \bm{\alpha}(\bm{R})
 =
@@ -695,6 +763,27 @@ m_{3,4}&=-{\frac {{ n_x}}{{{ n_x}
 \bm{0} & \bm{0} & \bm{R}_1  \\
 \end{pmatrix}
 \end{equation}
+
+
+\begin{align}
+&\left(\frac{\partial \overline{\bm{R}}(\bm{\beta})}{\partial \overline{\bm{\beta}}}\right)
+=\\
+\small
+&\left[ \begin {array}{ccc} 0&-{\it S_2}\,{\it C_3}&-{\it C_2}\,{\it S_3}
+\\ \noalign{\medskip}{\it C_1}\,{\it S_2}\,{\it C_3}-{\it S_1}\,{\it S_3}&{
+ \it S_1}\,{\it C_2}\,{\it C_3}&-{\it S_1}\,{\it S_2}\,{\it S_3}+{\it C_1}\,{
+ \it C_3}\\ \noalign{\medskip}{\it S_1}\,{\it S_2}\,{\it C_3}+{\it C_1}\,{
+ \it S_3}&-{\it C_1}\,{\it C_2}\,{\it C_3}&{\it C_1}\,{\it S_2}\,{\it S_3}+{
+ \it S_1}\,{\it C_3}\\ \noalign{\medskip}0&{\it S_2}\,{\it S_3}&-{\it C_2}\,
+{\it C_3}\\ \noalign{\medskip}-{\it C_1}\,{\it S_2}\,{\it S_3}-{\it S_1}\,{
+    \it C_3}&-{\it S_1}\,{\it C_2}\,{\it S_3}&-{\it S_1}\,{\it S_2}\,{\it C_3}-{
+    \it C_1}\,{\it S_3}\\ \noalign{\medskip}-{\it S_1}\,{\it S_2}\,{\it S_3}+{
+    \it C_1}\,{\it C_3}&{\it C_1}\,{\it C_2}\,{\it S_3}&{\it C_1}\,{\it S_2}\,{
+    \it C_3}-{\it S_1}\,{\it S_3}\\ \noalign{\medskip}0&{\it C_2}&0
+\\ \noalign{\medskip}-{\it C_1}\,{\it C_2}&{\it S_1}\,{\it S_2}&0
+\\ \noalign{\medskip}-{\it S_1}\,{\it C_2}&-{\it C_1}\,{\it S_2}&0
+\end {array} \right]  \nonumber
+\end{align}
 
 \section{Acknowledgements}
 
