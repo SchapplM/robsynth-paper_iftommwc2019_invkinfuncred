@@ -150,6 +150,7 @@ Rotation can be described using Euler angles, axis and angle, quaternions and ro
 
 \begin{equation}
 \bm{R}(\bm{\beta}) = \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \in \mathrm{SO(3)}
+\label{equ:def_rmat_xyz}
 \end{equation}
 
 Definition der Abweichung zwischen $\bm{x}$ und $\bm{f}(\bm{q})$
@@ -183,6 +184,7 @@ Intuitive standard approach:
 Discussion: Why this does not work for 3T2R: Reference axis of the Euler angles is always different, tool axis is not one constant reference axis of the Euler angles $\bm{\alpha}$.
 
 \subsection{Effect of the reciprocal Euler Angles}
+\label{sec:RecEulAng_effect}
 
 \begin{figure}[tb!]
     \input{./figures/frame_comparison_6dof.pdf_tex}
@@ -279,9 +281,9 @@ and
 Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_3$ are defined around the same axis, $\beta_3$ only influences $\alpha_3$ and not $\alpha_1$ and $\alpha_2$ as described in the Appendix \ref{sec:appendix_eulerreciproc}.
 
 \begin{align}
-\alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) = \alpha_1(\bm{q},\bm{\eta})\\
-\alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) = \alpha_2(\bm{q},\bm{\eta}) \\
-\alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3) = \alpha_3(\bm{q},\bm{x})
+\alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) = \alpha_1(\bm{q},\bm{\eta}) \label{equ:alpha1_dep_beta}\\
+\alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) = \alpha_2(\bm{q},\bm{\eta}) \label{equ:alpha2_dep_beta}\\
+\alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3) = \alpha_3(\bm{q},\bm{x})  \label{equ:alpha3_dep_beta}
 \end{align}
 
 
@@ -640,74 +642,86 @@ can be simplified similar to the process described in Sec.\,REF with
 
 \section{APPENDIX}
 
-\subsection{Influence of reciprocal Euler angles}
+\subsection{Influence of Reciprocal Euler angles}
 \label{sec:appendix_eulerreciproc}
 
-This section shows the effect of the reciprocity of Euler-angles.
+This section derives the effect of the reciprocity of Euler-angles at the example of the kinematics description of Sec.\,\ref{sec:RecEulAng} and the frames of Fig.\,\ref{fig:frames_6dof}.
 
-A given end-effector orientation $\beta_1$, $\beta_2$, $\beta_3$
-
-%$\bm{\alpha}\left(\rotmat{0}{Ex}$
-
+An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation matrix from\footnote{The matrix rotates vectors from $\ks{Eq}$ to $\ks{Ex}$} the actual end-effector frame $\ks{Eq}$ to the desired frame end-effector $\ks{Ex}$
+%
 \begin{equation}
 \rotmat{Ex}{Eq}(\bm{\beta},\bm{q})
 = 
 \rotmat{0}{Ex}^\transp (\bm{\beta})\rotmat{0}{Eq}(\bm{q})
 \end{equation}
-
+%
+where with the Euler-X-Y-Z-angles we have
+%
 \begin{equation}
 \rotmat{0}{Ex}^\transp(\bm{\beta})
 =
 \bm{R}_z(-\beta_3) \bm{R}_y(-\beta_2) \bm{R}_x(-\beta_1)
 \end{equation}
-
-$\beta_1'=\beta_1$, $\beta_2'=\beta_2$, $\beta_3'=\beta_3-\delta$
-
+%
+as introduced in (\ref{equ:def_rmat_xyz}).
+With an additional rotation $\delta$ around the $z$-axis for the desired orientation, we have the new Euler angles
+%
+\begin{equation}
+\beta_1'=\beta_1, \beta_2'=\beta_2, \beta_3'=\beta_3-\delta.
+\end{equation}
+%
+The additional rotation corresponds to the tool axis defined in Sec.\,\ref{sec:RecEulAng} % and does not influence 3T2R tasks.
+and leads to a new residual orientation error expressed as a rotation matrix
+%
 \begin{align}
 \rotmat{Ex}{Eq}(\bm{\beta}',\bm{q})
 &=
 \left(\rotmat{0}{Ex}(\bm{\beta})\bm{R}_z(-\delta)\right)^\transp \rotmat{0}{Eq}(\bm{q}) \\
 &=
-\bm{R}_z(\delta) \rotmat{0}{Ex}^\transp (\bm{\beta}) \rotmat{0}{Eq}(\bm{q})
+\bm{R}_z(\delta) \rotmat{0}{Ex}^\transp (\bm{\beta}) \rotmat{0}{Eq}(\bm{q}). \nonumber
 \end{align}
 
-R
+We define the first residual orientation error corresponding to $\bm{\beta}$ as a rotation matrix
+%
 \begin{align}
 \rotmat{Ex}{Eq}(\bm{\beta},\bm{q})
 =\left[ \begin {array}{ccc} {n_x}&{o_x}&{a_x} \\ \noalign{\medskip}{n_y}&{o_y}&{a_y}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] 
 \end{align}
-
-alpha
-
+%
+and as an Z-Y-X-Euler angle representation around fixed frames
+%
 \begin{align}
 \bm{\alpha} =
-\left[ \begin {array}{c} \arctan \left( {o_z},{a_z} \right)  \\ \noalign{\medskip}\arctan \left( -{n_z},\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ \noalign{\medskip}\arctan \left( {n_y},{ n_x} \right) \end {array} \right] 
+\left[ \begin {array}{c} \arctan \left( {o_z},{a_z} \right)  \\ \noalign{\medskip}\arctan \left( -{n_z},\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ \noalign{\medskip}\arctan \left( {n_y},{ n_x} \right) \end {array} \right].
 \end{align}
 
-
-
-R2
+The error corresponding to $\bm{\beta}'$ only differs regarding the additional rotation $\delta$ with
+%
 \begin{align}
 &\rotmat{Ex}{Eq}(\bm{\beta}',\bm{q})
 = \\
 &\left[ \begin {array}{ccc} { C_{\delta}}\,{n_x}-{ S_{\delta}}\,{ n_y}&{ C_{\delta}}\,{o_x}-{ S_{\delta}}\,{o_y}&{ C_{\delta}}\,{ a_x}-{ S_{\delta}}\,{a_y}\\ \noalign{\medskip}{ C_{\delta}}\,{n_y}+ { S_{\delta}}\,{n_x}&{ C_{\delta}}\,{o_y}+{ S_{\delta}}\,{o_x}&{  C_{\delta}}\,{a_y}+{ S_{\delta}}\,{a_x}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] \nonumber
 \end{align}
-alpha2
+%
+and the Z-Y-X-Euler angles (fixed frames)
+%
 \begin{equation}
 \bm{\alpha}' =
  \left[ \begin {array}{c} \arctan \left( {o_z},{a_z} \right)  \\
   \noalign{\medskip}\arctan \left( -{n_z},\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\
   \noalign{\medskip}\arctan \left( {  C_{\delta}}\,{n_y}+{ S_{\delta}}\,{n_x},{ C_{\delta}}\,{n_x}-{  S_{\delta}}\,{n_y} \right) \end {array} \right] 
 \end{equation}
-
-This results in
-
+%
+where $\delta$  only influences the components $\alpha_1$ and $\alpha_2$.
+This allows the conclusion, that $\beta_3$only influences $\alpha_3$ and results in the dependencies
+%
 \begin{align}
 \alpha_1&=\alpha_1(\bm{q},\beta_1,\beta_2) \\
 \alpha_2&=\alpha_2(\bm{q},\beta_1,\beta_2) \\
 \alpha_3&=\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3)
 \end{align}
-
+%
+already displayed in (\ref{equ:alpha1_dep_beta})-(\ref{equ:alpha3_dep_beta}) with the consequences for the kinematic modeling of robots in 3T2R tasks described in Sec.\,\ref{sec:RecEulAng_effect}.
 
 \subsection{Matrix operations for gradients}
 
