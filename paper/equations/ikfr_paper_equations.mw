@@ -275,20 +275,6 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat := simplify(GradMat);</Text-field>
 </Input>
 </Group>
-<Group view="code" labelreference="L2123" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Nutze Orthonormoalit\303\244t der Rotationsmatrix aus</Font></Text-field>
-</Input>
-</Group>
-<Group view="code" labelreference="L2120" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">  for j from 1 to 3 do:
-      GradMat := subs({R1(j,1)^2+R1(j,2)^2+R1(j,3)^2=1}, GradMat):
-  end do:</Text-field>
-</Input>
-</Group>
-<Group view="code" hide-input="false" labelreference="L2124" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat;</Text-field>
-</Input>
-</Group>
 <Group view="code" labelreference="L2115" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(Transpose(GradMat), &quot;dalphadRb.txt&quot;); </Text-field>
 </Input>
