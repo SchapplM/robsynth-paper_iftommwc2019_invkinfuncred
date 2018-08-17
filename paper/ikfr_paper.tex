@@ -336,6 +336,7 @@ Since the tool axis rotation $\beta_3$ and the orientation error component $\alp
 This property of the reciprocal Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections
 
 \subsection{Application on 3T2R Tasks}
+\label{sec:RecEulAng_3T2R_app}
 
 The standard methods introduced in Sec.\,\ref{sec:Intro} for solving the inverse kinematics for 3T2R tasks and exploiting the functional redundancy struggle with the definition a Jacobian matrix for the problem with appropriate dimensions.
 To obtain a Jacobian with minimal row dimension we now describe the kinematic condition for the 3T2R problem in the coordinates $\bm{\eta}$ as
@@ -409,15 +410,13 @@ for solution of the inverse kinematics in the next step $k+1$. The increment
 \end{equation}
 %
 of the joint angles towards this solution can be used in iterative algorithms like Newton-Raphson well-known in robotics literature.
+Depending on the dimension of the matrix, $(.)^\dagger$ denotes the matrix inverse or the pseudo-inverse.
 
 \subsection{Remarks on the Implementation}
 \label{sec:RecEulAng_implement}
 
-This approach does not use the geometric Jacobian of the serial link manipulator for the rotation part.
-The Jacobian\footnote{$\bm{\Psi}_{\mathrm{r},\partial\bm{q}}
-    =
-    \begin{pmatrix} \bm{1} & \bm{0}\end{pmatrix} \bm{\Phi}_{\mathrm{r},\partial\bm{q}}$
-    is calculated in the same way w.l.o.g.} $\bm{\Phi}_{\partial\bm{q}}$ of (\ref{equ:taylor_phi}) consists of nested non-linear functions and does not use the geometric Jacobian of the serial link manipulator for the rotation part, which is easy to calculate. 
+The Jacobian\footnote{$\bm{\Psi}_{\mathrm{r},\partial\bm{q}}=\begin{pmatrix} \bm{1} & \bm{0}\end{pmatrix} \bm{\Phi}_{\mathrm{r},\partial\bm{q}}$ is calculated in the same way w.l.o.g.}
+$\bm{\Phi}_{\partial\bm{q}}$ of (\ref{equ:taylor_phi}) consists of nested non-linear functions and does not use the geometric Jacobian of the serial link manipulator for the rotational part, which is easy to calculate. 
 %
 However $\bm{\Phi}_{\partial\bm{q}}$ can be implemented efficiently by exploiting the chain rule and sparsity of the matrices with partial derivatives as shown in the following.
 
@@ -448,7 +447,7 @@ matrix multiplication is expressed with the product operator
 \label{equ:matprod}
 \end{equation}
 %
-which can be seen as a function as well as the transposition operator
+which can be seen as a function. The transposition operator
 %
 \begin{equation}
 \rotmat{2}{1}
@@ -457,10 +456,11 @@ which can be seen as a function as well as the transposition operator
 \Rightarrow
 \rotmato{2}{1}
 =
-\bm{P}_\transp \rotmato{1}{2}.
+\bm{P}_\transp \rotmato{1}{2}
 \end{equation}
 %
-Then the Euler angles can be calculated from a rotation matrix using these operators with
+is a $9 \times 9$ permutation matrix.
+The Euler angles can be calculated from a rotation matrix using these operators with
 %
 \begin{equation}
 \overline{\bm{\alpha}}(\overline{\bm{R}})
@@ -480,104 +480,113 @@ Finally applying this to the rotational part of the residual vector Jacobian and
 &=
 \left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
 \left(\frac{\partial }{\partial \overline{\bm{R}}_2}
-\overline{\prod}\left[ \overline{\bm{R}}_1, \overline{\bm{R}}_2\right]\right)
+\overline{\prod}\left[\rotmato{0}{Ex}, \overline{\bm{R}}_2\right]\right)
 \left(\frac{\partial}{\partial \bm{q}} \rotmato{0}{Eq}(\bm{q})\right).  \nonumber
 \end{align}
 The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ enclosed in the geometric Jacobian of the manipulator and is not regarded at this point.
 
 The two first partial derivatives from (\ref{equ:grad_Phi_q}) are sparse matrices and can be calculated efficiently as shown in appendix \ref{sec:appendix_gradient_matrix}.
-The last partial derivative $(\partial \overline{\rotmat{0}{Eq}}) / (\partial \bm{q})$ can be derived efficiently with computer algebra systems.
+The last partial derivative $\partial \rotmato{}{Eq}/\partial \bm{q}$ can be derived efficiently with computer algebra systems.
 
 \section{Resolving functional Redundancy for 3T2R Tasks}
 \label{sec:ResFuncRed}
 
+%with $\mathrm{dim}(\bm{\Psi})=5$
 
-If $\mathrm{dim}(\bm{\Psi})=5$ and $\mathrm{dim}(\bm{q})>5$, which presents the typical case for solving 3T2R tasks in industry, at least one joint DoF is free for optimization additional criteria.
+The inverse kinematics formalism (\ref{equ:deltaq_psi}) described in the previous section \ref{sec:RecEulAng_3T2R_app} does not yet take into account the functional redundancy.
+The typical scenario for 3T2R tasks in industry is a serial link robot with $\mathrm{dim}(\bm{q})>5$.
+Most commonly a classical industrial robot with $\mathrm{dim}(\bm{q})=6$ will be used.
+Since $\mathrm{dim}(\bm{\Psi})=5$ at least one DoF is free for optimization additional criteria.
 
-Example
-
+For the sake of simplicity as a simple additional criterion the summed weighted quadratic distances
+%
 \begin{equation}
-\bm{h}
+h(\bm{q})
 =
 \frac{1}{2} (\bm{q}-\bar{\bm{q}})^\transp\bm{W}(\bm{q}-\bar{\bm{q}})
 \end{equation}  
 %
+of the joint positions $\bm{q}$ from their respective mean position $\bar{\bm{q}}$ will be used.
+Minimizing $h(\bm{q})$ avoids the risk of joints reaching their technical limits.
+The gradient
+%
 \begin{equation}
-\bm{h}_{\partial\bm{q}}
+h_{\partial\bm{q}}
 =
-\frac{\partial \bm{h}}{\partial \bm{q}}
+\frac{\partial h}{\partial \bm{q}}
 =
 \bm{W}(\bm{q}-\bar{\bm{q}})
 \end{equation}
-
-With
-\begin{equation}
-\bm{h}_{\partial\bm{q}}=\frac{\partial \bm{h}}{\partial \bm{q}},
-\bm{\Psi}_{\partial\bm{q}}=\frac{\partial \bm{\Psi}}{\partial \bm{q}}
-\end{equation}
-
-
-With the gradient projection method the minimization of $\bm{h}$ in the Null space of the Jacobian $\bm{\Psi}_{\bm{q}}$ can be found
-
+%
+can be used to include this additional minimization into the solution of the inverse kinematics.
+The gradient $h_{\partial\bm{q}}=\partial h/\partial \bm{q}$ is projected into the Null space of $\bm{\Psi}_{\partial\bm{q}}=\partial \bm{\Psi}/\partial \bm{q}$ with
+%
 \begin{align}
 \bm{\Delta}\bm{q}
 &=
 \bm{\Delta}\bm{q}_{\mathrm{T}} + \bm{\Delta}\bm{q}_{\mathrm{N}} \\
 &=
-\bm{\Psi}_{\partial\bm{q}}^{\dagger} (-\bm{\Psi}) + (\bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}) \bm{h}_{\partial\bm{q}}
+\bm{\Psi}_{\partial\bm{q}}^{\dagger} (-\bm{\Psi}) +  (\bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}) \bm{h}_{\partial\bm{q}}
 \end{align}
-
-where the Null-space incremental motion $\bm{\Delta}\bm{q}_{\mathrm{N}}$ does not influence the task achievement, which is only improved with $\bm{\Delta}\bm{q}_{\mathrm{T}}$.
+%
+where the Null-space incremental motion $\bm{\Delta}\bm{q}_{\mathrm{N}}$ does not affects the task achievement ensured via $\bm{\Delta}\bm{q}_{\mathrm{T}}$.
 
 \section{Application on Kinematic Constraint Equations of Parallel Robots}
 \label{sec:ParRobKinConstr}
 
-Kinematic constraint equations are used in parallel robotics to relate end-effector and joint velocities, actuator and end-effector forces or to solve the inverse kinematics problem.
+Kinematic constraint equations are used for parallel kinematic machines (``PKM'') to relate end-effector and joint velocities, actuator and end-effector forces or to solve the inverse kinematics problem.
 
-Usually only the translational part of the constraint equations is defined and only the joint positions, velocities and forces associated with the translational motion are calculated. %  $\bm{q}'$
+Usually only the translational part of the constraint equations is defined and only the joint positions, velocities and forces associated with the translational motion are calculated.
+This leads to kinematic models where the platform coupling joints are canceled out of the equations. These joints are predominantly passive spherical joints for spatial PKM and passive rotational joints for planar PKM and their kinematic state is generally not of any interest.
 
-Then the position of the platform coupling point $B$ relative to the base coupling point $A$ is used:
+In the following, the definitions for $\bm{x}$ still hold from  (\ref{equ:xt_def}),(\ref{equ:xr_def}), but they now refer to the base frame $\ks{0}$ and the end-effector frame $\ks{E}$ of the whole PKM.
 
+Similar to (\ref{equ:Phit_def}) for serial chains with, the most common kinematic constraint equation 
+%
 \begin{equation}
 \bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) - \ortvek{0}{r}{}{A_iB_i}(\bm{x}_{\mathrm{t}})
 \end{equation}
+%
+for leg $i$ is derived from the position of the platform coupling point $B_i$ relative to the base coupling point $A_i$. The vector
 \begin{equation}
 \ortvek{0}{r}{}{A_iB_i}(\bm{x}) = 
 - \ortvek{0}{r}{}{0A_i}
 + \ortvek{0}{r}{}{0E}(\bm{x}_{\mathrm{t}}) + \rotmat{0}{E}(\bm{x}_{\mathrm{r}}) \ortvek{E}{r}{}{EB_i}
 \end{equation}
-
-The term $\rotmat{0}{E}(\bm{x}_{\mathrm{r}}$ depends on the full rotation description including the rotation about the tool axis.
-For a formulation without the tool axis rotation a different constraint definition can be used
-
+%
+includes the term $\rotmat{0}{E}(\bm{x}_{\mathrm{r}})$ that depends on the full orientation $\bm{x}_{\mathrm{r}}$ of the end-effector with the rotation about the tool axis in 3T2R tasks.
+For a formulation without the tool axis rotation a different constraint definition
+%
 \begin{equation}
 \bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = 
 \ortvek{0}{r}{}{0E}(\bm{q}_i) - \ortvek{0}{r}{}{0E}(\bm{x}_{\mathrm{t}})
 \end{equation}
-
-where only the translational part $\bm{x}_{\mathrm{t}}$ of the end-effector coordinates occur and not the rotational part $\bm{x}_{\mathrm{r}}$.
-As a drawback, all joint angles $\bm{q}_i$ of the leg $i$ are now included, not only the coordinates of the first joints.
-
+%
+with the vector from the robot base frame $\ks{0}$ to the PKM end-effector $E$ can be used where 
+only the translational part $\bm{x}_{\mathrm{t}}$ of the end-effector coordinates appear and not the rotational part $\bm{x}_{\mathrm{r}}$.
+As a drawback, all joint angles $\bm{q}_i$ of the leg $i$ and not only the coordinates of the first joints counted from the base are now included
+in the vector
+%
 \begin{equation}
-\ortvek{0}{r}{}{0E}(\bm{q}) = 
+\ortvek{0}{r}{}{0E}(\bm{q}_i) = 
 \ortvek{0}{r}{}{0A_i}
-+ \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) + \rotmat{0}{B_i}(\bm{q}_i) \ortvek{B_i}{r}{}{B_iE}
++ \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) + \rotmat{0}{B_i}(\bm{q}_i) \ortvek{B_i}{r}{}{B_iE}.
 \end{equation}
+%
+To account for the increased number of included joints, also the rotational part of the kinematic constraints is needed to generate enough equations for an invertible Jacobian.
 
-To account for the increased number of included joints, also the rotational part of the kinematic constraints is needed to generate enough equations.
-
-Here again the definition is used
-
+Here again the definition 
+%
 \begin{align}
 \bm{\Phi}_{\mathrm{r}_i}(\bm{q},\bm{x})
 =\bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right)
 \end{align}
+%
+from (\ref{equ:Phir_def}) is used.
+The set of constraints $\bm{\Phi}_{i}$ for each leg of the PKM can again be reduced to $\bm{\Psi}_{i}$ by removing the last rotational component\footnote{The following steps can also be performed using $\bm{\Psi}$, but $\bm{\Phi}$ is used for simplifying the equations.}, as described in Sec.\,\ref{sec:RecEulAng_3T2R_app}.
 
-The set of constraints $\bm{\Phi}_{i}$ for each leg of the PKM can again be reduced to $\bm{\Psi}_{i}$ by removing the last rotational component, as described in Sec.\,REF.
-
-The constraint equations for the PKM are assembled from all $m$ legs as
-
-
+The constraint equations
+%
 \begin{equation}
 \bm{\Phi}
 =
@@ -588,13 +597,11 @@ The constraint equations for the PKM are assembled from all $m$ legs as
 \bm{\Phi}_m \\
 \end{pmatrix}
 \end{equation}
-
-The constraints $\bm{\Phi}$ and $\bm{\Psi}$ can be used equally.
-The differential kinematics of the PKM is calculated with
-
-
-
-
+%
+for the PKM are assembled from all $m$.
+The constraints $\bm{\Phi}$ and $\bm{\Psi}$ can be used interchangeably.
+The differential kinematics of the PKM is calculated with the time derivative
+%
 \begin{equation}
 \frac{\mathrm{d}}{\mathrm{d}t} \bm{\Phi}(\bm{q},\bm{x})
 =
@@ -603,8 +610,8 @@ The differential kinematics of the PKM is calculated with
 \bm{\Phi}_{\partial \bm{x}} \dot{\bm{x}}
 \end{equation}
 %
-The diagonal elements $\bm{\Phi}_i$ of the direct kinematics Jacobian % $\bm{\Phi}_{\partial \bm{q}}$ 
-
+where the diagonal elements $\partial \bm{\Phi}_i / \partial \bm{q}_i$ of the direct kinematics Jacobian
+%
 \begin{equation}
 \bm{\Phi}_{\partial \bm{q}}
 =
@@ -616,11 +623,12 @@ The diagonal elements $\bm{\Phi}_i$ of the direct kinematics Jacobian % $\bm{\Ph
 0 & \ddots & \ddots & 0  \\
 0 & 0 & 0 &\frac{\partial \bm{\Phi}_m}{\partial \bm{q}_m}
 \end{pmatrix}
+\label{equ:PKM_phi_grad_q}
 \end{equation}  
-
-correspond to the residual vector Jacobian from Sec.\,REF.
+%
+correspond to the residual vector Jacobian (\ref{equ:grad_Phi_q}) from Sec.\,\ref{sec:RecEulAng}.
 The calculation of the inverse kinematics Jacobian
-
+%
 \begin{equation}
 \bm{\Phi}_{\partial \bm{x}}
 =
@@ -632,29 +640,30 @@ The calculation of the inverse kinematics Jacobian
 \vdots \\
 \frac{\partial \bm{\Phi}_m}{\partial \bm{x}}\\
 \end{pmatrix}
+\label{equ:PKM_phi_grad_x}
 \end{equation}  
-
-can be simplified similar to the process described in Sec.\,REF with
-
+%
+can be simplified similar to the process described in Sec.\,\ref{sec:RecEulAng_implement} with
+%
 \begin{align}
 \frac{\partial}{\partial \bm{x}_{\mathrm{r}}}\bm{\Phi}_{\mathrm{r}_i}
 &=
-\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left((\rotmat{0}{Eq}^\transp(\bm{q}) \rotmat{0}{Ex}(\bm{x}_{\mathrm{r}}))^\transp\right) \label{equ:grad_Phi_x} \\
+\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left((\rotmat{0}{Eq}^\transp(\bm{q}_i) \rotmat{0}{Ex}(\bm{x}_{\mathrm{r}}))^\transp\right) \label{equ:grad_Phi_x} \\
 \bm{\Phi}_{\mathrm{r}_i,\partial \bm{x}_{\mathrm{r}}} 
 &=
 \frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \overline{\bm{\alpha}}\left(
 \bm{P}_{\mathrm{T}}
-\overline{\prod}\left[ \rotmato{0}{Eq}^\transp(\bm{q}), \rotmato{0}{Ex}(\bm{x}_{\mathrm{r}})\right]\right) \nonumber \\
+\overline{\prod}\left[ \rotmato{0}{Eq}^\transp(\bm{q}_i), \rotmato{0}{Ex}(\bm{x}_{\mathrm{r}})\right]\right) \nonumber \\
 &=
 \frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}
 \bm{P}_{\mathrm{T}}
-\frac{\partial \overline{\prod}\left[ \overline{\bm{R}}_1, \overline{\bm{R}}_2\right]}{\partial \overline{\bm{R}}_2}
+\frac{\partial \overline{\prod}\left[ \rotmato{0}{Eq}^\transp, \overline{\bm{R}}_2\right]}{\partial \overline{\bm{R}}_2}
 \frac{\partial \rotmato{0}{Ex}(\bm{x}_{\mathrm{r}})}{\partial \bm{x}_{\mathrm{r}}} \nonumber
 \end{align}
+%
+where the simplicity of the single expression is demonstrated in appendix\,\ref{sec:appendix_gradient_matrix}.
 
-
-
-
+Modifying (\ref{equ:PKM_phi_grad_q}) and (\ref{equ:PKM_phi_grad_x}) to use $\bm{\Psi}_{\partial \bm{q}}$ and $\bm{\Psi}_{\partial \bm{x}}$ for 3T2R tasks promises to improve motion planning and controllers by calculating actuator forces considering the tool symmetry and allowing the incorporation of Null-space movements and forces.
 
 \section{Simulative Evaluation for solving Serial Robot inverse Kinematics in 3T2R Tasks}
 \label{sec:SimEvalSerRobIK}
@@ -749,7 +758,7 @@ This allows the conclusion, that $\beta_3$only influences $\alpha_3$ and results
 \alpha_3'&=\alpha_3'(\bm{q},\beta_1,\beta_2,\beta_3)
 \end{align}
 %
-already displayed in (\ref{equ:alpha1_dep_beta})-(\ref{equ:alpha3_dep_beta}) with the consequences for the kinematic modeling of robots in 3T2R tasks described in Sec.\,\ref{sec:RecEulAng_effect}.
+already displayed in (\ref{equ:alpha_dep_beta}) with the consequences for the kinematic modeling of robots in 3T2R tasks described in Sec.\,\ref{sec:RecEulAng_effect}.
 
 \subsection{Matrix Operations for Partial Derivatives}
 \label{sec:appendix_gradient_matrix}
