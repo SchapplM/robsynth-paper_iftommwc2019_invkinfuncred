@@ -9,6 +9,7 @@
 \newcommand{\ortvek}[4]{{ }_{(#1)}{\boldsymbol{#2}}^{#3}_{#4} }
 \newcommand{\vek}[3]{\boldsymbol{#1}^{#2}_{#3}}
 \newcommand{\rotmat}[2]{{{ }^{#1}\boldsymbol{R}}_{#2}}
+\newcommand{\rotmato}[2]{{{ }^{#1}\boldsymbol{\overline{R}}}_{#2}}
 \newcommand{\transp}[0]{{\mathrm{T}}}
 \newcommand{\ks}[1]{{\mathcal{F}}_{#1}}
 
@@ -441,9 +442,9 @@ matrix multiplication is expressed with the product operator
 \rotmat{1}{2}
 \rotmat{2}{3}
 \Rightarrow
-\overline{\rotmat{1}{3}}
+\rotmato{1}{3}
 =
-\overline{\prod}\left[ \overline{\rotmat{1}{2}}, \overline{\rotmat{2}{3}}\right]
+\overline{\prod}\left[ \rotmato{1}{2}, \rotmato{2}{3}\right]
 \label{equ:matprod}
 \end{equation}
 %
@@ -454,9 +455,9 @@ which can be seen as a function as well as the transposition operator
 =
 \rotmat{1}{2}^\transp
 \Rightarrow
-\overline{\rotmat{2}{1}}
+\rotmato{2}{1}
 =
-\bm{P}_\transp \overline{\rotmat{1}{2}}.
+\bm{P}_\transp \rotmato{1}{2}.
 \end{equation}
 %
 Then the Euler angles can be calculated from a rotation matrix using these operators with
@@ -467,7 +468,7 @@ Then the Euler angles can be calculated from a rotation matrix using these opera
 \bm{\alpha}(\bm{R}).
 \end{equation}
 %
-Finally applying this to the rotational part of the residual vector Jacobian and applying the chain rule for differentiation yields
+Finally applying this to the rotational part of the residual vector Jacobian and using the chain rule for differentiation yields
 %
 \begin{align}
 \frac{\partial}{\partial \bm{q}}\bm{\Phi}_{\mathrm{r}}
@@ -475,12 +476,12 @@ Finally applying this to the rotational part of the residual vector Jacobian and
 \frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\rotmat{0}{Ex}^\transp(\bm{x}) \rotmat{0}{Eq}(\bm{q})\right) \label{equ:grad_Phi_q}\\
 \bm{\Phi}_{\mathrm{r},\partial\bm{q}}
 &=
-\frac{\partial}{\partial \bm{q}} \overline{\bm{\alpha}}\left(\overline{\prod}\left[ \overline{\rotmat{0}{Ex}^\transp}(\bm{x}), \overline{\rotmat{0}{Eq}}(\bm{q})\right]\right) \nonumber \\
+\frac{\partial}{\partial \bm{q}} \overline{\bm{\alpha}}\left(\overline{\prod}\left[ \rotmato{0}{Ex}^\transp(\bm{x}), \rotmato{0}{Eq}(\bm{q})\right]\right) \nonumber \\
 &=
 \left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
-\left(\frac{\partial }{\partial \overline{\bm{R}_2}}
-\overline{\prod}\left[ \overline{R_1}, \overline{R_2}\right]\right)
-\left(\frac{\partial}{\partial \bm{q}} \overline{\rotmat{0}{Eq}}(\bm{q})\right).  \nonumber
+\left(\frac{\partial }{\partial \overline{\bm{R}}_2}
+\overline{\prod}\left[ \overline{\bm{R}}_1, \overline{\bm{R}}_2\right]\right)
+\left(\frac{\partial}{\partial \bm{q}} \rotmato{0}{Eq}(\bm{q})\right).  \nonumber
 \end{align}
 The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ enclosed in the geometric Jacobian of the manipulator and is not regarded at this point.
 
@@ -638,18 +639,17 @@ can be simplified similar to the process described in Sec.\,REF with
 \begin{align}
 \frac{\partial}{\partial \bm{x}_{\mathrm{r}}}\bm{\Phi}_{\mathrm{r}_i}
 &=
-\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left((\rotmat{0}{Eq}^\transp(\bm{q}) \rotmat{0}{Ex}(\bm{x}_{\mathrm{r}}))^\transp\right) (\label{equ:grad_Phi_x}) \\
+\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left((\rotmat{0}{Eq}^\transp(\bm{q}) \rotmat{0}{Ex}(\bm{x}_{\mathrm{r}}))^\transp\right) \label{equ:grad_Phi_x} \\
 \bm{\Phi}_{\mathrm{r}_i,\partial \bm{x}_{\mathrm{r}}} 
 &=
 \frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \overline{\bm{\alpha}}\left(
 \bm{P}_{\mathrm{T}}
-\overline{\prod}\left[ \overline{\rotmat{0}{Eq}^\transp}(\bm{q}), \overline{\rotmat{0}{Ex}}(\bm{x}_{\mathrm{r}})\right]\right) \nonumber \\
+\overline{\prod}\left[ \rotmato{0}{Eq}^\transp(\bm{q}), \rotmato{0}{Ex}(\bm{x}_{\mathrm{r}})\right]\right) \nonumber \\
 &=
-\left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
+\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}
 \bm{P}_{\mathrm{T}}
-\left(\frac{\partial }{\partial \overline{\bm{R}_2}}
-\overline{\prod}\left[ \overline{R_1}, \overline{R_2}\right]\right)
-\left(\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \overline{\rotmat{0}{Ex}}(\bm{x}_{\mathrm{r}})\right) \nonumber
+\frac{\partial \overline{\prod}\left[ \overline{\bm{R}}_1, \overline{\bm{R}}_2\right]}{\partial \overline{\bm{R}}_2}
+\frac{\partial \rotmato{0}{Ex}(\bm{x}_{\mathrm{r}})}{\partial \bm{x}_{\mathrm{r}}} \nonumber
 \end{align}
 
 
