@@ -141,7 +141,7 @@ and orientation
 \begin{pmatrix}\vek{n}{}{Ex} & \vek{o}{}{Ex} & \vek{a}{}{Ex}\end{pmatrix}
 \end{equation}  
 % 
-with respect to the base frame $\ks{0}$ expressed in a set $\bm{\beta}$ of X-Y-Z-Euler angles
+with respect to the base frame $\ks{0}$ expressed in a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles
 %
 \begin{equation}
 \bm{x}_{\mathrm{r}}
@@ -483,7 +483,7 @@ Finally applying this to the rotational part of the residual vector Jacobian and
 \overline{\prod}\left[\rotmato{0}{Ex}, \overline{\bm{R}}_2\right]\right)
 \left(\frac{\partial}{\partial \bm{q}} \rotmato{0}{Eq}(\bm{q})\right).  \nonumber
 \end{align}
-The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ enclosed in the geometric Jacobian of the manipulator and is not regarded at this point.
+The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ is enclosed in the geometric Jacobian of the manipulator and is not regarded at this point to focus on the rotational aspects.
 
 The two first partial derivatives from (\ref{equ:grad_Phi_q}) are sparse matrices and can be calculated efficiently as shown in appendix \ref{sec:appendix_gradient_matrix}.
 The last partial derivative $\partial \rotmato{}{Eq}/\partial \bm{q}$ can be derived efficiently with computer algebra systems.
@@ -686,7 +686,7 @@ An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation 
 \rotmat{0}{Ex}^\transp (\bm{\beta})\rotmat{0}{Eq}(\bm{q})
 \end{equation}
 %
-where with the Euler-X-Y-Z-angles we have
+where with the Euler-$X$-$Y$-$Z$-angles we have
 %
 \begin{equation}
 \rotmat{0}{Ex}^\transp(\bm{\beta})
@@ -723,7 +723,7 @@ We define the first residual orientation error corresponding to $\bm{\beta}$ as 
 =\left[ \begin {array}{ccc} {n_x}&{o_x}&{a_x} \\ \noalign{\medskip}{n_y}&{o_y}&{a_y}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] 
 \end{align}
 %
-and as an Z-Y-X-Euler angle representation around fixed frames
+and as an $Z$-$Y$-$X$-Euler angle representation around fixed frames
 %
 \begin{align}
 \bm{\alpha} =
@@ -740,7 +740,7 @@ The error corresponding to $\bm{\beta}'$ only differs regarding the additional r
 \end{align}
 %
 where $C_{\delta}=\mathrm{cos}(\delta)$, $S_{\delta}=\mathrm{sin}(\delta)$.
-The Z-Y-X-Euler angles regarding fixed frames from this rotation matrix are
+The $Z$-$Y$-$X$-Euler angles regarding fixed frames from this rotation matrix are
 %
 \begin{equation}
 \bm{\alpha}' =
@@ -763,7 +763,7 @@ already displayed in (\ref{equ:alpha_dep_beta}) with the consequences for the ki
 \subsection{Matrix Operations for Partial Derivatives}
 \label{sec:appendix_gradient_matrix}
 
-The single expressions derived in Sec.\,\ref{sec:RecEulAng_implement} for the serial chains and in Sec.\,xx for the parallel chains can be calculated with low computational effort from the definition of the X-Y-Z- and Z-Y-X-Euler angles from (\ref{equ:def_rmat_xyz}), (\ref{equ:def_rmat_zyxr}) and (\ref{equ:alpha_xyz}).
+The single expressions derived in Sec.\,\ref{sec:RecEulAng_implement} for the serial chains and in Sec.\,xx for the parallel chains can be calculated with low computational effort from the definition of the $X$-$Y$-$Z$- and $Z$-$Y$-$X$-Euler angles from (\ref{equ:def_rmat_xyz}), (\ref{equ:def_rmat_zyxr}) and (\ref{equ:alpha_xyz}).
 
 The gradient in (\ref{equ:grad_Phi_q}) becomes
 %
@@ -813,7 +813,7 @@ The gradient of the matrix product (\ref{equ:matprod}) in (\ref{equ:grad_Phi_x})
 
 \section{Acknowledgements}
 
-The financial support from the Deutsche Forschungsgemeinschaft (German Research Foundation, DFG) under grant 341489206 are gracefully acknowledged.
+The financial support from the Deutsche Forschungsgemeinschaft (German Research Foundation, DFG) under grant 341489206 is gracefully acknowledged.
 
 % BIBLIOGRAPHY
 \bibliographystyle{ieeetr}
