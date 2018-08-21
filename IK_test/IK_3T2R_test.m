@@ -93,7 +93,7 @@ for mdlname2 = RobotNames
     T_E_test = RS.fkineEE(q_test);
     test_T = T_E\T_E_test - eye(4);
     test_T = test_T(:,[3,4]); % Spalten mit x-y-Einheitsvektoren lassen sich nicht vergleichen.
-    if any(abs(test_T(:)) > 1e-10)
+    if any(abs(test_T(:)) > 1e-10) || any(isnan(test_T(:)))
       % Teilweise konvergiert die IK nicht, wenn der Abstand zu groß ist.
       warning on
       warning('DK/IK stimmt nicht für Aufgabenredundanz. Delta_x = %1.5e, Delta_z = %1.5e', norm(test_T(:,2)), norm(test_T(:,1)));
