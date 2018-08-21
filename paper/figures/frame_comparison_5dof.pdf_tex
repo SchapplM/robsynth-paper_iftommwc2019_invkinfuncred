@@ -63,5 +63,6 @@
     \put(0.80377641,0.05315832){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_z(\alpha_3)$}}}%
     \put(0.52196599,0.17442805){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_z(\beta_3+\alpha_3)$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{frame_comparison_5dof.pdf}}%
+    \put(0.78400205,0.30688078){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_z(\beta_3)$}}}%
   \end{picture}%
 \endgroup%
