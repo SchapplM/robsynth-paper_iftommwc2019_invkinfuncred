@@ -77,8 +77,8 @@ The characteristic length required to normalize the Jacobian for the performance
 The existing methods each have drawbacks that are avoided by using the new method presented in this paper:
 \begin{itemize}
     \item Augmenting the joint space \cite{Baron2000} increases the computational cost and can lead to an ill-conditioned Jacobian \cite{HuoBar2008}.
-    \item Using a nested optimization \cite{ZhuQuCaoYan2013,GuoDonKe2015} does not allow using the well-proven gradient projection method and does not work if the tool axis is aligned parallel to the last robot joint (``pointing configuration'') \cite{GuoDonKe2015}.
-    \item In \cite{Zlajpah2017} the tool-axis rotation of the end-effector has to be calculated and canceled out in the null-space.
+    \item Using a nested optimization \cite{ZhuQuCaoYan2013,GuoDonKe2015} does not allow using the well-proven gradient projection method.
+    \item In \cite{Zlajpah2017} the tool-axis rotation of the end-effector has to be calculated and canceled out in the nullspace.
     \item Describing the tool axis with two points requires to define a distance between these points, which has to be chosen to gain a good conditioning of the optimization problem \cite{LegerAng2016}.
     \item All methods have a high mathematical level of abstraction e.\,g. using orthogonal decomposition \cite{HuoBar2008}, linear matrix inequalities and convex optimization \cite{FromGra2010}, rotation and component-selection of the vector part of the quaternion orientation error \cite{Zlajpah2017} or sequential quadratic programming \cite{LegerAng2016}.
 \end{itemize}
@@ -382,7 +382,7 @@ Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial
 \label{equ:taylor_phi}
 \end{equation}
 %
-where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is called the ``Jacobian matrix corresponding to the residual vector'' in \cite{GoldenbergBenFen1985}.
+where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is called the ``Jacobian matrix corresponding to the residual vector'' ($\bm{\Phi}$) in \cite{GoldenbergBenFen1985}.
 
 For 3T2R tasks we can define in the same way
 %
@@ -524,12 +524,28 @@ The gradient $h_{\partial\bm{q}}=\partial h/\partial \bm{q}$ is projected into t
 \begin{align}
 \bm{\Delta}\bm{q}
 &=
-\bm{\Delta}\bm{q}_{\mathrm{T}} + \bm{\Delta}\bm{q}_{\mathrm{N}} \\
+\bm{\Delta}\bm{q}_{\mathrm{T}} + \bm{\Delta}\bm{q}_{\mathrm{N}} \nonumber \\
 &=
 \bm{\Psi}_{\partial\bm{q}}^{\dagger} (-\bm{\Psi}) +  (\bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}) \bm{h}_{\partial\bm{q}}
+\label{equ:nullspace}
 \end{align}
 %
-where the Null-space incremental motion $\bm{\Delta}\bm{q}_{\mathrm{N}}$ does not affects the task achievement ensured via $\bm{\Delta}\bm{q}_{\mathrm{T}}$.
+where the nullspace incremental motion $\bm{\Delta}\bm{q}_{\mathrm{N}}$ does not affects the task achievement ensured via $\bm{\Delta}\bm{q}_{\mathrm{T}}$ \cite{Yoshikawa1984}.
+
+It is reported in \cite{GuoDonKe2015} that their optimization does not work for industrial robots where the tool axis is aligned parallel to the last robot joint axis.
+This ``pointing configuration'' can also not be addressed by the nullspace projection from (\ref{equ:nullspace}), since the nullspace corresponds to the last robot axis and
+%
+\begin{equation}
+\bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}
+=
+\begin{pmatrix}
+\bm{0} & \bm{0} \\
+\bm{0} & 1
+\end{pmatrix}
+\end{equation}
+%
+only projects the gradient $h_{\partial\bm{q}}$ of additional criteria onto the last joint.
+Therefore the method does only work if the tool is mounted in a different configuration (``side'' or ``hanging'' in \cite{GuoDonKe2015}), which might be unfavorable for some end-effectors or tasks.
 
 \section{Application on Kinematic Constraint Equations of Parallel Robots}
 \label{sec:ParRobKinConstr}
@@ -763,7 +779,7 @@ already displayed in (\ref{equ:alpha_dep_beta}) with the consequences for the ki
 \subsection{Matrix Operations for Partial Derivatives}
 \label{sec:appendix_gradient_matrix}
 
-The single expressions derived in Sec.\,\ref{sec:RecEulAng_implement} for the serial chains and in Sec.\,xx for the parallel chains can be calculated with low computational effort from the definition of the $X$-$Y$-$Z$- and $Z$-$Y$-$X$-Euler angles from (\ref{equ:def_rmat_xyz}), (\ref{equ:def_rmat_zyxr}) and (\ref{equ:alpha_xyz}).
+The single expressions derived in Sec.\,\ref{sec:RecEulAng_implement} for the serial chains and in Sec.\,\ref{sec:ParRobKinConstr} for the parallel chains can be calculated with low computational effort from the definition of the $X$-$Y$-$Z$- and $Z$-$Y$-$X$-Euler angles from (\ref{equ:def_rmat_xyz}), (\ref{equ:def_rmat_zyxr}) and (\ref{equ:alpha_xyz}).
 
 The gradient in (\ref{equ:grad_Phi_q}) becomes
 %
