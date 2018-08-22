@@ -65,7 +65,7 @@ These tasks comprise amongst others arc welding \cite{HuoBar2005}, drilling \cit
 Since the standard industrial robots have six DoF, one degree of \emph{functional} redundancy exists which allows to improve performance characteristics of the robots while achieving a valid pose to perform one of the aforementioned tasks.
 To be able to incorporate performance optimization into inverse kinematics via the well-established gradient projection method \cite{Yoshikawa1984}, either the joint space can be augmented or the task space can be reduced \cite{Huo2009}.
 Augmenting the joint space is possible by inserting an additional joint for the rotation around the task's axis of symmetry (``tool axis'') \cite{Baron2000}.
-Reducing the task space can be performed by orthogonal decomposition of the end-effector twist \cite{HuoBar2005}, removing the row of the Jacobian corresponding to the tool axis \cite{Zlajpah2017}, the construction of the Jacobian Nullspace based upon geometric properties of the task \cite{LegerAng2016} or constructing a cone or pyramid resulting from the tool axis with an additional range of tolerance for tilt angles \cite{FromGra2010}.
+Reducing the task space can be performed by orthogonal decomposition of the end-effector twist \cite{HuoBar2005}, removing the row of the ``task frame Jacobian'' corresponding to the tool axis \cite{Zlajpah2017}, the construction of the Jacobian Nullspace based upon geometric properties of the task \cite{LegerAng2016} or constructing a cone or pyramid resulting from the tool axis with an additional range of tolerance for tilt angles \cite{FromGra2010}.
 
 Another possibility for the resolution of the functional redundancy is a cascaded optimization where the inner loop calculates the inverse kinematics with standard methods and the outer loop optimizes the performance index.
 The optimization can be performed by evaluating the index on a range of rotation angles around the tool axis \cite{ZhuQuCaoYan2013} or by using the incremental change of the rotation around the tool axis directly to adapt the joint angles \cite{GuoDonKe2015}.
@@ -83,7 +83,9 @@ The existing methods each have drawbacks that are avoided by using the new metho
     \item All methods have a high mathematical level of abstraction e.\,g. using orthogonal decomposition \cite{HuoBar2008}, linear matrix inequalities and convex optimization \cite{FromGra2010}, rotation and component-selection of the vector part of the quaternion orientation error \cite{Zlajpah2017} or sequential quadratic programming \cite{LegerAng2016}.
 \end{itemize}
 
-As an alternative to the existing methods, we present an approach of expressing the orientation of the end-effector and the orientation error between desired and actual end-effector orientation with a set of reciprocal Euler angles.
+This paper transfers the approach from \cite{Zlajpah2017} from the velocity level to the position level and the orientation error is expressed in Euler angles instead of quaternions, which brings some advantages, as described in the following.
+
+The idea is to express the orientation of the end-effector and the orientation error between desired and actual end-effector orientation with a set of reciprocal Euler angles.
 Reciprocity for sets of Euler angles is defined in this paper as successive rotations around elementary axes that have mutually switched order.
 By this definition, the rotation component belonging to the tool axis in 3T2R tasks is always the same for the absolute orientation and for the orientation error.
 The effect of the tool axis can then be eliminated from the kinematic equations.
@@ -106,7 +108,7 @@ Simulative results for the inverse kinematics of serial robots in 3T2R tasks is 
 \label{sec:RecEulAng}
 
 The core of solving the inverse kinematics problem of robot manipulators for tasks with only two rotational degrees of freedom is the nonlinearity of rotation.
-Rotation can be described using rotation matrices, Euler angles, rotation axis and angle its derivations like quaternions or the Rodrigues vector.
+Rotation can be described using rotation matrices, Euler angles, rotation angle/axis and its derivations like quaternions or the Rodrigues vector.
 In contrast to all other notations, consecutive elementary rotations like Euler angles can be reduced to adapt for tasks only requiring two rotatory DoF.
 
 \subsection{Kinematics Description}
@@ -195,7 +197,7 @@ The intuitive approach of choosing
 \end{equation}
 %
 the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\,\ref{fig:frames_6dof} where the intermediate steps of the single elementary rotations are omitted since they have no technical meaning.
-Using this convention an adaption to tasks with functional redundancy is only possible with the methods described in Sec.\,\ref{sec:Intro}
+Using this convention an adaption to tasks with functional redundancy is only possible with the methods described in Sec.\,\ref{sec:Intro}.
 
 \begin{figure}[tb!]
     \input{./figures/frame_comparison_6dof.pdf_tex}
@@ -412,6 +414,14 @@ for solution of the inverse kinematics in the next step $k+1$. The increment
 of the joint angles towards this solution can be used in iterative algorithms like Newton-Raphson well-known in robotics literature.
 Depending on the dimension of the matrix, $(\cdot)^\dagger$ denotes the matrix inverse or the pseudo-inverse.
 
+\subsection{Discussion of Singularities}
+
+In \cite{Zlajpah2017} quaternions were used in favor of Euler angles for the orientation error with the grounds that a singularity-free representation of $\bm{\Phi}=\bm{0}$ is needed.
+This is the case for all $A$-$B$-$C$-Euler angles with axes $A \ne C$ like e.\,g. the $Z$-$Y$-$X$ notation used here for $\bm{\alpha}$.
+For control purposes it can be assumed that the components of the orientation error $\bm{\alpha}$ always stay below 90$^\circ$, which avoids the ``gimbal lock'' representation singularity of Euler angles.
+This assumption can be justified by the consideration that active position and orientation tracking will only produce small errors.
+A singularity-free representation of the absolute orientation $\bm{\beta}$ has to be ensured at the phase of motion planning, as well as avoiding discontinuities of the trajectory.
+
 \subsection{Remarks on the Implementation}
 \label{sec:RecEulAng_implement}
 
@@ -506,6 +516,7 @@ If a rotation $\rotmato{0}{N}(\bm{q})$ to the last robot link frame and a consta
 %with $\mathrm{dim}(\bm{\Psi})=5$
 
 The inverse kinematics formalism (\ref{equ:deltaq_psi}) described in the previous section \ref{sec:RecEulAng_3T2R_app} does not yet take into account the functional redundancy.
+
 The typical scenario for 3T2R tasks in industry is a serial link robot with $\mathrm{dim}(\bm{q})>5$.
 Most commonly a classical industrial robot with $\mathrm{dim}(\bm{q})=6$ will be used.
 Since $\mathrm{dim}(\bm{\Psi})=5$ at least one DoF is free for optimization additional criteria.
@@ -699,6 +710,13 @@ Modifying (\ref{equ:PKM_phi_grad_q}) and (\ref{equ:PKM_phi_grad_x}) to use $\bm{
 \section{Conclusions}
 \label{sec:Conclusion}
 
+We presented a novel concept to formulate the inverse kinematics problem of serial kinematic chains using reciprocal Euler angles.
+This exploits the properties of Euler angles to reduce the number of coordinates required for 3T2R tasks which are of high industrial relevance.
+Applications to the inverse kinematics of serial robots and the kinematic constraint equations of parallel robots are given.
+The detailed view on the practical implementation aims at facilitating the understanding of the approach and at reducing the barrier for potential users.
+
+Future work includes comparative simulative evaluation against state of the art methods and inquiries on singularities and the relation to the geometric Jacobian.
+
 \section{APPENDIX}
 
 \subsection{Influence of Reciprocal Euler angles}
@@ -778,7 +796,7 @@ The $Z$-$Y$-$X$-Euler angles regarding fixed frames from this rotation matrix ar
 \end{equation}
 %
 where $\delta$  only influences the components $\alpha_1$ and $\alpha_2$.
-This allows the conclusion, that $\beta_3$only influences $\alpha_3$ and results in the dependencies
+This allows the conclusion, that $\beta_3$ only influences $\alpha_3$ and results in the dependencies
 %
 \begin{align}
 \alpha_1'&=\alpha_1'(\bm{q},\beta_1,\beta_2) =\alpha_1\\
