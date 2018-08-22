@@ -410,7 +410,7 @@ for solution of the inverse kinematics in the next step $k+1$. The increment
 \end{equation}
 %
 of the joint angles towards this solution can be used in iterative algorithms like Newton-Raphson well-known in robotics literature.
-Depending on the dimension of the matrix, $(.)^\dagger$ denotes the matrix inverse or the pseudo-inverse.
+Depending on the dimension of the matrix, $(\cdot)^\dagger$ denotes the matrix inverse or the pseudo-inverse.
 
 \subsection{Remarks on the Implementation}
 \label{sec:RecEulAng_implement}
@@ -487,6 +487,18 @@ The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm
 
 The two first partial derivatives from (\ref{equ:grad_Phi_q}) are sparse matrices and can be calculated efficiently as shown in appendix \ref{sec:appendix_gradient_matrix}.
 The last partial derivative $\partial \rotmato{}{Eq}/\partial \bm{q}$ can be derived efficiently with computer algebra systems.
+
+If a rotation $\rotmato{0}{N}(\bm{q})$ to the last robot link frame and a constant rotation $\rotmato{N}{E}$ to the end-effector frame are used to account for exchangeable end-effectors or tools, the properties of the column-operator can be used to substitute the last term in (\ref{equ:grad_Phi_q}) with
+%
+\begin{align}
+\frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} 
+&=
+\frac{\partial}{\partial \bm{q}} \overline{\prod}\left[ \rotmato{0}{N}(\bm{q}), \rotmato{N}{E}\right] \nonumber \\
+&=
+\frac{\partial}{\partial \overline{\bm{R}}_1} \overline{\prod}\left[ \overline{\bm{R}}_1, \rotmato{N}{E}\right]
+\frac{\partial}{\partial \bm{q}} \rotmato{0}{N}(\bm{q}).
+\label{equ:ee_rotation_gradq}
+\end{align}
 
 \section{Resolving functional Redundancy for 3T2R Tasks}
 \label{sec:ResFuncRed}
@@ -813,10 +825,11 @@ and the inverse gradient in (\ref{equ:grad_Phi_x}) yields
 \end{align}
 %
 with $C_i=\mathrm{cos}(\beta_i)$, $S_i=\mathrm{sin}(\beta_i)$.
-The gradient of the matrix product (\ref{equ:matprod}) in (\ref{equ:grad_Phi_x}) and (\ref{equ:grad_Phi_q}) is
+The gradient of the matrix product (\ref{equ:matprod}) w.r.t the second factor used in (\ref{equ:grad_Phi_x}) and (\ref{equ:grad_Phi_q}) is
+%
 \begin{equation}
-\left(\frac{\partial }{\partial \overline{\bm{R}_2}}
-\overline{\prod}\left[ \overline{R_1}, \overline{R_2}\right]\right)
+\frac{\partial }{\partial \overline{\bm{R}}_2}
+\overline{\prod}\left[ \overline{\bm{R}}_1, \overline{\bm{R}}_2\right]
 =
 \begin{pmatrix}
 \bm{R}_1 & \bm{0} & \bm{0} \\
@@ -824,9 +837,19 @@ The gradient of the matrix product (\ref{equ:matprod}) in (\ref{equ:grad_Phi_x})
 \bm{0} & \bm{0} & \bm{R}_1  \\
 \end{pmatrix}
 \end{equation}
-
-
-
+%
+and the gradient w.r.t the first factor used in (\ref{equ:ee_rotation_gradq}) is
+%
+\begin{equation}
+\frac{\partial }{\partial \overline{\bm{R}}_1}
+\overline{\prod}\left[ \overline{\bm{R}}_1, \overline{\bm{R}}_2\right]
+=
+\begin{pmatrix}
+{\mathrm{diag}}(n_x)&{\mathrm{diag}}(o_x)&{\mathrm{diag}}(a_x) \\ {\mathrm{diag}}(n_y)&{\mathrm{diag}}(o_y)&{\mathrm{diag}}(a_y)\\ {\mathrm{diag}}(n_z)&{\mathrm{diag}}(o_z)&{\mathrm{diag}}(a_z)
+\end{pmatrix}
+\end{equation}
+%
+where $n_x,ny,...$ are the entries of $\bm{R}_2$ and the $\mathrm{diag}$-matrices are $3 \times 3$.
 \section{Acknowledgements}
 
 The financial support from the Deutsche Forschungsgemeinschaft (German Research Foundation, DFG) under grant 341489206 is gracefully acknowledged.
