@@ -3,9 +3,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{calrsfs} % Für Kalligraphie-F 
-%\newcommand{\gbf}[1] {\mbox{\boldmath${#1}$\unboldmath}}% inserts 'g'reek 'b'old 'f'ace symbols eg. \gbf{\alpha}.
 \newcommand{\bm}[1]{\boldsymbol{#1}}
 
+% Latex-Makros für häufig verwendete Formelzeichen
 \newcommand{\ortvek}[4]{{ }_{(#1)}{\boldsymbol{#2}}^{#3}_{#4} }
 \newcommand{\vek}[3]{\boldsymbol{#1}^{#2}_{#3}}
 \newcommand{\rotmat}[2]{{{ }^{#1}\boldsymbol{R}}_{#2}}
@@ -16,6 +16,8 @@
 % Für Deutsche Umlaute
 \usepackage{ngerman}
 \usepackage[utf8]{inputenc}
+
+% Für Bilder
 \usepackage{graphicx}
 \usepackage{color}
 \graphicspath{{./figures/}}
@@ -42,7 +44,7 @@
 
 %ABSTRACT
 \begin{abstract}
-Robotic tasks like welding or drilling with three translational and only two rotational degrees of freedom (``3T2R'') are of high industrial relevance but are rather scarcely addressed in scientific publications.
+Robotic tasks like welding or drilling with three translational and only two rotational degrees of freedom (``3T2R'') are of high industrial relevance but are ra\-ther scarcely addressed in scientific publications.
 Existing solutions for the resolution of the functional redundancy of robotic manipulators performing these tasks either expand the full kinematic formulation or reduce it in intermediate steps.
 The present paper presents an approach to reduce the kinematic formulation from the start to solve the problem in a simple way.
 This is done by using a set of reciprocal Euler angles to describe the end-effector orientation and the orientation error in inverse kinematics.
@@ -95,14 +97,14 @@ The contributions of this paper are
 \begin{itemize}
     \item A new formulation for the kinematics problem for robots performing 3T2R-tasks,
     \item an application of the formulation leading to an efficient solution for inverse kinematics with functional redundancy,
-    \item examples on the performance of the implementation regarding computation and convergence,
+    \item thoughts on the implementation of gradients of and w.r.t rotation matrices and its performance,
     \item the extension of the formalism on parallel robots.
 \end{itemize}
 
 The remainder of the paper is structured as follows: The idea of kinematics description using sets of reciprocal Euler angles is elaborated upon in Sec.\, \ref{sec:RecEulAng}.
 Their application in resolving the functional redundancy in inverse kinematics of 3T2R tasks is shown in Sec.\,\ref{sec:ResFuncRed}.
 Sec.\,\ref{sec:ParRobKinConstr} gives an outlook to the definition of kinematic constraints for parallel robots. 
-Simulative results for the inverse kinematics of serial robots in 3T2R tasks is presented in Sec.\,\ref{sec:SimEvalSerRobIK} to support the presented approach. Sec.\,\ref{sec:Conclusion} concludes the paper.
+Sec.\,\ref{sec:Conclusion} concludes the paper.
 
 \section{Using reciprocal Euler Angles for Robot Kinematics}
 \label{sec:RecEulAng}
@@ -542,7 +544,7 @@ h_{\partial\bm{q}}
 \end{equation}
 %
 can be used to include this additional minimization into the solution of the inverse kinematics.
-The gradient $h_{\partial\bm{q}}=\partial h/\partial \bm{q}$ is projected into the Null space of $\bm{\Psi}_{\partial\bm{q}}=\partial \bm{\Psi}/\partial \bm{q}$ with
+The gradient $h_{\partial\bm{q}}=\partial h/\partial \bm{q}$ is projected into the nullspace of $\bm{\Psi}_{\partial\bm{q}}=\partial \bm{\Psi}/\partial \bm{q}$ with
 %
 \begin{align}
 \bm{\Delta}\bm{q}
@@ -702,10 +704,7 @@ can be simplified similar to the process described in Sec.\,\ref{sec:RecEulAng_i
 %
 where the simplicity of the single expression is demonstrated in appendix\,\ref{sec:appendix_gradient_matrix}.
 
-Modifying (\ref{equ:PKM_phi_grad_q}) and (\ref{equ:PKM_phi_grad_x}) to use $\bm{\Psi}_{\partial \bm{q}}$ and $\bm{\Psi}_{\partial \bm{x}}$ for 3T2R tasks promises to improve motion planning and controllers by calculating actuator forces considering the tool symmetry and allowing the incorporation of Null-space movements and forces.
-
-\section{Simulative Evaluation for solving Serial Robot inverse Kinematics in 3T2R Tasks}
-\label{sec:SimEvalSerRobIK}
+Modifying (\ref{equ:PKM_phi_grad_q}) and (\ref{equ:PKM_phi_grad_x}) to use $\bm{\Psi}_{\partial \bm{q}}$ and $\bm{\Psi}_{\partial \bm{x}}$ for 3T2R tasks promises to improve motion planning and controllers by calculating actuator forces considering the tool symmetry and allowing the incorporation of nullspace movements and forces.
 
 \section{Conclusions}
 \label{sec:Conclusion}
