@@ -56,12 +56,12 @@
     \put(0.20332753,0.09387677){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{Eq}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{frame_comparison_5dof.pdf}}%
     \put(0.07181548,0.03930904){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\rotmat{0}{Eq}(\bm{q})$}}}%
-    \put(0.33926017,0.02383066){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1)$}}}%
+    \put(0.33926017,0.02383066){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3)$}}}%
     \put(0.4579454,0.26938371){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{A1}$}}}%
     \put(0.56877046,0.09690802){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{A2}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{frame_comparison_5dof.pdf}}%
-    \put(0.80377641,0.05315832){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_z(\alpha_3)$}}}%
-    \put(0.52196599,0.17442805){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_z(\beta_3+\alpha_3)$}}}%
+    \put(0.80377641,0.05315832){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_z(\alpha_1)$}}}%
+    \put(0.52196599,0.17442805){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_z(\beta_3+\alpha_1)$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{frame_comparison_5dof.pdf}}%
     \put(0.78400205,0.30688078){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\bm{R}_z(\beta_3)$}}}%
   \end{picture}%

@@ -34,8 +34,8 @@
     M.\ Schappler\thanks{moritz.schappler@imes.uni-hannover.de}
 & S.\ Tappe\thanks{svenja.tappe@imes.uni-hannover.de}
 & T.\ Ortmaier\thanks{tobias.ortmaier@imes.uni-hannover.de}\\
-    \multicolumn{3}{c}{Institut für mechatronische Systeme} \\
-    \multicolumn{3}{c}{Leibniz Universität Hannover, Hannover, Germany}
+    \multicolumn{3}{c}{Institute for Mechatronic Systems} \\
+    \multicolumn{3}{c}{Leibniz University Hannover, Hannover, Germany}
     \end{tabular}
 }
 
@@ -64,7 +64,7 @@ Due to the nonlinearity of rotation on position level \cite{GoldenbergBenFen1985
 The kinematics of robots performing tasks with five instead of six degrees of freedom (DoF) has drawn much less attention, even if many industrial relevant tasks only require 5-DoF such as the class of 3T2R-tasks where the task rotation is axis-symmetric.
 These tasks comprise amongst others arc welding \cite{HuoBar2005}, drilling \cite{ZhuQuCaoYan2013,GuoDonKe2015}, spray-painting \cite{FromGra2010}, laser-cutting, milling, glueing and deburring and are transfered to a greater extend to robotic manipulators in the automotive or aviation industry.
 
-Since the standard industrial robots have six DoF, one degree of \emph{functional} redundancy exists which allows to improve performance characteristics of the robots while achieving a valid pose to perform one of the aforementioned tasks.
+Since standard industrial robots have six DoF, one degree of \emph{functional} redundancy exists which allows to improve performance characteristics of the robots while achieving a valid pose to perform one of the aforementioned tasks.
 To be able to incorporate performance optimization into inverse kinematics via the well-established gradient projection method \cite{Yoshikawa1984}, either the joint space can be augmented or the task space can be reduced \cite{Huo2009}.
 Augmenting the joint space is possible by inserting an additional joint for the rotation around the task's axis of symmetry (``tool axis'') \cite{Baron2000}.
 Reducing the task space can be performed by orthogonal decomposition of the end-effector twist \cite{HuoBar2005}, removing the row of the ``task frame Jacobian'' corresponding to the tool axis \cite{Zlajpah2017}, the construction of the Jacobian Nullspace based upon geometric properties of the task \cite{LegerAng2016} or constructing a cone or pyramid resulting from the tool axis with an additional range of tolerance for tilt angles \cite{FromGra2010}.
@@ -97,7 +97,7 @@ The contributions of this paper are
 \begin{itemize}
     \item A new formulation for the kinematics problem for robots performing 3T2R-tasks,
     \item an application of the formulation leading to an efficient solution for inverse kinematics with functional redundancy,
-    \item thoughts on the implementation of gradients of and w.r.t rotation matrices and its performance,
+    \item thoughts on the implementation of gradients of and w.r.t. rotation matrices and its performance,
     \item the extension of the formalism on parallel robots.
 \end{itemize}
 
@@ -175,7 +175,7 @@ The deviation between the desired end-effector frame $\ks{Ex}$ expressed with $\
 where the translational part 
 %
 \begin{equation}
-\bm{\Phi}_{\mathrm{t}}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{x}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
+\bm{\Phi}_{\mathrm{t}}(\bm{q},\bm{x}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{x}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
 \label{equ:Phit_def}
 \end{equation}
 %
@@ -232,13 +232,14 @@ It is apparent, that using $\bm{\alpha}$ as defined in the previous subsection\,
 To encounter this issue we now choose the Euler angle convention $\bm{\alpha}$ for the orientation error to be 
 %
 \begin{equation}
-\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_3) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1) \in \mathrm{SO(3)}.
+\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3) \in \mathrm{SO(3)}.
 \label{equ:def_rmat_zyxr}
 \end{equation}
 %
 This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the $X$-$Y$-$Z$-convention $\bm{\beta}$ for the absolute orientation.
-The notation corresponds to successive $X$-$Y$-$Z$ rotations $\bm{\alpha}$ about \emph{fixed} axes with the ambition of having thecorresponding third entries $\alpha_3$ and $\beta_3$.
-The permutation in (\ref{equ:def_rmat_zyxr}) does not affect the calculation and the term ``$Z$-$Y$-$X$-Euler angles'' will be used further in this paper.
+%
+The reciprocity only refers to the switched order of the elementary axes $X$, $Y$ and $Z$.
+Since $\bm{\alpha}$ and $\bm{\beta}$ describe different rotations, the respective intermediate rotation axes are different.
 
 % from (\ref{equ:xt_def}),(\ref{equ:xr_def})
 Similar to the end-effector operational space coordinates $\bm{x}$ we define the task space to have the coordinates
@@ -247,9 +248,9 @@ Similar to the end-effector operational space coordinates $\bm{x}$ we define the
 \bm{\eta}
 =
 \begin{pmatrix}
-\bm{\eta}_{\mathrm{t}} \\
-\bm{\eta}_{\mathrm{r}}
-\end{pmatrix}
+\bm{\eta}_{\mathrm{t}}^\transp & 
+\bm{\eta}_{\mathrm{r}}^\transp
+\end{pmatrix}^\transp
 \end{equation}  
 %
 with the unchanged translational part
@@ -293,7 +294,7 @@ and the partial frame rotation
 \rotmat{0}{A2} 
 &= 
 \rotmat{0}{Eq}(\bm{q})
-\left(\bm{R}_x(\alpha_1) \bm{R}_y(\alpha_2)\right)^\transp \\ 
+\left(\bm{R}_x(\alpha_3) \bm{R}_y(\alpha_2)\right)^\transp \\ 
 &=
 \begin{pmatrix}
 \vek{n}{}{A2} & \vek{o}{}{A2} & \vek{a}{}{A2}
@@ -314,7 +315,7 @@ The frames $\ks{A1}$, $\ks{A2}$ and $\ks{Ex}$ all share the same $z$-axis
 %
 which is also the tool axis as can be seen in Fig.\,\ref{fig:frames_5dof}.
 
-Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_3$ are defined around the same axis, $\beta_3$ only influences $\alpha_3$ and not $\alpha_1$ and $\alpha_2$ as derived in the appendix \ref{sec:appendix_eulerreciproc} and can be expressed by
+Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_1$ are defined around the same axis, $\beta_3$ only influences $\alpha_1$ and not $\alpha_2$ and $\alpha_3$ as derived in the appendix \ref{sec:appendix_eulerreciproc} and can be expressed by
 %
 \begin{align}
 \begin{pmatrix}
@@ -324,15 +325,15 @@ Since the tool axis rotation $\beta_3$ and the orientation error component $\alp
 \end{pmatrix}
 =
 \begin{pmatrix}
-\alpha_1(\bm{q},\beta_1,\beta_2) \\
+\alpha_1(\bm{q},\beta_1,\beta_2,\beta_3) \\
 \alpha_2(\bm{q},\beta_1,\beta_2) \\
-\alpha_3(\bm{q},\beta_1,\beta_2,\beta_3)
+\alpha_3(\bm{q},\beta_1,\beta_2)
 \end{pmatrix}
 =
 \begin{pmatrix}
-\alpha_1(\bm{q},\bm{\eta}) \\
+\alpha_1(\bm{q},\bm{x}) \\
 \alpha_2(\bm{q},\bm{\eta}) \\
-\alpha_3(\bm{q},\bm{x}) 
+\alpha_3(\bm{q},\bm{\eta}) 
 \end{pmatrix}
 \label{equ:alpha_dep_beta}.
 \end{align}
@@ -366,11 +367,11 @@ equal to (\ref{equ:Phit_def}) and the rotational part
 \begin{align}
 \bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta}) &= 
 \begin{pmatrix}
-\alpha_1  & \alpha_2
+\alpha_2  & \alpha_3
 \end{pmatrix}^\transp \nonumber \\
 &=
-\begin{pmatrix} \bm{1}_{2 \times 2} & \bm{0}_{2 \times 1}\end{pmatrix} \bm{\Phi} (\bm{q},\bm{x}) \nonumber \\
-&= \begin{pmatrix} \bm{1} & \bm{0}\end{pmatrix} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{2}
+\begin{pmatrix}\bm{0}_{2 \times 1} & \bm{1}_{2 \times 2}\end{pmatrix} \bm{\Phi} (\bm{q},\bm{x}) \nonumber \\
+&= \begin{pmatrix} \bm{0} & \bm{1}\end{pmatrix} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{2}
 \end{align}
 %
 adapted from (\ref{equ:Phir_def}) by using (\ref{equ:alpha_dep_beta} and (\ref{equ:etar_def}).
@@ -382,7 +383,7 @@ Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial
 \bm{\Phi}(\bm{q}^{k+1},\bm{x}) = 
 \bm{\Phi}(\bm{q}^{k},\bm{x})
 +
-\frac{\partial}{\partial \bm{q}} \bm{\Phi}(\bm{q}^k,\bm{x}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}_i^k)
+\frac{\partial}{\partial \bm{q}} \bm{\Phi}(\bm{q}^k,\bm{x}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}^k)
 \label{equ:taylor_phi}
 \end{equation}
 %
@@ -394,7 +395,7 @@ For 3T2R tasks we can define in the same way
 \bm{\Psi}(\bm{q}^{k+1},\bm{\eta}) = 
 \bm{\Psi}(\bm{q}^{k},\bm{\eta})
 +
-\frac{\partial}{\partial \bm{q}} \bm{\Psi}(\bm{q},\bm{\eta}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}_i^k)
+\frac{\partial}{\partial \bm{q}} \bm{\Psi}(\bm{q},\bm{\eta}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}^k)
 \end{equation}
 %
 with the condition
@@ -444,8 +445,8 @@ We define the column operator
 \end{pmatrix}
 \end{equation}
 %
-for rotation matrices to avoid differentiating matrices or w.r.t matrices.
-matrix multiplication is expressed with the product operator
+for rotation matrices to avoid differentiating matrices or w.r.t. matrices.
+Matrix multiplication is expressed with the product operator
 %
 \begin{equation}
 \rotmat{1}{3}
@@ -676,10 +677,10 @@ The calculation of the inverse kinematics Jacobian
 \frac{\partial \bm{\Phi}}{\partial \bm{x}}
 =
 \begin{pmatrix}
-\frac{\partial \bm{\Phi}_1}{\partial \bm{x}}\\
-\frac{\partial \bm{\Phi}_2}{\partial \bm{x}}\\
+\partial \bm{\Phi}_1/\partial \bm{x}\\
+\partial \bm{\Phi}_2/\partial \bm{x}\\
 \vdots \\
-\frac{\partial \bm{\Phi}_m}{\partial \bm{x}}\\
+\partial \bm{\Phi}_m/\partial \bm{x}\\
 \end{pmatrix}
 \label{equ:PKM_phi_grad_x}
 \end{equation}  
@@ -729,6 +730,7 @@ An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation 
 \rotmat{Ex}{Eq}(\bm{\beta},\bm{q})
 = 
 \rotmat{0}{Ex}^\transp (\bm{\beta})\rotmat{0}{Eq}(\bm{q})
+\label{equ:orierr_1_rotmat}
 \end{equation}
 %
 where with the Euler-$X$-$Y$-$Z$-angles we have
@@ -740,7 +742,7 @@ where with the Euler-$X$-$Y$-$Z$-angles we have
 \end{equation}
 %
 as introduced in (\ref{equ:def_rmat_xyz}).
-With an additional rotation $\delta$ around the $z$-axis for the desired orientation, we have the new Euler angles
+With an additional rotation $-\delta$ around the $z$-axis for the desired orientation, we have the new Euler angles
 %
 \begin{equation}
 \beta_1'=\beta_1,  \quad \beta_2'=\beta_2,  \quad \beta_3'=\beta_3-\delta.
@@ -759,48 +761,60 @@ and leads to a new residual orientation error expressed as a rotation matrix
 \bm{R}_z(\delta) \rotmat{0}{Ex}^\transp (\bm{\beta}) \rotmat{0}{Eq}(\bm{q}) \nonumber \\
 &=
 \bm{R}_z(\delta) \rotmat{Ex}{Eq}(\bm{\beta},\bm{q}).
+\label{equ:orierr_2_rotmat}
 \end{align}
 
-We define the first residual orientation error corresponding to $\bm{\beta}$ as a rotation matrix
+We define the first residual orientation error from (\ref{equ:orierr_1_rotmat}) corresponding to $\bm{\beta}$ as a rotation matrix
 %
+% Quelle: equations/R1.txt (aus ikfr_paper_equations.mw)
 \begin{align}
 \rotmat{Ex}{Eq}(\bm{\beta},\bm{q})
 =\left[ \begin {array}{ccc} {n_x}&{o_x}&{a_x} \\ \noalign{\medskip}{n_y}&{o_y}&{a_y}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] 
+\label{equ:orierr_1_rotmat_def}
 \end{align}
 %
-and as an $Z$-$Y$-$X$-Euler angle representation around fixed frames
+and as a $Z$-$Y$-$X$-Euler angle representation
 %
+% Quelle: equations/alpha1.txt (aus ikfr_paper_equations.mw)
 \begin{align}
 \bm{\alpha} =
-\left[ \begin {array}{c} \arctan \left( {o_z},{a_z} \right)  \\ \noalign{\medskip}\arctan \left( -{n_z},\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ \noalign{\medskip}\arctan \left( {n_y},{ n_x} \right) \end {array} \right].
+\begin{bmatrix}
+\arctan \left( {n_y} / { n_x} \right) \\ 
+\arctan \left( -{n_z} / \sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ 
+\arctan \left( {o_z} / {a_z} \right)
+\end{bmatrix}.
 \label{equ:alpha_xyz}
 \end{align}
 
-The error corresponding to $\bm{\beta}'$ only differs regarding the additional rotation $\delta$ with
+The second error corresponding to $\bm{\beta}'$ only differs regarding the additional rotation $\delta$. Combining (\ref{equ:orierr_2_rotmat}) and (\ref{equ:orierr_1_rotmat_def}) leads to
 %
+% Quelle: equations/R2.txt (aus ikfr_paper_equations.mw)
 \begin{align}
 &\rotmat{Ex}{Eq}(\bm{\beta}',\bm{q})
 = \\
 &\left[ \begin {array}{ccc} { C_{\delta}}\,{n_x}-{ S_{\delta}}\,{ n_y}&{ C_{\delta}}\,{o_x}-{ S_{\delta}}\,{o_y}&{ C_{\delta}}\,{ a_x}-{ S_{\delta}}\,{a_y}\\ \noalign{\medskip}{ C_{\delta}}\,{n_y}+ { S_{\delta}}\,{n_x}&{ C_{\delta}}\,{o_y}+{ S_{\delta}}\,{o_x}&{  C_{\delta}}\,{a_y}+{ S_{\delta}}\,{a_x}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] \nonumber
 \end{align}
 %
-where $C_{\delta}=\mathrm{cos}(\delta)$, $S_{\delta}=\mathrm{sin}(\delta)$.
-The $Z$-$Y$-$X$-Euler angles regarding fixed frames from this rotation matrix are
+where $C_{\delta}=\mathrm{cos}(\delta)$ and $S_{\delta}=\mathrm{sin}(\delta)$.
+The $Z$-$Y$-$X$-Euler angles from this rotation matrix are
 %
+% Quelle: equations/alpha2.txt (aus ikfr_paper_equations.mw)
 \begin{equation}
 \bm{\alpha}' =
- \left[ \begin {array}{c} \arctan \left( {o_z},{a_z} \right)  \\
-  \noalign{\medskip}\arctan \left( -{n_z},\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\
-  \noalign{\medskip}\arctan \left( {  C_{\delta}}\,{n_y}+{ S_{\delta}}\,{n_x},{ C_{\delta}}\,{n_x}-{  S_{\delta}}\,{n_y} \right) \end {array} \right] 
+\begin{bmatrix}
+\arctan \left( ({  C_{\delta}}\,{n_y}+{ S_{\delta}}\,{n_x}) / ({ C_{\delta}}\,{n_x}-{  S_{\delta}}\,{n_y}) \right) \\
+\arctan \left( -{n_z} / \sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\
+\arctan \left( {o_z} / {a_z} \right)
+\end{bmatrix}
 \end{equation}
 %
-where $\delta$  only influences the components $\alpha_1$ and $\alpha_2$.
-This allows the conclusion, that $\beta_3$ only influences $\alpha_3$ and results in the dependencies
+where $\delta$  only influences the first component $\alpha_1$.
+This allows the conclusion, that $\beta_3$ only influences $\alpha_1$ and results in the dependencies
 %
 \begin{align}
-\alpha_1'&=\alpha_1'(\bm{q},\beta_1,\beta_2) =\alpha_1\\
+\alpha_1'&=\alpha_1'(\bm{q},\beta_1,\beta_2,\beta_3)\\
 \alpha_2'&=\alpha_2'(\bm{q},\beta_1,\beta_2) =\alpha_2\\
-\alpha_3'&=\alpha_3'(\bm{q},\beta_1,\beta_2,\beta_3)
+\alpha_3'&=\alpha_3'(\bm{q},\beta_1,\beta_2) =\alpha_3
 \end{align}
 %
 already displayed in (\ref{equ:alpha_dep_beta}) with the consequences for the kinematic modeling of robots in 3T2R tasks described in Sec.\,\ref{sec:RecEulAng_effect}.
@@ -811,7 +825,7 @@ already displayed in (\ref{equ:alpha_dep_beta}) with the consequences for the ki
 The single expressions derived in Sec.\,\ref{sec:RecEulAng_implement} for the serial chains and in Sec.\,\ref{sec:ParRobKinConstr} for the parallel chains can be calculated with low computational effort from the definition of the $X$-$Y$-$Z$- and $Z$-$Y$-$X$-Euler angles from (\ref{equ:def_rmat_xyz}), (\ref{equ:def_rmat_zyxr}) and (\ref{equ:alpha_xyz}).
 
 The gradient in (\ref{equ:grad_Phi_q}) becomes
-%
+% Quelle: equations/dalphadRb.txt (aus ikfr_paper_equations.mw)
 \begin{equation}
 \left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)^\transp
 =
@@ -820,6 +834,7 @@ The gradient in (\ref{equ:grad_Phi_q}) becomes
 %
 and the inverse gradient in (\ref{equ:grad_Phi_x}) yields
 %
+% Quelle: equations/R2b_dxyz.txt (aus ikfr_paper_equations.mw)
 \begin{align}
 &\left(\frac{\partial \overline{\bm{R}}(\bm{\beta})}{\partial \overline{\bm{\beta}}}\right)
 =\\
@@ -842,7 +857,7 @@ and the inverse gradient in (\ref{equ:grad_Phi_x}) yields
 \end{align}
 %
 with $C_i=\mathrm{cos}(\beta_i)$, $S_i=\mathrm{sin}(\beta_i)$.
-The gradient of the matrix product (\ref{equ:matprod}) w.r.t the second factor used in (\ref{equ:grad_Phi_x}) and (\ref{equ:grad_Phi_q}) is
+The gradient of the matrix product (\ref{equ:matprod}) w.r.t. the second factor used in (\ref{equ:grad_Phi_x}) and (\ref{equ:grad_Phi_q}) is
 %
 \begin{equation}
 \frac{\partial }{\partial \overline{\bm{R}}_2}
@@ -855,7 +870,7 @@ The gradient of the matrix product (\ref{equ:matprod}) w.r.t the second factor u
 \end{pmatrix}
 \end{equation}
 %
-and the gradient w.r.t the first factor used in (\ref{equ:ee_rotation_gradq}) is
+and the gradient w.r.t. the first factor used in (\ref{equ:ee_rotation_gradq}) is
 %
 \begin{equation}
 \frac{\partial }{\partial \overline{\bm{R}}_1}

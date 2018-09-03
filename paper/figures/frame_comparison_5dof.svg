@@ -117,7 +117,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="158.30252"
+     inkscape:cx="109.8152"
      inkscape:cy="87.659828"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -141,7 +141,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -239,7 +239,7 @@
          id="tspan4159-5-62"
          x="96.168236"
          y="1045.6071"
-         style="font-size:3.75px">$\bm{R}_y(\alpha_2) \bm{R}_x(\alpha_1)$</tspan></text>
+         style="font-size:3.75px">$\bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3)$</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -287,7 +287,7 @@
          id="tspan4159-5-62-7"
          x="227.84213"
          y="1037.2937"
-         style="font-size:3.75px">$\bm{R}_z(\alpha_3)$</tspan></text>
+         style="font-size:3.75px">$\bm{R}_z(\alpha_1)$</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -299,7 +299,7 @@
          id="tspan4159-5-62-7-9"
          x="147.95886"
          y="1002.918"
-         style="font-size:3.75px">$\bm{R}_z(\beta_3+\alpha_3)$</tspan></text>
+         style="font-size:3.75px">$\bm{R}_z(\beta_3+\alpha_1)$</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend-9-7-3)"
        d="m 136.19849,983.22875 c -6.60714,10.53572 -1.19849,19.13345 5.41609,31.74885"

@@ -172,8 +172,7 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-input="false" labelreference="L2084" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha1tmp := simplify(r2eulzyx(R1), 'trig'):
-alpha1 := alpha1tmp([3,2,1]);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha1 := simplify(r2eulzyx(R1), 'trig');</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2081" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -189,11 +188,7 @@ alpha1 := alpha1tmp([3,2,1]);</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-input="false" labelreference="L2085" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2tmp := simplify(r2eulzyx(R2)):</Text-field>
-</Input>
-</Group>
-<Group view="code" hide-input="false" labelreference="L2090" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2 := alpha2tmp([3,2,1],1);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2 := simplify(r2eulzyx(R2));</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2093" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -248,11 +243,6 @@ alpha2_latex := subs({sin(delta)=Sdelta}, alpha2_latex):</Text-field>
 </Input>
 </Group></Presentation-Block>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Umgedrehte Euler-ZYX</Text-field></Title><Presentation-Block>
-<Group view="code" hide-input="false" labelreference="L2121" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/codeexport/rmat_diff_eulzyxrev&quot;,struktsynth_bsp_path);
-alpha:=alpha:</Text-field>
-</Input>
-</Group>
 <Group view="code" hide-input="false" labelreference="L2118" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read sprintf(&quot;%s/codeexport/eulzyx_diff_rmatvec_maple.m&quot;,struktsynth_bsp_path):
 GradMat := GradMat;</Text-field>
@@ -272,7 +262,11 @@ end do:</Text-field>
 </Input>
 </Group>
 <Group view="code" hide-input="false" labelreference="L2117" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat := simplify(GradMat);</Text-field>
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat := simplify(GradMat):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2130" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Transpose(GradMat);</Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2115" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
