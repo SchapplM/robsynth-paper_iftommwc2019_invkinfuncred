@@ -46,7 +46,7 @@
 \begin{abstract}
 Robotic tasks like welding or drilling with three translational and only two rotational degrees of freedom (``3T2R'') are of high industrial relevance but are ra\-ther scarcely addressed in scientific publications.
 Existing solutions for the resolution of the functional redundancy of robotic manipulators performing these tasks either expand the full kinematic formulation or reduce it in intermediate steps.
-The present paper presents an approach to reduce the kinematic formulation from the start to solve the problem in a simple way.
+This paper presents an approach to reduce the kinematic formulation from the start to solve the problem in a simpler way.
 This is done by using a set of reciprocal Euler angles to describe the end-effector orientation and the orientation error in inverse kinematics.
 \end{abstract}
 
@@ -58,8 +58,8 @@ functional redundancy, redundancy resolution, reciprocal Euler angles, inverse k
 \section{Introduction}
 \label{sec:Intro}
 Since the first papers in the 1980s the fields of inverse kinematics \cite{GoldenbergBenFen1985} and the resolution of \emph{intrinsic} redundancy \cite{Yoshikawa1984} in robotics have been extensively elaborated upon.
-Inverse kinematics for robot manipulators can be approached with gradient-based numeric approaches on the level of joint positions and joint velocity.
-Due to the nonlinearity of rotation on position level \cite{GoldenbergBenFen1985}, the latter is usually preferred.
+Inverse kinematics for robot manipulators can be solved analytically for some robots and can be approached in general with gradient-based numeric methods at  joint position or joint velocity level.
+Due to the nonlinearity of rotation at position level \cite{GoldenbergBenFen1985}, the latter is usually preferred.
 
 The kinematics of robots performing tasks with five instead of six degrees of freedom (DoF) has drawn much less attention, even if many industrial relevant tasks only require 5-DoF such as the class of 3T2R-tasks where the task rotation is axis-symmetric.
 These tasks comprise amongst others arc welding \cite{HuoBar2005}, drilling \cite{ZhuQuCaoYan2013,GuoDonKe2015}, spray-painting \cite{FromGra2010}, laser-cutting, milling, glueing and deburring and are transfered to a greater extend to robotic manipulators in the automotive or aviation industry.
@@ -72,7 +72,7 @@ Reducing the task space can be performed by orthogonal decomposition of the end-
 Another possibility for the resolution of the functional redundancy is a cascaded optimization where the inner loop calculates the inverse kinematics with standard methods and the outer loop optimizes the performance index.
 The optimization can be performed by evaluating the index on a range of rotation angles around the tool axis \cite{ZhuQuCaoYan2013} or by using the incremental change of the rotation around the tool axis directly to adapt the joint angles \cite{GuoDonKe2015}.
 
-The choice of performance indices aims to improve the task execution with measures such as the joint positions quadratic \cite{HuoBar2005} or hyperbolic \cite{ZhuQuCaoYan2013} distances from the their limits, singularity avoidance via Frobenius-norm condition number \cite{ZhuQuCaoYan2013}, squared condition number \cite{LegerAng2016} or a combination of manipulability and condition number of the Jacobian \cite{HuoBar2008} or stiffness \cite{GuoDonKe2015}.
+The choice of performance indices aims to improve the task execution with measures such as the joint positions quadratic \cite{HuoBar2005} or hyperbolic \cite{ZhuQuCaoYan2013} distances from their limits, singularity avoidance via Frobenius-norm condition number \cite{ZhuQuCaoYan2013}, squared condition number \cite{LegerAng2016} or a combination of manipulability and condition number of the Jacobian \cite{HuoBar2008} or stiffness \cite{GuoDonKe2015}.
 
 The characteristic length required to normalize the Jacobian for the performance indices can be either chosen constant regarding the robot geometry \cite{ZhuQuCaoYan2013} or as an additional optimization parameter \cite{LegerAng2016}.
 
@@ -81,21 +81,21 @@ The existing methods each have drawbacks that are avoided by using the new metho
     \item Augmenting the joint space \cite{Baron2000} increases the computational cost and can lead to an ill-conditioned Jacobian \cite{HuoBar2008}.
     \item Using a nested optimization \cite{ZhuQuCaoYan2013,GuoDonKe2015} does not allow using the well-proven gradient projection method.
     \item In \cite{Zlajpah2017} the tool-axis rotation of the end-effector has to be calculated and canceled out in the nullspace.
-    \item Describing the tool axis with two points requires to define a distance between these points, which has to be chosen to gain a good conditioning of the optimization problem \cite{LegerAng2016}.
+    \item Describing the tool axis with two points requires to define a distance between these points, which has to be chosen e.\,g. as the normalized Jacobian's characteristic length to gain a good conditioning of the optimization problem \cite{LegerAng2016}.
     \item All methods have a high mathematical level of abstraction e.\,g. using orthogonal decomposition \cite{HuoBar2008}, linear matrix inequalities and convex optimization \cite{FromGra2010}, rotation and component-selection of the vector part of the quaternion orientation error \cite{Zlajpah2017} or sequential quadratic programming \cite{LegerAng2016}.
 \end{itemize}
 
-This paper transfers the approach from \cite{Zlajpah2017} from the velocity level to the position level and the orientation error is expressed in Euler angles instead of quaternions, which brings some advantages, as described in the following.
-
-The idea is to express the orientation of the end-effector and the orientation error between desired and actual end-effector orientation with a set of reciprocal Euler angles.
-Reciprocity for sets of Euler angles is defined in this paper as successive rotations around elementary axes that have mutually switched order.
+This paper transfers the velocity level approach from \cite{Zlajpah2017} to the position level and the orientation error is expressed in Euler angles instead of quaternions:
+%
+The absolute orientation of the end-effector and the corresponding orientation error between desired and actual end-effector orientation are expressed with two sets of Euler angles which are mutually reciprocal.
+Reciprocity for sets of Euler angles is defined in this paper as successive rotations around intrinsic elementary axes of switched order.
 By this definition, the rotation component belonging to the tool axis in 3T2R tasks is always the same for the absolute orientation and for the orientation error.
 The effect of the tool axis can then be eliminated from the kinematic equations.
-This allows to express the kinematics equation in minimal form which makes it easy to use the gradient projection method to incorporate performance indices.
+This allows to express the kinematics equation in minimal form which makes it easy to use the gradient projection method to incorporate performance indices in inverse kinematics.
 
 The contributions of this paper are
 \begin{itemize}
-    \item A new formulation for the kinematics problem for robots performing 3T2R-tasks,
+    \item a new formulation for the kinematics problem for robot manipulators performing 3T2R-tasks,
     \item an application of the formulation leading to an efficient solution for inverse kinematics with functional redundancy,
     \item thoughts on the implementation of gradients of and w.r.t. rotation matrices and its performance,
     \item the extension of the formalism on parallel robots.
@@ -103,7 +103,7 @@ The contributions of this paper are
 
 The remainder of the paper is structured as follows: The idea of kinematics description using sets of reciprocal Euler angles is elaborated upon in Sec.\, \ref{sec:RecEulAng}.
 Their application in resolving the functional redundancy in inverse kinematics of 3T2R tasks is shown in Sec.\,\ref{sec:ResFuncRed}.
-Sec.\,\ref{sec:ParRobKinConstr} gives an outlook to the definition of kinematic constraints for parallel robots. 
+Sec.\,\ref{sec:ParRobKinConstr} gives an outlook on the definition of kinematic constraints for parallel robots. 
 Sec.\,\ref{sec:Conclusion} concludes the paper.
 
 \section{Using reciprocal Euler Angles for Robot Kinematics}
@@ -133,7 +133,7 @@ describing the end-effector frames $\ks{E}$ position
 \begin{equation}
 \bm{x}_{\mathrm{t}}
 =
-\ortvek{0}{r}{}{0E}
+\ortvek{0}{r}{}{E}
 \label{equ:xt_def}
 \end{equation}  
 %
@@ -163,7 +163,7 @@ using without loss of generality\footnote{other sets of Euler angles with the sa
 \label{equ:def_rmat_xyz}
 \end{equation}
 %
-The deviation between the desired end-effector frame $\ks{Ex}$ expressed with $\bm{x}$ and the actual robots end-effector frame $\ks{Eq}$ expressed with $\bm{f}(\bm{q})$ with 
+The deviation $\bm{\Phi}$ between the desired end-effector frame $\ks{Ex}$ expressed with $\bm{x}$ and the actual robots end-effector frame $\ks{Eq}$ expressed with $\bm{f}(\bm{q})$ with 
 %
 \begin{equation}
 \bm{\Phi}=\begin{pmatrix}
@@ -420,7 +420,7 @@ Depending on the dimension of the matrix, $(\cdot)^\dagger$ denotes the matrix i
 \subsection{Discussion of Singularities}
 
 In \cite{Zlajpah2017} quaternions were used in favor of Euler angles for the orientation error with the grounds that a singularity-free representation of $\bm{\Phi}=\bm{0}$ is needed.
-This is the case for all $A$-$B$-$C$-Euler angles with axes $A \ne C$ like e.\,g. the $Z$-$Y$-$X$ notation used here for $\bm{\alpha}$.
+This is the case for Tait-Bryan angles\footnote{$A$-$B$-$C$-Euler angles with axes $A \ne C$ as opposed to ``proper Euler angles'' with $A = C$. The elementary axes are $A,B,C \in \{ X,Y,Z\}$.} like e.\,g. the $Z$-$Y$-$X$ notation used here for $\bm{\alpha}$.
 For control purposes it can be assumed that the components of the orientation error $\bm{\alpha}$ always stay below 90$^\circ$, which avoids the ``gimbal lock'' representation singularity of Euler angles.
 This assumption can be justified by the consideration that active position and orientation tracking will only produce small errors.
 A singularity-free representation of the absolute orientation $\bm{\beta}$ has to be ensured at the phase of motion planning, as well as avoiding discontinuities of the trajectory.
@@ -578,15 +578,16 @@ Therefore the method does only work if the tool is mounted in a different config
 
 Kinematic constraint equations are used for parallel kinematic machines (``PKM'') to relate end-effector and joint velocities, actuator and end-effector forces or to solve the inverse kinematics problem.
 
-Usually only the translational part of the constraint equations is defined and only the joint positions, velocities and forces associated with the translational motion are calculated.
-This leads to kinematic models where the platform coupling joints are canceled out of the equations. These joints are predominantly passive spherical joints for spatial PKM and passive rotational joints for planar PKM and their kinematic state is generally not of any interest.
+% Quelle: Merlet2006, S. 96
+Usually only the translational part of the constraint equations is defined and only the joint positions, joint velocities and joint forces associated with the translational motion are calculated.
+This leads to kinematic models where the platform coupling joints are canceled out of the equations. These joints are predominantly passive spherical joints for spatial PKM and passive rotational joints for planar PKM and their kinematic state is generally not of any interest \cite{Merlet2006}.
 
 In the following, the definitions for $\bm{x}$ still hold from  (\ref{equ:xt_def}),(\ref{equ:xr_def}), but they now refer to the base frame $\ks{0}$ and the end-effector frame $\ks{E}$ of the whole PKM.
 
 Similar to (\ref{equ:Phit_def}) for serial chains with, the most common kinematic constraint equation 
 %
 \begin{equation}
-\bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) - \ortvek{0}{r}{}{A_iB_i}(\bm{x}_{\mathrm{t}})
+\bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) - \ortvek{0}{r}{}{A_iB_i}(\bm{x})
 \end{equation}
 %
 for leg $i$ is derived from the position of the platform coupling point $B_i$ relative to the base coupling point $A_i$. The vector
@@ -604,7 +605,7 @@ For a formulation without the tool axis rotation a different constraint definiti
 \ortvek{0}{r}{}{0E}(\bm{q}_i) - \ortvek{0}{r}{}{0E}(\bm{x}_{\mathrm{t}})
 \end{equation}
 %
-with the vector from the robot base frame $\ks{0}$ to the PKM end-effector $E$ can be used where 
+with the vector from the robot base frame $\ks{0}$ to the PKM end-effector $\ks{E}$ can be used where 
 only the translational part $\bm{x}_{\mathrm{t}}$ of the end-effector coordinates appear and not the rotational part $\bm{x}_{\mathrm{r}}$.
 As a drawback, all joint angles $\bm{q}_i$ of the leg $i$ and not only the coordinates of the first joints counted from the base are now included
 in the vector
