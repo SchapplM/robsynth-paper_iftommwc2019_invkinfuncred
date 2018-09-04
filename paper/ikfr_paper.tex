@@ -116,36 +116,37 @@ In contrast to all other notations, consecutive elementary rotations like Euler 
 \subsection{Kinematics Description}
 \label{sec:RecEulAng_KinDesc}
 
-We assume a serial kinematic chain with joint positions $\bm{q}$ and the forward kinematics
+A serial kinematic chain is described with the joint positions $\bm{q}$ and the forward kinematics
 %
 \begin{equation}
-\bm{x}
+\bm{x} (\bm{q})
 =
 \begin{pmatrix}
-\bm{x}_{\mathrm{t}}^\transp & \bm{x}_{\mathrm{r}}^\transp
+\bm{x}_{\mathrm{t}}^\transp(\bm{q}) & \bm{x}_{\mathrm{r}}^\transp(\bm{q})
 \end{pmatrix}^\transp
 =
 \bm{f} (\bm{q})
+\label{equ:dirkin}
 \end{equation}  
 %
-describing the end-effector frames $\ks{E}$ position 
+describing the end-effector frames position 
 %
 \begin{equation}
-\bm{x}_{\mathrm{t}}
+\bm{x}_{\mathrm{t}} (\bm{q})
 =
-\ortvek{0}{r}{}{E}
+\ortvek{0}{r}{}{E} (\bm{q})
 \label{equ:xt_def}
 \end{equation}  
 %
 and orientation 
 %
 \begin{equation}
-\rotmat{0}{E}=\bm{R}(\bm{x}_{\mathrm{r}})
+\rotmat{0}{E} (\bm{x}_{\mathrm{r}} (\bm{q}))
 =
-\begin{pmatrix}\vek{n}{}{Ex} & \vek{o}{}{Ex} & \vek{a}{}{Ex}\end{pmatrix}
+\begin{pmatrix}\vek{n}{}{E} & \vek{o}{}{E} & \vek{a}{}{E}\end{pmatrix}
 \end{equation}  
 % 
-with respect to the base frame $\ks{0}$ expressed in a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles
+with respect to the base frame $\ks{0}$ expressed without loss of generality in a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles\footnote{other sets of Euler angles with the same properties may be used as well}
 %
 \begin{equation}
 \bm{x}_{\mathrm{r}}
@@ -156,14 +157,16 @@ with respect to the base frame $\ks{0}$ expressed in a set $\bm{\beta}$ of $X$-$
 \label{equ:xr_def}
 \end{equation} 
 %
-using without loss of generality\footnote{other sets of Euler angles with the same properties may be used as well}
+using 
 %
 \begin{equation}
 \bm{R}(\bm{\beta}) = \bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3) \in \mathrm{SO(3)}.
 \label{equ:def_rmat_xyz}
 \end{equation}
 %
-The deviation $\bm{\Phi}$ between the desired end-effector frame $\ks{Ex}$ expressed with $\bm{x}$ and the actual robots end-effector frame $\ks{Eq}$ expressed with $\bm{f}(\bm{q})$ with 
+In the following, a general pose $\bm{x}$ of the robot end-effector is regarded independent of the forward kinematics $\bm{f}(\bm{q})$ in (\ref{equ:dirkin}).
+The general pose is the desired end-effector pose in the inverse kinematics problem and will be termed with ``$\bm{x}$'' without further supplements for the sake of compactness of the equations.
+The deviation $\bm{\Phi}$ between the desired end-effector frame $\ks{D}$ expressed with $\bm{x}$ and the actual robots end-effector frame $\ks{E}$ expressed with $\bm{f}(\bm{q})$ with
 %
 \begin{equation}
 \bm{\Phi}=\begin{pmatrix}
@@ -175,44 +178,48 @@ The deviation $\bm{\Phi}$ between the desired end-effector frame $\ks{Ex}$ expre
 where the translational part 
 %
 \begin{equation}
-\bm{\Phi}_{\mathrm{t}}(\bm{q},\bm{x}) = \ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{x}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
+\bm{\Phi}_{\mathrm{t}}(\bm{q},\bm{x}) = - \bm{x}_{\mathrm{t}} + \ortvek{0}{r}{}{E}(\bm{q}) \in {\mathbb{R}}^{3}
 \label{equ:Phit_def}
 \end{equation}
 %
-is the vector from $\ks{Ex}$ to $\ks{Eq}$.
+is the vector from $\ks{D}$ to $\ks{E}$.
 The rotational part
 %
 \begin{align}
 \bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) &= \begin{pmatrix}
 \alpha_1  & \alpha_2 & \alpha_3
-\end{pmatrix}^\transp  \nonumber \\
-&=\bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{3}
+\end{pmatrix}^\transp
+=\bm{\alpha}\left(\rotmat{D}{E}\right)\nonumber \\
+&=\bm{\alpha}\left(\rotmat{0}{D}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{E}(\bm{q})\right) \in {\mathbb{R}}^{3}
 \label{equ:Phir_def}
 \end{align}
 %
 of this ``residual vector'' is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}.
-The Euler angle convention of the residual $\bm{\alpha}$ can be chosen independently of the choice for the orientation representation in $\rotmat{0}{E}$ or $\bm{x}_{\mathrm{r}}$.
+The Euler angle convention of the residual $\bm{\alpha}$ can be chosen independently of the choice for the orientation representation in  $\bm{x}_{\mathrm{r}}$.
 The intuitive approach of choosing
 %
 \begin{equation}
-\bm{R}(\bm{\alpha}) := \bm{R}_x(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_z(\alpha_3) \in \mathrm{SO(3)}
+\bm{R}(\bm{\alpha}^*) := \bm{R}_x(\alpha_1^*) \bm{R}_y(\alpha_2^*) \bm{R}_z(\alpha_3^*) \in \mathrm{SO(3)}
+\label{equ:alpha_convention_xyz}
 \end{equation}
 %
 the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\,\ref{fig:frames_6dof} where the intermediate steps of the single elementary rotations are omitted since they have no technical meaning.
-Using this convention an adaption to tasks with functional redundancy is only possible with the methods described in Sec.\,\ref{sec:Intro}.
-
-\begin{figure}[tb!]
+Using this convention an adaption to tasks with functional redundancy is only possible with some of the referenced state of the art methods described in Sec.\,\ref{sec:Intro}.
+%
+\begin{figure}[tb]
     \input{./figures/frame_comparison_6dof.pdf_tex}
+    \vspace{-0.2cm}
     \caption{Overview of the different frames for 6-dof tasks with standard Euler-angle notation.}
     \label{fig:frames_6dof}
 \end{figure} 
+
 
 \subsection{Effect of the reciprocal Euler Angles}
 \label{sec:RecEulAng_effect}
 
 
 
-\begin{figure}[tb!]
+\begin{figure}[htb]
     \input{./figures/frame_comparison_5dof.pdf_tex}
     \caption{overview of the different frames for 5-dof tasks with reciprocal Euler-angle notation.}
     \label{fig:frames_5dof}
@@ -220,22 +227,29 @@ Using this convention an adaption to tasks with functional redundancy is only po
 
 
 %\begin{align}
-%\rotmat{Ex}{Eq}(\bm{x},\bm{q}) 
-%& = \rotmat{0}{Ex}^\transp (\bm{x})\rotmat{0}{Eq}(\bm{q}) \\
+%\rotmat{D}{E}(\bm{x},\bm{q}) 
+%& = \rotmat{0}{D}^\transp (\bm{x})\rotmat{0}{E}(\bm{q}) \\
 %&={}_{(Ex)}\begin{pmatrix}
-%\vek{n}{}{Eq}(\bm{x}_{\mathrm{r}}) & \vek{o}{}{Eq}(\bm{x}_{\mathrm{r}}) & \vek{a}{}{Eq}(\bm{x}_{\mathrm{r}})
+%\vek{n}{}{E}(\bm{x}_{\mathrm{r}}) & \vek{o}{}{E}(\bm{x}_{\mathrm{r}}) & \vek{a}{}{E}(\bm{x}_{\mathrm{r}})
 %\end{pmatrix}
 %\end{align}
 
-It is apparent, that using $\bm{\alpha}$ as defined in the previous subsection\,\ref{sec:RecEulAng_KinDesc}, all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ influence the three unit vectors $\bm{n}_{Ex}$, $\bm{o}_{Ex}$, $\bm{a}_{Ex}$ of the rotation matrix $\rotmat{0}{E}(\bm{x})$.
-
-To encounter this issue we now choose the Euler angle convention $\bm{\alpha}$ for the orientation error to be 
+It is apparent, that using $\bm{\alpha}$ as defined in the previous subsection\,\ref{sec:RecEulAng_KinDesc}, all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ affect the three unit vectors of the rotation matrix
 %
 \begin{equation}
-\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3) \in \mathrm{SO(3)}.
+\rotmat{0}{D} (\bm{x}_{\mathrm{r}})
+=
+\begin{pmatrix}\vek{n}{}{D} & \vek{o}{}{D} & \vek{a}{}{D}\end{pmatrix}.
+\end{equation}  
+% 
+To encounter this issue the Euler angle convention $\bm{\alpha}$ for the orientation error is now chosen to be 
+%
+\begin{equation}
+\bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3) \in \mathrm{SO(3)}
 \label{equ:def_rmat_zyxr}
 \end{equation}
 %
+instead of the definition from (\ref{equ:alpha_convention_xyz}).
 This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the $X$-$Y$-$Z$-convention $\bm{\beta}$ for the absolute orientation.
 %
 The reciprocity only refers to the switched order of the elementary axes $X$, $Y$ and $Z$.
@@ -274,7 +288,7 @@ relating to $\bm{x}$ and the modified rotational part
 \label{equ:etar_def}
 \end{equation}
 %
-where the last rotation $\beta_3$ around the $z$-axis is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily.
+where the last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily.
 
 We now distinguish the frames $\ks{A1}$ and $\ks{A2}$ resulting from intermediate elementary rotations sketched in Fig.\,\ref{fig:frames_5dof} with the partial frame rotation to the desired frame
 %
@@ -293,7 +307,7 @@ and the partial frame rotation
 \begin{align}
 \rotmat{0}{A2} 
 &= 
-\rotmat{0}{Eq}(\bm{q})
+\rotmat{0}{E}(\bm{q})
 \left(\bm{R}_x(\alpha_3) \bm{R}_y(\alpha_2)\right)^\transp \\ 
 &=
 \begin{pmatrix}
@@ -303,19 +317,20 @@ and the partial frame rotation
 %
 from the actual frame and the $x$- and $y$-axis error components.
 
-The frames $\ks{A1}$, $\ks{A2}$ and $\ks{Ex}$ all share the same $z$-axis
+The frames $\ks{A1}$, $\ks{A2}$ and $\ks{D}$ all share the same $z$-axis
 %
 \begin{equation}
-\vek{a}{}{Ex}
+\vek{a}{}{D}
 =
 \vek{a}{}{A1}
 =
 \vek{a}{}{A2}
+\label{equ:z_axis_equal}
 \end{equation}
 %
-which is also the tool axis as can be seen in Fig.\,\ref{fig:frames_5dof}.
+which is also the tool axis as can be seen in Fig.\,\ref{fig:frames_5dof}, since the only transformation between these frames is a rotation $\bm{R}_z$ around the $z$-axes from (\ref{equ:z_axis_equal}).
 
-Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_1$ are defined around the same axis, $\beta_3$ only influences $\alpha_1$ and not $\alpha_2$ and $\alpha_3$ as derived in the appendix \ref{sec:appendix_eulerreciproc} and can be expressed by
+Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_1$ are defined around the same axis, $\beta_3$ only influences $\alpha_1$ and not $\alpha_2$ and $\alpha_3$, as derived in the appendix \ref{sec:appendix_eulerreciproc}, which can be expressed by
 %
 \begin{align}
 \begin{pmatrix}
@@ -343,8 +358,8 @@ This property of the reciprocal Euler angles allows a kinematic description of r
 \subsection{Application on 3T2R Tasks}
 \label{sec:RecEulAng_3T2R_app}
 
-The standard methods introduced in Sec.\,\ref{sec:Intro} for solving the inverse kinematics for 3T2R tasks and exploiting the functional redundancy struggle with the definition a Jacobian matrix for the problem with appropriate dimensions.
-To obtain a Jacobian with minimal row dimension we now describe the kinematic condition for the 3T2R problem in the coordinates $\bm{\eta}$ as
+The standard methods introduced in Sec.\,\ref{sec:Intro} for solving the inverse kinematics for 3T2R tasks and exploiting the functional redundancy struggle with the definition of a Jacobian matrix with appropriate dimensions.
+To obtain a Jacobian with minimal row dimension the kinematic condition for the 3T2R problem in the coordinates $\bm{\eta}$ is now described as
 %
 \begin{equation}
 \bm{\Psi}=\begin{pmatrix}
@@ -359,7 +374,7 @@ following the definition for $\bm{\Phi}$ from (\ref{equ:Phi_def}) with the trans
 = 
 \bm{\Phi}_{\mathrm{t}}(\bm{q},\bm{x}) 
 =
-\ortvek{0}{r}{}{E}(\bm{q}) - \ortvek{0}{r}{}{E}(\bm{\eta}_{\mathrm{t}}) \in {\mathbb{R}}^{3}
+- \bm{\eta}_{\mathrm{t}} + \ortvek{0}{r}{}{E}(\bm{q}) \in {\mathbb{R}}^{3}
 \end{equation}
 %
 equal to (\ref{equ:Phit_def}) and the rotational part
@@ -371,19 +386,19 @@ equal to (\ref{equ:Phit_def}) and the rotational part
 \end{pmatrix}^\transp \nonumber \\
 &=
 \begin{pmatrix}\bm{0}_{2 \times 1} & \bm{1}_{2 \times 2}\end{pmatrix} \bm{\Phi} (\bm{q},\bm{x}) \nonumber \\
-&= \begin{pmatrix} \bm{0} & \bm{1}\end{pmatrix} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right) \in {\mathbb{R}}^{2}
+&= \begin{pmatrix} \bm{0} & \bm{1}\end{pmatrix} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{E}(\bm{q})\right) \in {\mathbb{R}}^{2}
 \end{align}
 %
 adapted from (\ref{equ:Phir_def}) by using (\ref{equ:alpha_dep_beta} and (\ref{equ:etar_def}).
 
 The condition $\bm{\Phi}=\bm{0}$ or $\bm{\Psi}=\bm{0}$ leads to a valid configuration of positioning the end-effector and the complete orientation of the end-effector (using $\bm{\Phi}$) or the orientation only of the tool-axis (using $\bm{\Psi}$).
-Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots with 6-DoF can be derived with the Taylor series of $\bm{\Phi}}(\bm{q},\bm{x})$ to
+Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots with 6-DoF at the step $k+1$ can be derived with the Taylor series of $\bm{\Phi}(\bm{q},\bm{x})$ to
 %
 \begin{equation}
 \bm{\Phi}(\bm{q}^{k+1},\bm{x}) = 
 \bm{\Phi}(\bm{q}^{k},\bm{x})
 +
-\frac{\partial}{\partial \bm{q}} \bm{\Phi}(\bm{q}^k,\bm{x}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}^k)
+\frac{\partial}{\partial \bm{q}} \bm{\Phi}(\bm{q},\bm{x}) \biggr\rvert_{\bm{q}^k} (\bm{q}^{k+1} - \bm{q}^k)
 \label{equ:taylor_phi}
 \end{equation}
 %
@@ -419,7 +434,7 @@ Depending on the dimension of the matrix, $(\cdot)^\dagger$ denotes the matrix i
 
 \subsection{Discussion of Singularities}
 
-In \cite{Zlajpah2017} quaternions were used in favor of Euler angles for the orientation error with the grounds that a singularity-free representation of $\bm{\Phi}=\bm{0}$ is needed.
+In \cite{Zlajpah2017} quaternions were used in favor of Euler angles for the orientation error with the reasons that a singularity-free representation of $\bm{\Phi}=\bm{0}$ is needed.
 This is the case for Tait-Bryan angles\footnote{$A$-$B$-$C$-Euler angles with axes $A \ne C$ as opposed to ``proper Euler angles'' with $A = C$. The elementary axes are $A,B,C \in \{ X,Y,Z\}$.} like e.\,g. the $Z$-$Y$-$X$ notation used here for $\bm{\alpha}$.
 For control purposes it can be assumed that the components of the orientation error $\bm{\alpha}$ always stay below 90$^\circ$, which avoids the ``gimbal lock'' representation singularity of Euler angles.
 This assumption can be justified by the consideration that active position and orientation tracking will only produce small errors.
@@ -431,22 +446,30 @@ A singularity-free representation of the absolute orientation $\bm{\beta}$ has t
 The Jacobian\footnote{$\bm{\Psi}_{\mathrm{r},\partial\bm{q}}=\begin{pmatrix} \bm{1} & \bm{0}\end{pmatrix} \bm{\Phi}_{\mathrm{r},\partial\bm{q}}$ is calculated in the same way w.l.o.g.}
 $\bm{\Phi}_{\partial\bm{q}}$ of (\ref{equ:taylor_phi}) consists of nested non-linear functions and does not use the geometric Jacobian of the serial link manipulator for the rotational part, which is easy to calculate. 
 %
-However $\bm{\Phi}_{\partial\bm{q}}$ can be implemented efficiently by exploiting the chain rule and sparsity of the matrices with partial derivatives as shown in the following.
+However, $\bm{\Phi}_{\partial\bm{q}}$ can be implemented efficiently by exploiting the chain rule and sparsity of the matrices with partial derivatives as shown in the following.
 
-We define the column operator
+We define the column operator $\overline{\bm{R}}$ for matrices with
 %
 \begin{equation}
 \bm{R}=\begin{pmatrix}
 \bm{n} & \bm{o} & \bm{a}
 \end{pmatrix}
+ \in {\mathbb{R}}^{3 \times 3}
 \Rightarrow
 \overline{\bm{R}}=\begin{pmatrix}
 \bm{n} \\ \bm{o} \\ \bm{a}
-\end{pmatrix}
+\end{pmatrix} \in {\mathbb{R}}^{9}
 \end{equation}
 %
-for rotation matrices to avoid differentiating matrices or w.r.t. matrices.
-Matrix multiplication is expressed with the product operator
+to avoid differentiating matrices or w.r.t. matrices.
+Matrix multiplication is then expressed with the product operator
+%
+\begin{equation}
+\overline{\Pi}: {\mathbb{R}}^{9} \times {\mathbb{R}}^{9} \rightarrow {\mathbb{R}}^{9}
+\label{equ:matprod_def}
+\end{equation}
+%
+with
 %
 \begin{equation}
 \rotmat{1}{3}
@@ -456,11 +479,11 @@ Matrix multiplication is expressed with the product operator
 \Rightarrow
 \rotmato{1}{3}
 =
-\overline{\prod}\left[ \rotmato{1}{2}, \rotmato{2}{3}\right]
+\overline{\prod}\left( \rotmato{1}{2}, \rotmato{2}{3}\right)
 \label{equ:matprod}
 \end{equation}
 %
-which can be seen as a function. The transposition operator
+The transposition operator $\bm{P}_\transp$ is a $9 \times 9$ permutation matrix with
 %
 \begin{equation}
 \rotmat{2}{1}
@@ -469,11 +492,10 @@ which can be seen as a function. The transposition operator
 \Rightarrow
 \rotmato{2}{1}
 =
-\bm{P}_\transp \rotmato{1}{2}
+\bm{P}_\transp \rotmato{1}{2}.
 \end{equation}
 %
-is a $9 \times 9$ permutation matrix.
-The Euler angles can be calculated from a rotation matrix using these operators with
+The Euler angles can be calculated from a rotation matrix in the same way as before using these operators with the notation
 %
 \begin{equation}
 \overline{\bm{\alpha}}(\overline{\bm{R}})
@@ -486,29 +508,29 @@ Finally applying this to the rotational part of the residual vector Jacobian and
 \begin{align}
 \frac{\partial}{\partial \bm{q}}\bm{\Phi}_{\mathrm{r}}
 &=
-\frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\rotmat{0}{Ex}^\transp(\bm{x}) \rotmat{0}{Eq}(\bm{q})\right) \label{equ:grad_Phi_q}\\
+\frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\rotmat{0}{D}^\transp(\bm{x}) \rotmat{0}{E}(\bm{q})\right) \label{equ:grad_Phi_q}\\
 \bm{\Phi}_{\mathrm{r},\partial\bm{q}}
 &=
-\frac{\partial}{\partial \bm{q}} \overline{\bm{\alpha}}\left(\overline{\prod}\left[ \rotmato{0}{Ex}^\transp(\bm{x}), \rotmato{0}{Eq}(\bm{q})\right]\right) \nonumber \\
+\frac{\partial}{\partial \bm{q}} \overline{\bm{\alpha}}\left(\overline{\prod}\left( \rotmato{0}{D}^\transp(\bm{x}), \rotmato{0}{E}(\bm{q})\right)\right) \nonumber \\
 &=
 \left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)
-\left(\frac{\partial }{\partial \overline{\bm{R}}_2}
-\overline{\prod}\left[\rotmato{0}{Ex}, \overline{\bm{R}}_2\right]\right)
-\left(\frac{\partial}{\partial \bm{q}} \rotmato{0}{Eq}(\bm{q})\right).  \nonumber
+\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}
+\right)
+\left(\frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} \right).  \nonumber
 \end{align}
 The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ is enclosed in the geometric Jacobian of the manipulator and is not regarded at this point to focus on the rotational aspects.
 
 The two first partial derivatives from (\ref{equ:grad_Phi_q}) are sparse matrices and can be calculated efficiently as shown in appendix \ref{sec:appendix_gradient_matrix}.
-The last partial derivative $\partial \rotmato{}{Eq}/\partial \bm{q}$ can be derived efficiently with computer algebra systems.
+The last partial derivative $\partial \rotmato{0}{E}/\partial \bm{q}$ can be derived efficiently with computer algebra systems.
 
 If a rotation $\rotmato{0}{N}(\bm{q})$ to the last robot link frame and a constant rotation $\rotmato{N}{E}$ to the end-effector frame are used to account for exchangeable end-effectors or tools, the properties of the column-operator can be used to substitute the last term in (\ref{equ:grad_Phi_q}) with
 %
 \begin{align}
 \frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} 
 &=
-\frac{\partial}{\partial \bm{q}} \overline{\prod}\left[ \rotmato{0}{N}(\bm{q}), \rotmato{N}{E}\right] \nonumber \\
+\frac{\partial}{\partial \bm{q}} \overline{\prod}\left( \rotmato{0}{N}(\bm{q}), \rotmato{N}{E}\right) \nonumber \\
 &=
-\frac{\partial}{\partial \overline{\bm{R}}_1} \overline{\prod}\left[ \overline{\bm{R}}_1, \rotmato{N}{E}\right]
+\frac{\partial}{\partial \rotmato{0}{N}} \overline{\prod}\left( \rotmato{0}{N}, \rotmato{N}{E}\right)
 \frac{\partial}{\partial \bm{q}} \rotmato{0}{N}(\bm{q}).
 \label{equ:ee_rotation_gradq}
 \end{align}
@@ -522,9 +544,9 @@ The inverse kinematics formalism (\ref{equ:deltaq_psi}) described in the previou
 
 The typical scenario for 3T2R tasks in industry is a serial link robot with $\mathrm{dim}(\bm{q})>5$.
 Most commonly a classical industrial robot with $\mathrm{dim}(\bm{q})=6$ will be used.
-Since $\mathrm{dim}(\bm{\Psi})=5$ at least one DoF is free for optimization additional criteria.
+Since $\mathrm{dim}(\bm{\Psi})=5$ at least one DoF is free for optimization of additional criteria.
 
-For the sake of simplicity as a simple additional criterion the summed weighted quadratic distances
+For the sake of simplicity as an additional criterion the summed $\bm{W}$-weighted quadratic distances
 %
 \begin{equation}
 h(\bm{q})
@@ -532,7 +554,7 @@ h(\bm{q})
 \frac{1}{2} (\bm{q}-\bar{\bm{q}})^\transp\bm{W}(\bm{q}-\bar{\bm{q}})
 \end{equation}  
 %
-of the joint positions $\bm{q}$ from their respective mean position $\bar{\bm{q}}$ will be used.
+of the joint positions $\bm{q}$ from their respective reference position $\bar{\bm{q}}$ will be used.
 Minimizing $h(\bm{q})$ avoids the risk of joints reaching their technical limits.
 The gradient
 %
@@ -559,14 +581,14 @@ The gradient $h_{\partial\bm{q}}=\partial h/\partial \bm{q}$ is projected into t
 where the nullspace incremental motion $\bm{\Delta}\bm{q}_{\mathrm{N}}$ does not affects the task achievement ensured via $\bm{\Delta}\bm{q}_{\mathrm{T}}$ \cite{Yoshikawa1984}.
 
 It is reported in \cite{GuoDonKe2015} that their optimization does not work for industrial robots where the tool axis is aligned parallel to the last robot joint axis.
-This ``pointing configuration'' can also not be addressed by the nullspace projection from (\ref{equ:nullspace}), since the nullspace corresponds to the last robot axis and
+This ``pointing configuration'' can also not be addressed by the nullspace projection from (\ref{equ:nullspace}), since the nullspace corresponds to the last robot axis and (in the case of a six-DoF robot)
 %
 \begin{equation}
 \bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}
 =
 \begin{pmatrix}
-\bm{0} & \bm{0} \\
-\bm{0} & 1
+\bm{0}_{5 \times 5} & \bm{0}_{5 \times 1} \\
+\bm{0}_{1 \times 5} & 1_{1 \times 1}
 \end{pmatrix}
 \end{equation}
 %
@@ -582,30 +604,35 @@ Kinematic constraint equations are used for parallel kinematic machines (``PKM''
 Usually only the translational part of the constraint equations is defined and only the joint positions, joint velocities and joint forces associated with the translational motion are calculated.
 This leads to kinematic models where the platform coupling joints are canceled out of the equations. These joints are predominantly passive spherical joints for spatial PKM and passive rotational joints for planar PKM and their kinematic state is generally not of any interest \cite{Merlet2006}.
 
-In the following, the definitions for $\bm{x}$ still hold from  (\ref{equ:xt_def}),(\ref{equ:xr_def}), but they now refer to the base frame $\ks{0}$ and the end-effector frame $\ks{E}$ of the whole PKM.
+In the following, the definitions for $\bm{x}$ still hold from  (\ref{equ:xt_def}),\,(\ref{equ:xr_def}), but they now refer to the base frame $\ks{0}$ and the end-effector frame $\ks{D}$ of the whole PKM instead just of single kinematic chains.
+The end-effector frame expressed with the task frame coordinates $\bm{x}$ is denoted with ``D'' to comply with the notation from Sec.\,\ref{sec:RecEulAng} used for the inverse kinematics problem of serial chain robots.
 
-Similar to (\ref{equ:Phit_def}) for serial chains with, the most common kinematic constraint equation 
+
+The most common kinematic constraint equation 
 %
 \begin{equation}
-\bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) - \ortvek{0}{r}{}{A_iB_i}(\bm{x})
+\bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = - \ortvek{0}{r}{}{A_iB_i}(\bm{x}) + \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) 
 \end{equation}
 %
-for leg $i$ is derived from the position of the platform coupling point $B_i$ relative to the base coupling point $A_i$. The vector
+for leg $i$ is derived from the position of the platform coupling point $B_i$ relative to the base coupling point $A_i$ \cite{Merlet2006}.
+The second term $\ortvek{0}{r}{}{A_iB_i}(\bm{q}_i)$ corresponds to the forward kinematics of the serial chain. 
+The vector
 \begin{equation}
 \ortvek{0}{r}{}{A_iB_i}(\bm{x}) = 
 - \ortvek{0}{r}{}{0A_i}
-+ \ortvek{0}{r}{}{0E}(\bm{x}_{\mathrm{t}}) + \rotmat{0}{E}(\bm{x}_{\mathrm{r}}) \ortvek{E}{r}{}{EB_i}
++ \bm{x}_{\mathrm{t}} + \rotmat{0}{D}(\bm{x}_{\mathrm{r}}) \ortvek{D}{r}{}{DB_i}
 \end{equation}
 %
-includes the term $\rotmat{0}{E}(\bm{x}_{\mathrm{r}})$ that depends on the full orientation $\bm{x}_{\mathrm{r}}$ of the end-effector with the rotation about the tool axis in 3T2R tasks.
+includes the term $\rotmat{0}{D}(\bm{x}_{\mathrm{r}})$ that depends on the full  orientation $\bm{x}_{\mathrm{r}}$ of the end-effector with the rotation about the tool axis in 3T2R tasks.
 For a formulation without the tool axis rotation a different constraint definition
 %
 \begin{equation}
 \bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = 
-\ortvek{0}{r}{}{0E}(\bm{q}_i) - \ortvek{0}{r}{}{0E}(\bm{x}_{\mathrm{t}})
+\ortvek{0}{r}{}{DE}(\bm{q}_i,\bm{x}) =
+- \bm{x}_{\mathrm{t}} + \ortvek{0}{r}{}{0E}(\bm{q}_i) 
 \end{equation}
 %
-with the vector from the robot base frame $\ks{0}$ to the PKM end-effector $\ks{E}$ can be used where 
+similar to (\ref{equ:Phit_def}) with the vector from the robot base frame $\ks{0}$ to the PKM end-effector $\ks{D}$ can be used where 
 only the translational part $\bm{x}_{\mathrm{t}}$ of the end-effector coordinates appear and not the rotational part $\bm{x}_{\mathrm{r}}$.
 As a drawback, all joint angles $\bm{q}_i$ of the leg $i$ and not only the coordinates of the first joints counted from the base are now included
 in the vector
@@ -622,11 +649,11 @@ Here again the definition
 %
 \begin{align}
 \bm{\Phi}_{\mathrm{r}_i}(\bm{q},\bm{x})
-=\bm{\alpha}\left(\rotmat{0}{Ex}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{Eq}(\bm{q})\right)
+=\bm{\alpha}\left(\rotmat{0}{D}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{E}(\bm{q})\right)
 \end{align}
 %
 from (\ref{equ:Phir_def}) is used.
-The set of constraints $\bm{\Phi}_{i}$ for each leg of the PKM can again be reduced to $\bm{\Psi}_{i}$ by removing the last rotational component\footnote{The following steps can also be performed using $\bm{\Psi}$, but $\bm{\Phi}$ is used for simplifying the equations.}, as described in Sec.\,\ref{sec:RecEulAng_3T2R_app}.
+The set of constraints $\bm{\Phi}_{i}$ for each leg of the PKM can again be reduced to $\bm{\Psi}_{i}$ by removing the superfluous rotational component\footnote{The following steps can also be performed using $\bm{\Psi}$, but $\bm{\Phi}$ is used for simplifying the equations.} in case of a 3T2R task, as described in Sec.\,\ref{sec:RecEulAng_3T2R_app}.
 
 The constraint equations
 %
@@ -641,8 +668,8 @@ The constraint equations
 \end{pmatrix}
 \end{equation}
 %
-for the PKM are assembled from all $m$.
-The constraints $\bm{\Phi}$ and $\bm{\Psi}$ can be used interchangeably.
+of the PKM are assembled for all $m$ legs.
+% The constraints $\bm{\Phi}$ and $\bm{\Psi}$ can be used interchangeably.
 The differential kinematics of the PKM is calculated with the time derivative
 %
 \begin{equation}
@@ -691,27 +718,38 @@ can be simplified similar to the process described in Sec.\,\ref{sec:RecEulAng_i
 \begin{align}
 \frac{\partial}{\partial \bm{x}_{\mathrm{r}}}\bm{\Phi}_{\mathrm{r}_i}
 &=
-\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left((\rotmat{0}{Eq}^\transp(\bm{q}_i) \rotmat{0}{Ex}(\bm{x}_{\mathrm{r}}))^\transp\right) \label{equ:grad_Phi_x} \\
-\bm{\Phi}_{\mathrm{r}_i,\partial \bm{x}_{\mathrm{r}}} 
+\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left(\left(\rotmat{0}{E}^\transp(\bm{q}_i) \rotmat{0}{D}(\bm{x}_{\mathrm{r}})\right)^\transp\right) \label{equ:grad_Phi_x} \\
 &=
 \frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \overline{\bm{\alpha}}\left(
 \bm{P}_{\mathrm{T}}
-\overline{\prod}\left[ \rotmato{0}{Eq}^\transp(\bm{q}_i), \rotmato{0}{Ex}(\bm{x}_{\mathrm{r}})\right]\right) \nonumber \\
+\overline{\prod}\left( \rotmato{0}{E}^\transp(\bm{q}_i), \rotmato{0}{D}(\bm{x}_{\mathrm{r}})\right)\right) \nonumber \\
 &=
 \frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}
 \bm{P}_{\mathrm{T}}
-\frac{\partial \overline{\prod}\left[ \rotmato{0}{Eq}^\transp, \overline{\bm{R}}_2\right]}{\partial \overline{\bm{R}}_2}
-\frac{\partial \rotmato{0}{Ex}(\bm{x}_{\mathrm{r}})}{\partial \bm{x}_{\mathrm{r}}} \nonumber
+\frac{\partial \overline{\prod}\left( \rotmato{0}{E}^\transp, \rotmato{0}{D}\right)}{\partial \rotmato{0}{D}}
+\frac{\partial \rotmato{0}{D}(\bm{x}_{\mathrm{r}})}{\partial \bm{x}_{\mathrm{r}}} \nonumber
 \end{align}
 %
 where the simplicity of the single expression is demonstrated in appendix\,\ref{sec:appendix_gradient_matrix}.
+
+Again, only the rotational component $\bm{\Phi}_{\mathrm{r}_i,\partial \bm{x}_{\mathrm{r}}}$ of 
+%
+\begin{equation}
+\partial \bm{\Phi}_i/\partial \bm{x}
+=
+\begin{pmatrix}
+\partial\bm{\Phi}_{\mathrm{t}_i}/\partial \bm{x}_{\mathrm{t}} & \partial\bm{\Phi}_{\mathrm{t}_i}/\partial \bm{x}_{\mathrm{r}} \\
+\bm{0} & \partial\bm{\Phi}_{\mathrm{r}_i}/\partial \bm{x}_{\mathrm{r}} \\
+\end{pmatrix}
+\end{equation}
+is regarded due to the focus on rotation in this paper.
 
 Modifying (\ref{equ:PKM_phi_grad_q}) and (\ref{equ:PKM_phi_grad_x}) to use $\bm{\Psi}_{\partial \bm{q}}$ and $\bm{\Psi}_{\partial \bm{x}}$ for 3T2R tasks promises to improve motion planning and controllers by calculating actuator forces considering the tool symmetry and allowing the incorporation of nullspace movements and forces.
 
 \section{Conclusions}
 \label{sec:Conclusion}
 
-We presented a novel concept to formulate the inverse kinematics problem of serial kinematic chains using reciprocal Euler angles.
+This paper presented a novel concept to formulate the inverse kinematics problem of serial kinematic chains using reciprocal Euler angles.
 This exploits the properties of Euler angles to reduce the number of coordinates required for 3T2R tasks which are of high industrial relevance.
 Applications to the inverse kinematics of serial robots and the kinematic constraint equations of parallel robots are given.
 The detailed view on the practical implementation aims at facilitating the understanding of the approach and at reducing the barrier for potential users.
@@ -725,19 +763,19 @@ Future work includes comparative simulative evaluation against state of the art 
 
 This section derives the effect of the reciprocity of Euler-angles at the example of the kinematics description of Sec.\,\ref{sec:RecEulAng} and the frames of Fig.\,\ref{fig:frames_6dof}.
 
-An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation matrix from\footnote{The matrix rotates vectors from $\ks{Eq}$ to $\ks{Ex}$} the actual end-effector frame $\ks{Eq}$ to the desired frame end-effector $\ks{Ex}$
+An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation matrix from\footnote{The matrix rotates vectors from $\ks{E}$ to $\ks{D}$} the actual end-effector frame $\ks{E}$ to the desired frame end-effector $\ks{D}$
 %
 \begin{equation}
-\rotmat{Ex}{Eq}(\bm{\beta},\bm{q})
+\rotmat{D}{E}(\bm{\beta},\bm{q})
 = 
-\rotmat{0}{Ex}^\transp (\bm{\beta})\rotmat{0}{Eq}(\bm{q})
+\rotmat{0}{D}^\transp (\bm{\beta})\rotmat{0}{E}(\bm{q})
 \label{equ:orierr_1_rotmat}
 \end{equation}
 %
 where with the Euler-$X$-$Y$-$Z$-angles we have
 %
 \begin{equation}
-\rotmat{0}{Ex}^\transp(\bm{\beta})
+\rotmat{0}{D}^\transp(\bm{\beta})
 =
 \bm{R}_z(-\beta_3) \bm{R}_y(-\beta_2) \bm{R}_x(-\beta_1)
 \end{equation}
@@ -753,15 +791,15 @@ The additional rotation corresponds to the tool axis defined in Sec.\,\ref{sec:R
 and leads to a new residual orientation error expressed as a rotation matrix
 %
 \begin{align}
-\rotmat{Ex}{Eq}(\bm{\beta}',\bm{q})
+\rotmat{D}{E}(\bm{\beta}',\bm{q})
 &=
-\rotmat{0}{Ex}^\transp (\bm{\beta}') \rotmat{0}{Eq}(\bm{q}) \nonumber\\
+\rotmat{0}{D}^\transp (\bm{\beta}') \rotmat{0}{E}(\bm{q}) \nonumber\\
 &=
-\left(\rotmat{0}{Ex}(\bm{\beta})\bm{R}_z(-\delta)\right)^\transp \rotmat{0}{Eq}(\bm{q}) \nonumber \\
+\left(\rotmat{0}{D}(\bm{\beta})\bm{R}_z(-\delta)\right)^\transp \rotmat{0}{E}(\bm{q}) \nonumber \\
 &=
-\bm{R}_z(\delta) \rotmat{0}{Ex}^\transp (\bm{\beta}) \rotmat{0}{Eq}(\bm{q}) \nonumber \\
+\bm{R}_z(\delta) \rotmat{0}{D}^\transp (\bm{\beta}) \rotmat{0}{E}(\bm{q}) \nonumber \\
 &=
-\bm{R}_z(\delta) \rotmat{Ex}{Eq}(\bm{\beta},\bm{q}).
+\bm{R}_z(\delta) \rotmat{D}{E}(\bm{\beta},\bm{q}).
 \label{equ:orierr_2_rotmat}
 \end{align}
 
@@ -769,8 +807,13 @@ We define the first residual orientation error from (\ref{equ:orierr_1_rotmat}) 
 %
 % Quelle: equations/R1.txt (aus ikfr_paper_equations.mw)
 \begin{align}
-\rotmat{Ex}{Eq}(\bm{\beta},\bm{q})
-=\left[ \begin {array}{ccc} {n_x}&{o_x}&{a_x} \\ \noalign{\medskip}{n_y}&{o_y}&{a_y}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] 
+\rotmat{D}{E}(\bm{\beta},\bm{q})
+=
+\begin{bmatrix}
+{n_x}&{o_x}&{a_x} \\
+{n_y}&{o_y}&{a_y} \\ 
+{n_z}&{o_z}&{a_z} \\ 
+\end{bmatrix}
 \label{equ:orierr_1_rotmat_def}
 \end{align}
 %
@@ -791,7 +834,7 @@ The second error corresponding to $\bm{\beta}'$ only differs regarding the addit
 %
 % Quelle: equations/R2.txt (aus ikfr_paper_equations.mw)
 \begin{align}
-&\rotmat{Ex}{Eq}(\bm{\beta}',\bm{q})
+&\rotmat{D}{E}(\bm{\beta}',\bm{q})
 = \\
 &\left[ \begin {array}{ccc} { C_{\delta}}\,{n_x}-{ S_{\delta}}\,{ n_y}&{ C_{\delta}}\,{o_x}-{ S_{\delta}}\,{o_y}&{ C_{\delta}}\,{ a_x}-{ S_{\delta}}\,{a_y}\\ \noalign{\medskip}{ C_{\delta}}\,{n_y}+ { S_{\delta}}\,{n_x}&{ C_{\delta}}\,{o_y}+{ S_{\delta}}\,{o_x}&{  C_{\delta}}\,{a_y}+{ S_{\delta}}\,{a_x}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] \nonumber
 \end{align}
@@ -824,8 +867,7 @@ already displayed in (\ref{equ:alpha_dep_beta}) with the consequences for the ki
 \label{sec:appendix_gradient_matrix}
 
 The single expressions derived in Sec.\,\ref{sec:RecEulAng_implement} for the serial chains and in Sec.\,\ref{sec:ParRobKinConstr} for the parallel chains can be calculated with low computational effort from the definition of the $X$-$Y$-$Z$- and $Z$-$Y$-$X$-Euler angles from (\ref{equ:def_rmat_xyz}), (\ref{equ:def_rmat_zyxr}) and (\ref{equ:alpha_xyz}).
-
-The gradient in (\ref{equ:grad_Phi_q}) becomes
+With $\overline{\bm{R}}=[n_x,n_y,n_z ,o_x,o_y,o_z,a_x,a_y,a_z]^\transp$ the gradient in (\ref{equ:grad_Phi_q}) becomes
 % Quelle: equations/dalphadRb.txt (aus ikfr_paper_equations.mw)
 \begin{equation}
 \left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)^\transp
@@ -882,10 +924,10 @@ and the gradient w.r.t. the first factor used in (\ref{equ:ee_rotation_gradq}) i
 \end{pmatrix}
 \end{equation}
 %
-where $n_x,ny,...$ are the entries of $\bm{R}_2$ and the $\mathrm{diag}$-matrices are $3 \times 3$.
+where $n_x,n_y,...$ are the entries of $\bm{R}_2$ and the $\mathrm{diag}$-matrices are $3 \times 3$.
 \section{Acknowledgements}
 
-The financial support from the Deutsche Forschungsgemeinschaft (German Research Foundation, DFG) under grant 341489206 is gracefully acknowledged.
+The financial support from the Deutsche Forschungsgemeinschaft (German Research Foundation, DFG) under grant number OR 196/33-1 is gracefully acknowledged.
 
 % BIBLIOGRAPHY
 \bibliographystyle{ieeetr}

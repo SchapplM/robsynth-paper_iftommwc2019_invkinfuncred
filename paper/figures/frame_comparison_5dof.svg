@@ -117,15 +117,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="109.8152"
-     inkscape:cy="87.659828"
+     inkscape:cx="144.918"
+     inkscape:cy="80.336222"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
      borderlayer="true"
      inkscape:window-width="1867"
-     inkscape:window-height="1176"
-     inkscape:window-x="53"
+     inkscape:window-height="1056"
+     inkscape:window-x="1973"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
      showguides="false">
@@ -141,7 +141,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -179,7 +179,7 @@
          id="tspan4159-6"
          x="255.05423"
          y="1004.5942"
-         style="font-size:3.75px">$\ks{Ex}$</tspan></text>
+         style="font-size:3.75px">$\ks{D}$</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -203,7 +203,7 @@
          id="tspan4159-62"
          x="57.63615"
          y="1025.7515"
-         style="font-size:3.75px">$\ks{Eq}$</tspan></text>
+         style="font-size:3.75px">$\ks{E}$</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend-9)"
        d="m 21.569071,1005.8241 c 4.642857,13.75 8.430929,16.5381 32.98893,18.788"
@@ -227,7 +227,7 @@
          id="tspan4159-5-6"
          x="20.357143"
          y="1041.2195"
-         style="font-size:3.75px">$\rotmat{0}{Eq}(\bm{q})$</tspan></text>
+         style="font-size:3.75px">$\rotmat{0}{E}(\bm{q})$</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
