@@ -52,7 +52,7 @@
     \put(0.06407596,0.20043549){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{0}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{frame_comparison_6dof.pdf}}%
     \put(0.87762473,0.19971546){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{D}$}}}%
-    \put(0.11663265,0.35594562){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\rotmat{0}{D}(\bm{x})=\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3)$}}}%
+    \put(0.11663265,0.35594562){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\rotmat{0}{D}(\bm{x}_{\mathrm{r}})=\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3)$}}}%
     \put(0.410554,0.11848774){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{E}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{frame_comparison_6dof.pdf}}%
     \put(0.08207483,0.04492462){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\rotmat{0}{E}(\bm{q})$}}}%

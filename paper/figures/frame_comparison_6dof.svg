@@ -72,7 +72,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="153.13812"
+     inkscape:cx="104.6508"
      inkscape:cy="49.832358"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -95,7 +95,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -145,7 +145,7 @@
          id="tspan4159-5"
          x="28.928572"
          y="964.07648"
-         style="font-size:3.75px">$\rotmat{0}{D}(\bm{x})=\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3)$</tspan></text>
+         style="font-size:3.75px">$\rotmat{0}{D}(\bm{x}_{\mathrm{r}})=\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3)$</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
