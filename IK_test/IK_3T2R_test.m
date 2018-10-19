@@ -32,7 +32,7 @@ for mdlname2 = RobotNames
       for i = 1:size(TSS.Q,1)
         q = TSS.Q(i,:)';
         T_E = RS.fkineEE(q);
-        xE = [T_E(1:3,4); r2rpy(T_E(1:3,1:3))];
+        xE = [T_E(1:3,4); r2eulxyz(T_E(1:3,1:3))];
         q0 = q-10*pi/180*(0.5-rand(RS.NQJ,1)); % Anfangswinkel 20° neben der Endstellung
         if m == 1
           q_test = RS.invkin1(xE, q0);
@@ -70,7 +70,7 @@ for mdlname2 = RobotNames
       dqp_IK_alt = dqp_IK;
       % Prüfe ZB
       Phi = RS.constr2(q, xE_soll);
-      Phi_IK = Phi(4:5,:);
+      Phi_IK = Phi(5:6,:);
       if j > 2
         if any(abs(Phi_IK(:) - Phi_IK_alt(:)) > 1e-10)
           error('Rotatorische Zwangsbedingungen für Aufgabenredundanz hat sich durch anderen Winkel beta3 geändert. Darf nicht sein.');
@@ -85,7 +85,7 @@ for mdlname2 = RobotNames
     warning off
     q = TSS.Q(i,:)';
     T_E = RS.fkineEE(q);
-    xE = [T_E(1:3,4); r2rpy(T_E(1:3,1:3))];
+    xE = [T_E(1:3,4); r2eulxyz(T_E(1:3,1:3))];
     xE(6) = 0; % Rotation um z-Achse des EE interessiert nicht.
     q0 = q-20*pi/180*(0.5-rand(RS.NQJ,1)); % Anfangswinkel 20° neben der Endstellung
     T_E0 = RS.fkineEE(q0);
@@ -111,7 +111,7 @@ for mdlname2 = RobotNames
     % valide direkte Kinematik berechnen für Soll-Pose xE
     qx = TSS.Q(i-1,:)';
     T_Ex = RS.fkineEE(qx);
-    xE = [T_Ex(1:3,4); r2rpy(T_Ex(1:3,1:3))];
+    xE = [T_Ex(1:3,4); r2eulxyz(T_Ex(1:3,1:3))];
     
     % zufälliger anderer Winkel für Aufstellung der Zwangsbedingungen
     q = TSS.Q(i,:)';
@@ -128,12 +128,13 @@ for mdlname2 = RobotNames
     % Bild 3, Weg Ex -> TA -> 0 -> Eq (über beta3,beta2,beta1)
     R_Ex_Eq = (R_0_TA*rotz(xE(6)))' * R_0_Eq;
     % manuelle Berechnung der Winkel der ZYX-Euler-Notation
-    % Siehe Aufzeichnungen vom 14.08.2018
+    % Siehe Aufzeichnungen vom 14.08.2018 (dort extrinsische Drehungen, hier intrisisch)
+    % (daher hier andere Reihenfolge der alpha)
     alpha1=atan2(R_Ex_Eq(3,2), R_Ex_Eq(3,3)); % 14.8., Gl. 20
     alpha2=atan2(-R_Ex_Eq(3,1), sqrt(R_Ex_Eq(1,1)^2+R_Ex_Eq(2,1)^2)); % 14.8., Gl. 22
     alpha3=atan2(R_Ex_Eq(2,1),R_Ex_Eq(1,1)); % 14.8., Gl. 23
     % ZB selbst nachgerechnet (Weg 2)
-    Phi2 = [Phi1(1:3); alpha1; alpha2; alpha3];
+    Phi2 = [Phi1(1:3); alpha3; alpha2; alpha1];
     % Bild 3, Weg 0 -> Eq -> Ex (über alpha1,alpha2,alpha3+beta3)
     R_0_TA_test = R_0_Eq * (rotz(alpha3+xE(6)) * roty(alpha2) * rotx(alpha1))';
     
@@ -159,7 +160,7 @@ for mdlname2 = RobotNames
     alpha1=atan2(R_TA1_Eq(3,2), R_TA1_Eq(3,3)); % 14.8., Gl. 20
     alpha2=atan2(-R_TA1_Eq(3,1), sqrt(R_TA1_Eq(1,1)^2+R_TA1_Eq(2,1)^2)); % 14.8., Gl. 22
 
-    Phi2 = [Phi1(1:3); alpha1; alpha2; NaN];
+    Phi2 = [Phi1(1:3); NaN; alpha2; alpha1];
     
     % Bild 4, Weg 0 -> Eq -> TA2 (über alpha2,alpha1)
     R_0_TA2 = R_0_Eq * (roty(alpha2) * rotx(alpha1))';
