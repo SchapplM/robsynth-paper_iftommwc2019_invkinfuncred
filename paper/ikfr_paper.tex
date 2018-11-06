@@ -1,4 +1,4 @@
-\documentclass[twocolumn,10pt]{IFTOMM}
+\documentclass{svproc}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -14,7 +14,7 @@
 \newcommand{\ks}[1]{{\mathcal{F}}_{#1}}
 
 % Für Deutsche Umlaute
-\usepackage{ngerman}
+%\usepackage{ngerman}
 \usepackage[utf8]{inputenc}
 
 % Für Bilder
@@ -22,25 +22,32 @@
 \usepackage{color}
 \graphicspath{{./figures/}}
 
+% to typeset URLs, URIs, and DOIs
+\usepackage{url}
+\def\UrlFont{\rmfamily}
+
 \begin{document}
-%PAPER NUMBER: will be provided by the organization for accepted paper
-\def\papernumber{IK xxx}
-\def\conference_name{15th IFToMM World Congress, Krakow, Poland, 30 June--4 July, 2019}
-%PAPER TITLE
+    
+\mainmatter              % start of a contribution
+%
 \title{Resolution of Functional Redundancy for 3T2R Robot Tasks  \\ using Two Sets of Reciprocal Euler Angles}
+%
+\titlerunning{Reciprocal Euler Angles}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{Moritz Schappler \and Svenja Tappe \and Tobias Ortmaier \inst{1}}
+%
+\authorrunning{Moritz Schappler et al.} % abbreviated author list (for running head)
+%
+%%%% list of authors for the TOC (use if author list has to be modified)
+%\tocauthor{Moritz Schappler, Svenja Tappe, and Tobias Ortmaier}
+%
+\institute{Leibniz University Hannover, 30167 Hannover, Germany,\\
+    \email{moritz.schappler@imes.uni-hannover.de}}
 
-\author{
-    \begin{tabular}{cccc}
-    M.\ Schappler\thanks{moritz.schappler@imes.uni-hannover.de}
-& S.\ Tappe\thanks{svenja.tappe@imes.uni-hannover.de}
-& T.\ Ortmaier\thanks{tobias.ortmaier@imes.uni-hannover.de}\\
-    \multicolumn{3}{c}{Institute for Mechatronic Systems} \\
-    \multicolumn{3}{c}{Leibniz University Hannover, Hannover, Germany}
-    \end{tabular}
-}
+\maketitle              % typeset the title of the contribution
 
-%ESSENTIAL, will not work otherwise
-\maketitle
 
 %ABSTRACT
 \begin{abstract}
@@ -52,7 +59,7 @@ This is done by using a set of reciprocal Euler angles to describe the end-effec
 
 %KEYWORDS
 \begin{keywords}
-functional redundancy, redundancy resolution, reciprocal Euler angles, inverse kinematics, robots, five-DoF task, 3T2R task
+functional redundancy, reciprocal Euler angles, \\ inverse kinematics, robots, five-DoF task, 3T2R task
 \end{keywords}
 
 \section{Introduction}
