@@ -104,13 +104,11 @@ The contributions of this paper are
 \begin{itemize}
     \item a new formulation for the kinematics problem for robot manipulators performing 3T2R-tasks,
     \item an application of the formulation leading to an efficient solution for inverse kinematics with functional redundancy,
-    \item remarks on the implementation of gradients of and w.r.t. rotation matrices and its performance,
-    \item the extension of the formalism on parallel robots.
+    \item remarks on the implementation of gradients of and w.r.t. rotation matrices and its performance.
 \end{itemize}
 
 The remainder of the paper is structured as follows: The idea of a kinematics description using sets of reciprocal Euler angles is elaborated upon in Sec.\, \ref{sec:RecEulAng}.
 Their application in resolving the functional redundancy in inverse kinematics of 3T2R tasks is shown in Sec.\,\ref{sec:ResFuncRed}.
-Sec.\,\ref{sec:ParRobKinConstr} gives an outlook on the definition of kinematic constraints for parallel robots. 
 Sec.\,\ref{sec:Conclusion} concludes the paper.
 
 \section{Using reciprocal Euler Angles for Robot Kinematics}
@@ -606,166 +604,12 @@ This ``pointing configuration'' can also not be addressed by the nullspace proje
 only projects the gradient $h_{\partial\bm{q}}$ of additional criteria onto the last joint.
 Therefore the method does only work if the tool is mounted in a different configuration (``side'' or ``hanging'' in \cite{GuoDonKe2015}), which might be unfavorable for some end-effectors or tasks.
 
-\section{Application on Kinematic Constraint Equations of Parallel Robots}
-\label{sec:ParRobKinConstr}
-
-Kinematic constraint equations are used for parallel kinematic machines (``PKM'') to relate end-effector and joint velocities, actuator and end-effector forces or to solve the inverse kinematics problem.
-
-% Quelle: Merlet2006, S. 96
-Usually only the translational part of the constraint equations is defined and only the joint positions, joint velocities and joint forces associated with the translational motion are calculated.
-This leads to kinematic models where the platform coupling joints are canceled out of the equations. These joints are predominantly passive spherical joints for spatial PKM and passive rotational joints for planar PKM and their kinematic state is generally not of any interest \cite{Merlet2006}.
-
-In the following, the definitions for $\bm{x}$ still hold from  (\ref{equ:xt_def}),\,(\ref{equ:xr_def_rotmat}),\,(\ref{equ:xr_def}), but they now refer to the base frame $\ks{0}$ and the end-effector frame $\ks{D}$ of the whole PKM instead just of single kinematic chains.
-The end-effector frame expressed with the task frame coordinates $\bm{x}$ is denoted with ``D'' to comply with the notation from Sec.\,\ref{sec:RecEulAng} used for the inverse kinematics problem of serial chain robots.
-
-
-The most common kinematic constraint equation 
-%
-\begin{equation}
-\bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = - \ortvek{0}{r}{}{A_iB_i}(\bm{x}) + \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) 
-\end{equation}
-%
-for leg $i$ is derived from the position of the platform coupling point $B_i$ relative to the base coupling point $A_i$ \cite{Merlet2006}.
-The second term $\ortvek{0}{r}{}{A_iB_i}(\bm{q}_i)$ corresponds to the forward kinematics of the serial chain. 
-The vector
-\begin{equation}
-\ortvek{0}{r}{}{A_iB_i}(\bm{x}) = 
-- \ortvek{0}{r}{}{0A_i}
-+ \bm{x}_{\mathrm{t}} + \rotmat{0}{D}(\bm{x}_{\mathrm{r}}) \ortvek{D}{r}{}{DB_i}
-\end{equation}
-%
-includes the term $\rotmat{0}{D}(\bm{x}_{\mathrm{r}})$ that depends on the full  orientation $\bm{x}_{\mathrm{r}}$ of the end-effector with the rotation about the tool axis in 3T2R tasks.
-For a formulation without the tool axis rotation a different constraint definition
-%
-\begin{equation}
-\bm{\Phi}_{\mathrm{t}_i}(\bm{q}_i,\bm{x}) = 
-\ortvek{0}{r}{}{DE}(\bm{q}_i,\bm{x}) =
-- \bm{x}_{\mathrm{t}} + \ortvek{0}{r}{}{0E}(\bm{q}_i) 
-\end{equation}
-%
-similar to (\ref{equ:Phit_def}) with the vector from the robot base frame $\ks{0}$ to the PKM end-effector $\ks{D}$ can be used where 
-only the translational part $\bm{x}_{\mathrm{t}}$ of the end-effector coordinates appears and not the rotational part $\bm{x}_{\mathrm{r}}$.
-As a drawback, all joint angles $\bm{q}_i$ of the leg $i$ and not only the coordinates of the first joints counted from the base are now included
-in the vector
-%
-\begin{equation}
-\ortvek{0}{r}{}{0E}(\bm{q}_i) = 
-\ortvek{0}{r}{}{0A_i}
-+ \ortvek{0}{r}{}{A_iB_i}(\bm{q}_i) + \rotmat{0}{B_i}(\bm{q}_i) \ortvek{B_i}{r}{}{B_iE}.
-\end{equation}
-%
-To account for the increased number of included joints, also the rotational part of the kinematic constraints is needed to generate enough equations for an invertible Jacobian.
-
-Here again the definition 
-%
-\begin{align}
-\bm{\Phi}_{\mathrm{r}_i}(\bm{q},\bm{x})
-=\bm{\alpha}\left(\rotmat{0}{D}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{E}(\bm{q})\right)
-\end{align}
-%
-from (\ref{equ:Phir_def}) is used.
-The set of constraints $\bm{\Phi}_{i}$ for each leg of the PKM can again be reduced to $\bm{\Psi}_{i}$ by removing the superfluous rotational component\footnote{The following steps can also be performed using $\bm{\Psi}$, but $\bm{\Phi}$ is used for simplifying the equations.} in case of a 3T2R task, as described in Sec.\,\ref{sec:RecEulAng_3T2R_app}.
-
-The constraint equations
-%
-\begin{equation}
-\bm{\Phi}
-=
-\begin{bmatrix}
-\bm{\Phi}_1 \\
-\bm{\Phi}_2 \\
-\vdots \\
-\bm{\Phi}_m \\
-\end{bmatrix}
-\end{equation}
-%
-of the PKM are assembled for all $m$ legs.
-% The constraints $\bm{\Phi}$ and $\bm{\Psi}$ can be used interchangeably.
-The differential kinematics of the PKM is calculated with the time derivative
-%
-\begin{equation}
-\frac{\mathrm{d}}{{\mathrm{d}}t} \bm{\Phi}(\bm{q},\bm{x})
-=
-\bm{\Phi}_{\partial \bm{q}}  \dot{\bm{q}}
-+
-\bm{\Phi}_{\partial \bm{x}} \dot{\bm{x}}
-\end{equation}
-%
-where the diagonal elements $\bm{\Phi}_{i,\partial \bm{q}}=\partial \bm{\Phi}_i / \partial \bm{q}_i$ of the direct kinematics Jacobian
-%
-\begin{equation}
-\bm{\Phi}_{\partial \bm{q}}
-=
-\frac{\partial \bm{\Phi}}{\partial \bm{q}}
-=
-\begin{bmatrix}
-\bm{\Phi}_{1,\partial \bm{q}}  & 0 & 0 & 0\\
-0 & \bm{\Phi}_{2,\partial \bm{q}} & \ddots & 0  \\
-0 & \ddots & \ddots & 0  \\
-0 & 0 & 0 &\bm{\Phi}_{m,\partial \bm{q}}
-\end{bmatrix}
-\label{equ:PKM_phi_grad_q}
-\end{equation}  
-%
-correspond to the residual vector Jacobian (\ref{equ:grad_Phi_q}) from Sec.\,\ref{sec:RecEulAng}.
-The calculation of the inverse kinematics Jacobian
-%
-\begin{equation}
-\bm{\Phi}_{\partial \bm{x}}
-=
-\frac{\partial \bm{\Phi}}{\partial \bm{x}}
-=
-\begin{bmatrix}
-\partial \bm{\Phi}_1/\partial \bm{x}\\
-\partial \bm{\Phi}_2/\partial \bm{x}\\
-\vdots \\
-\partial \bm{\Phi}_m/\partial \bm{x}\\
-\end{bmatrix}
-\label{equ:PKM_phi_grad_x}
-\end{equation}  
-%
-can be simplified similar to the process described in Sec.\,\ref{sec:RecEulAng_implement} with
-%
-\begin{align}
-\frac{\partial}{\partial \bm{x}_{\mathrm{r}}}\bm{\Phi}_{\mathrm{r}_i}
-&=
-\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \bm{\alpha}\left(\left(\rotmat{0}{E}^\transp(\bm{q}_i) \rotmat{0}{D}(\bm{x}_{\mathrm{r}})\right)^\transp\right) \label{equ:grad_Phi_x} \\
-&=
-\frac{\partial}{\partial \bm{x}_{\mathrm{r}}} \overline{\bm{\alpha}}\left(
-\bm{P}_{\mathrm{T}}
-\overline{\prod}\left( \rotmato{0}{E}^\transp(\bm{q}_i), \rotmato{0}{D}(\bm{x}_{\mathrm{r}})\right)\right) \nonumber \\
-&=
-%underbrace für Geschweifte Klammern drunter, vphantom nur für vertikale Größe des dritten Terms
-\underbrace{\vphantom{\frac{\partial \overline{\prod}\left( \rotmato{0}{E}^\transp, \rotmato{0}{D}\right)}{\partial \rotmato{0}{D}}}
-    \frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}}_{\mathrm{I}}
-\underbrace{\vphantom{\frac{\partial \overline{\prod}\left( \rotmato{0}{E}^\transp, \rotmato{0}{D}\right)}{\partial \rotmato{0}{D}}}
-    \bm{P}_{\mathrm{T}}}_{\mathrm{II}}
-\underbrace{\frac{\partial \overline{\prod}\left( \rotmato{0}{E}^\transp, \rotmato{0}{D}\right)}{\partial \rotmato{0}{D}}}_{\mathrm{III}}
-\underbrace{\frac{\partial \rotmato{0}{D}(\bm{x}_{\mathrm{r}})}{\partial \bm{x}_{\mathrm{r}}}}_{\mathrm{IV}} \nonumber
-\end{align}
-%
-where the simplicity of the single expression is demonstrated in appendix\,\ref{sec:appendix_gradient_matrix}.
-
-Again, only the rotational component $\bm{\Phi}_{\mathrm{r}_i,\partial \bm{x}_{\mathrm{r}}}$ of 
-%
-\begin{equation}
-\partial \bm{\Phi}_i/\partial \bm{x}
-=
-\begin{bmatrix}
-\partial\bm{\Phi}_{\mathrm{t}_i}/\partial \bm{x}_{\mathrm{t}} & \partial\bm{\Phi}_{\mathrm{t}_i}/\partial \bm{x}_{\mathrm{r}} \\
-\bm{0} & \partial\bm{\Phi}_{\mathrm{r}_i}/\partial \bm{x}_{\mathrm{r}} \\
-\end{bmatrix}
-\end{equation}
-is regarded due to the focus on rotation in this paper.
-
-Using $\bm{\Psi}_{\partial \bm{q}}$ and $\bm{\Psi}_{\partial \bm{x}}$ in (\ref{equ:PKM_phi_grad_q}) and (\ref{equ:PKM_phi_grad_x}) for 3T2R tasks promises to improve motion planning and controllers by calculating actuator forces considering the tool symmetry and allowing the incorporation of nullspace movements and forces.
-
 \section{Conclusions}
 \label{sec:Conclusion}
 
 This paper presented a novel concept to formulate the inverse kinematics problem of serial kinematic chains using reciprocal Euler angles.
 This exploits the properties of Euler angles to reduce the number of coordinates required for 3T2R tasks which are of high industrial relevance.
-Applications to the inverse kinematics of serial robots and the kinematic constraint equations of parallel robots are given.
+Applications to the inverse kinematics of serial robots are given.
 The detailed view on the practical implementation aims at facilitating the understanding of the approach and at reducing the barrier for potential users.
 
 Future work includes comparative simulative evaluation against state of the art methods and inquiries on singularities and the relation to the geometric Jacobian.
