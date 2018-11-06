@@ -1,0 +1,77 @@
+%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'frame_comparison_combined_5dof_6dof.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{342.99212598bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.24793388)%
+    \put(0.43909369,0.12233894){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{0}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{frame_comparison_combined_5dof_6dof.pdf}}%
+    \put(0.95138057,0.11436625){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{D}$}}}%
+    \put(0.46777867,0.20287901){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) $}}}}%
+    \put(0.560559,0.06668443){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{E}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{frame_comparison_combined_5dof_6dof.pdf}}%
+    \put(0.46894409,0.04460122){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\rotmat{0}{E}(\bm{q})$}}}}%
+    \put(0.64576695,0.02503792){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3)$}}}}%
+    \put(0.69491472,0.19071925){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{A1}$}}}%
+    \put(0.76952033,0.0686887){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{A2}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{frame_comparison_combined_5dof_6dof.pdf}}%
+    \put(0.93422578,0.03976329){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\bm{R}_z(\alpha_1)$}}}}%
+    \put(0.76656424,0.11994161){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\bm{R}_z(\beta_3+\alpha_1)$}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{frame_comparison_combined_5dof_6dof.pdf}}%
+    \put(0.9164871,0.2075138){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\bm{R}_z(\beta_3)$}}}}%
+    \put(0.01072783,0.10725028){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{0}$}}}%
+    \put(0.28561963,0.09808761){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{D}$}}}%
+    \put(0.02197338,0.19638201){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\rotmat{0}{D}(\bm{x}_{\mathrm{r}})=\bm{R}_x(\beta_1) \bm{R}_y(\beta_2) \bm{R}_z(\beta_3)$}}}}%
+    \put(0.15036026,0.06050874){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\ks{E}$}}}%
+    \put(0.02863747,0.04860665){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\rotmat{0}{E}(\bm{q})$}}}}%
+    \put(0.17566295,0.02986419){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\tiny{$\bm{R}_x(\alpha_1^*) \bm{R}_y(\alpha_2^*) \bm{R}_z(\alpha_3^*)$}}}}%
+    \put(0.00677606,0.01761901){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{(a)}}}%
+    \put(0.44079478,0.01315775){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{(b)}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{frame_comparison_combined_5dof_6dof.pdf}}%
+  \end{picture}%
+\endgroup%

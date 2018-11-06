@@ -217,23 +217,19 @@ The intuitive approach of choosing
 \label{equ:alpha_convention_xyz}
 \end{equation}
 %
-the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\,\ref{fig:frames_6dof} where the intermediate steps of the single elementary rotations are omitted since they have no technical meaning.
+the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\,\ref{fig:frames_5dof_6dof}\,(a) where the intermediate steps of the single elementary rotations are omitted since they have no technical meaning.
 %
-\begin{figure}[tb]
-    \input{./figures/frame_comparison_6dof.pdf_tex}
-    \vspace{-0.2cm}
-    \caption{Overview of the different frames for 6-dof tasks with standard Euler-angle notation.}
-    \label{fig:frames_6dof}
-\end{figure} 
 
 \subsection{Effect of the reciprocal Euler Angles}
 \label{sec:RecEulAng_effect}
 
+
 \begin{figure}[htb]
-    \input{./figures/frame_comparison_5dof.pdf_tex}
-    \caption{overview of the different frames for 5-dof tasks with reciprocal Euler-angle notation.}
-    \label{fig:frames_5dof}
+    \input{./figures/frame_comparison_combined_5dof_6dof.pdf_tex}
+    \caption{Overview of the different frames (a) for 6-dof tasks with standard Euler-angle notation and (b) for 5-dof tasks with reciprocal Euler-angle notation.}
+    \label{fig:frames_5dof_6dof}
 \end{figure} 
+
 
 Using $\bm{\alpha}$ as defined in the previous subsection\,\ref{sec:RecEulAng_KinDesc}, all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required.
 %
@@ -291,7 +287,7 @@ compared to $\bm{x}$ and the modified rotational part
 %
 where the last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily.
 
-Distinguishing the frames $\ks{A1}$ and $\ks{A2}$ resulting from intermediate elementary rotations, sketched in Fig.\,\ref{fig:frames_5dof}, gives the partial frame rotation to the desired frame
+Distinguishing the frames $\ks{A1}$ and $\ks{A2}$ resulting from intermediate elementary rotations, sketched in Fig.\,\ref{fig:frames_5dof_6dof}\,(b), gives the partial frame rotation to the desired frame
 %
 \begin{align}
 \rotmat{0}{A1} 
@@ -778,7 +774,7 @@ Future work includes comparative simulative evaluation against state of the art 
 \subsection{Influence of Reciprocal Euler angles}
 \label{sec:appendix_eulerreciproc}
 
-This section derives the effect of the reciprocity of Euler-angles at the example of the kinematics description of Sec.\,\ref{sec:RecEulAng} and the frames of Fig.\,\ref{fig:frames_6dof}.
+This section derives the effect of the reciprocity of Euler-angles at the example of the kinematics description of Sec.\,\ref{sec:RecEulAng} and the frames of Fig.\,\ref{fig:frames_5dof_6dof}\,(b).
 
 An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation matrix\footnote{The matrix rotates vectors from $\ks{E}$ to $\ks{D}$} from the actual end-effector frame $\ks{E}$ to the desired end-effector frame $\ks{D}$
 %
@@ -947,7 +943,7 @@ where $n_x,n_y,...$ are the entries of $\bm{R}_2$ and the $\mathrm{diag}$-matric
 The financial support from the Deutsche Forschungsgemeinschaft (German Research Foundation, DFG) under grant number OR 196/33-1 is gracefully acknowledged.
 
 % BIBLIOGRAPHY
-\bibliographystyle{ieeetr}
+\bibliographystyle{spphys}
 \bibliography{ikfr_ref}
 
 \end{document}
