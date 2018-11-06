@@ -57,12 +57,12 @@ functional redundancy, redundancy resolution, reciprocal Euler angles, inverse k
 
 \section{Introduction}
 \label{sec:Intro}
-Since the first papers in the 1980s the fields of inverse kinematics \cite{GoldenbergBenFen1985} and the resolution of \emph{intrinsic} redundancy \cite{Yoshikawa1984} in robotics have been extensively elaborated upon.
+Since the first papers in the 1980s, the fields of inverse kinematics \cite{GoldenbergBenFen1985} and the resolution of \emph{intrinsic} redundancy \cite{Yoshikawa1984} in robotics have been extensively elaborated upon.
 Inverse kinematics for robot manipulators can be solved analytically for some structures and can be approached in general with gradient-based numeric methods at  joint position or joint velocity level.
 Due to the nonlinearity of rotation at position level \cite{GoldenbergBenFen1985}, the latter is usually preferred.
 
-The kinematics of \emph{functionally} redundant robots performing tasks with five instead of six degrees of freedom (DoF) has drawn much less attention, even if many industrial relevant tasks only require 5-DoF such as the class of 3T2R-tasks where the task rotation is axis-symmetric.
-These tasks comprise amongst others arc welding \cite{HuoBar2005}, drilling \cite{ZhuQuCaoYan2013,GuoDonKe2015}, spray-painting \cite{FromGra2010}, laser-cutting, milling, deburring and glueing and are transfered to a greater extend to robotic manipulators in the automotive or aviation industry.
+The kinematics of \emph{functionally} redundant robots performing tasks with five instead of six degrees of freedom (DoF) has drawn much less attention, even if many industrial relevant tasks only require 5-DoF such as the class of 3T2R-tasks where the tool for the task is axis-symmetric.
+These tasks comprise amongst others arc welding \cite{HuoBar2005}, drilling \cite{ZhuQuCaoYan2013,GuoDonKe2015}, spray-painting \cite{FromGra2010}, laser-cutting, milling and glueing and are transfered to a greater extend to robotic manipulators in the automotive or aviation industry.
 
 Since standard industrial robots have six DoF, one degree of \emph{functional} redundancy exists which allows to improve performance characteristics of the robots while achieving a valid pose to perform one of the aforementioned tasks.
 To be able to incorporate performance optimization into inverse kinematics via the well-established gradient projection method \cite{Yoshikawa1984}, either the joint space can be augmented or the task space can be reduced \cite{Huo2009}.
@@ -97,7 +97,7 @@ The contributions of this paper are
 \begin{itemize}
     \item a new formulation for the kinematics problem for robot manipulators performing 3T2R-tasks,
     \item an application of the formulation leading to an efficient solution for inverse kinematics with functional redundancy,
-    \item thoughts on the implementation of gradients of and w.r.t. rotation matrices and its performance,
+    \item remarks on the implementation of gradients of and w.r.t. rotation matrices and its performance,
     \item the extension of the formalism on parallel robots.
 \end{itemize}
 
@@ -178,12 +178,12 @@ The deviation $\bm{\Phi}$ between the desired end-effector frame $\ks{D}$ expres
 %
 \begin{equation}
 \bm{\Phi}=\begin{bmatrix}
-\bm{\Phi}_{\mathrm{t}} & \bm{\Phi}_{\mathrm{r}}
+\bm{\Phi}_{\mathrm{t}}^\transp & \bm{\Phi}_{\mathrm{r}}^\transp
 \end{bmatrix}^\transp \in {\mathbb{R}}^{6}.
 \label{equ:Phi_def}
 \end{equation}
 %
-The the vector from $\ks{D}$ to $\ks{E}$ is the translational part 
+The vector from $\ks{D}$ to $\ks{E}$ is the translational part 
 %
 \begin{equation}
 \bm{\Phi}_{\mathrm{t}}(\bm{q},\bm{x}) = - \bm{x}_{\mathrm{t}} + \ortvek{0}{r}{}{E}(\bm{q}) \in {\mathbb{R}}^{3}
@@ -201,7 +201,7 @@ and the rotational part
 \label{equ:Phir_def}
 \end{align}
 %
-of this ``residual vector'' is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}.
+of this ``residual vector'' is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}, that is calculated from the rotation matrices.
 The Euler angle convention of the residual $\bm{\alpha}$ can be chosen independently of the choice for the orientation representation in  $\bm{x}_{\mathrm{r}}$.
 The intuitive approach of choosing
 %
@@ -211,7 +211,6 @@ The intuitive approach of choosing
 \end{equation}
 %
 the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\,\ref{fig:frames_6dof} where the intermediate steps of the single elementary rotations are omitted since they have no technical meaning.
-Using this convention an adaption to tasks with functional redundancy is only possible with some of the referenced state of the art methods described in Sec.\,\ref{sec:Intro} with further modifications for using Euler angles.
 %
 \begin{figure}[tb]
     \input{./figures/frame_comparison_6dof.pdf_tex}
@@ -229,9 +228,9 @@ Using this convention an adaption to tasks with functional redundancy is only po
     \label{fig:frames_5dof}
 \end{figure} 
 
-It is apparent, that using $\bm{\alpha}$ as defined in the previous subsection\,\ref{sec:RecEulAng_KinDesc}, all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one coordinate from the kinematic description, even if it is not required.
+Using $\bm{\alpha}$ as defined in the previous subsection\,\ref{sec:RecEulAng_KinDesc}, all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required.
 %
-To encounter this issue the Euler angle convention $\bm{\alpha}$ for the orientation error is now chosen to be 
+To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orientation error is now chosen to be 
 %
 \begin{equation}
 \bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3) \in \mathrm{SO(3)}
@@ -239,7 +238,7 @@ To encounter this issue the Euler angle convention $\bm{\alpha}$ for the orienta
 \end{equation}
 %
 instead of the definition from (\ref{equ:alpha_convention_xyz}).
-This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the $X$-$Y$-$Z$-convention $\bm{\beta}$ for the absolute orientation.
+This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the $X$-$Y$-$Z$-convention of $\bm{\beta}$ for the absolute orientation.
 %
 The reciprocity only refers to the switched order of the elementary axes $X$, $Y$ and $Z$.
 Since $\bm{\alpha}$ and $\bm{\beta}$ describe different rotation matrices, the respective intermediate rotation axes are different.
@@ -285,7 +284,7 @@ compared to $\bm{x}$ and the modified rotational part
 %
 where the last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily.
 
-Distinguishing the frames $\ks{A1}$ and $\ks{A2}$ resulting from intermediate elementary rotations sketched in Fig.\,\ref{fig:frames_5dof} gives the partial frame rotation to the desired frame
+Distinguishing the frames $\ks{A1}$ and $\ks{A2}$ resulting from intermediate elementary rotations, sketched in Fig.\,\ref{fig:frames_5dof}, gives the partial frame rotation to the desired frame
 %
 \begin{align}
 \rotmat{0}{A1} 
@@ -323,7 +322,7 @@ The frames $\ks{A1}$, $\ks{A2}$ and $\ks{D}$ all share the same $z$-axis
 \label{equ:z_axis_equal}
 \end{equation}
 %
-which is also the tool axis as can be seen in Fig.\,\ref{fig:frames_5dof}, since the only transformation between these frames is a rotation $\bm{R}_z$ around the $z$-axes from (\ref{equ:z_axis_equal}).
+which is also the tool axis, since transformations between these frames are rotations $\bm{R}_z$ around the $z$-axes from (\ref{equ:z_axis_equal}).
 
 Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_1$ are defined around the same axis, $\beta_3$ only influences $\alpha_1$ and not $\alpha_2$ and $\alpha_3$, as derived in the appendix \ref{sec:appendix_eulerreciproc}, which can be expressed by
 %
@@ -348,7 +347,7 @@ Since the tool axis rotation $\beta_3$ and the orientation error component $\alp
 \label{equ:alpha_dep_beta}.
 \end{align}
 %
-This property of the reciprocal Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections
+This property of the reciprocal Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections.
 
 \subsection{Application on 3T2R Tasks}
 \label{sec:RecEulAng_3T2R_app}
@@ -774,7 +773,7 @@ Future work includes comparative simulative evaluation against state of the art 
 
 This section derives the effect of the reciprocity of Euler-angles at the example of the kinematics description of Sec.\,\ref{sec:RecEulAng} and the frames of Fig.\,\ref{fig:frames_6dof}.
 
-An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation matrix from\footnote{The matrix rotates vectors from $\ks{E}$ to $\ks{D}$} the actual end-effector frame $\ks{E}$ to the desired end-effector frame $\ks{D}$
+An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation matrix\footnote{The matrix rotates vectors from $\ks{E}$ to $\ks{D}$} from the actual end-effector frame $\ks{E}$ to the desired end-effector frame $\ks{D}$
 %
 \begin{equation}
 \rotmat{D}{E}(\bm{\beta},\bm{q})
@@ -783,7 +782,7 @@ An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation 
 \label{equ:orierr_1_rotmat}
 \end{equation}
 %
-where using the $X$-$Y$-$Z$-Euler yields
+where using the $X$-$Y$-$Z$-Euler angles yields
 %
 \begin{equation}
 \rotmat{0}{D}^\transp(\bm{\beta})
