@@ -327,7 +327,7 @@ The frames $\ks{A1}$, $\ks{A2}$ and $\ks{D}$ all share the same $z$-axis
 %
 which is also the tool axis, since transformations between these frames are rotations $\bm{R}_z$ around the $z$-axes from (\ref{equ:z_axis_equal}).
 
-Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_1$ are defined around the same axis, $\beta_3$ only influences $\alpha_1$ and not $\alpha_2$ and $\alpha_3$, as derived in the appendix \ref{sec:appendix_eulerreciproc}, which can be expressed by
+Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_1$ are defined around the same axis, $\beta_3$ only influences $\alpha_1$ and not $\alpha_2$ and $\alpha_3$, which can be expressed by
 %
 \begin{align}
 \begin{bmatrix}
@@ -351,6 +351,7 @@ Since the tool axis rotation $\beta_3$ and the orientation error component $\alp
 \end{align}
 %
 This property of the reciprocal Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections.
+It can be derived by comparing $\bm{\alpha}$ for two different desired rotations which only differ regarding a rotation around the tool axis.
 
 \subsection{Application on 3T2R Tasks}
 \label{sec:RecEulAng_3T2R_app}
@@ -360,7 +361,7 @@ To obtain a Jacobian with minimal row dimension the kinematic condition for the 
 %
 \begin{equation}
 \bm{\Psi}=\begin{bmatrix}
-\bm{\Psi}_{\mathrm{t}} & \bm{\Psi}_{\mathrm{r}}
+\bm{\Psi}_{\mathrm{t}}^\transp & \bm{\Psi}_{\mathrm{r}}^\transp
 \end{bmatrix}^\transp \in {\mathbb{R}}^{5}
 \end{equation}
 %
@@ -531,10 +532,10 @@ The gradient
 $\bm{\Psi}_{\mathrm{r}, \partial\bm{q}}=\partial \bm{\Psi}_{\mathrm{r}} / \partial \bm{q}=\bm{P}_{\Psi}\bm{\Phi}_{\mathrm{r},\partial\bm{q}}$
 is obtained from the results of (\ref{equ:grad_Phi_q}) with the selection matrix $\bm{P}_{\Psi}$ from (\ref{equ:Psir_def}).
 
-The two first partial derivatives ``I'' and ``II'' from (\ref{equ:grad_Phi_q}) are sparse matrices and can be calculated efficiently as shown in appendix \ref{sec:appendix_gradient_matrix}.
+The two first partial derivatives ``I'' and ``II'' from (\ref{equ:grad_Phi_q}) are sparse matrices of low complexity.
 The last partial derivative ``III'' can be derived efficiently with computer algebra systems.
 
-If a rotation $\rotmato{0}{N}(\bm{q})$ to the last robot link frame and a constant rotation $\rotmato{N}{E}$ to the end-effector frame are used to account for exchangeable end-effectors or tools, the properties of the column-operator can be used to substitute the last term ``III'' in (\ref{equ:grad_Phi_q}) with
+If a rotation $\rotmat{0}{N}(\bm{q})$ to the last robot link frame and a constant rotation $\rotmat{N}{E}$ to the end-effector frame are used to account for exchangeable end-effectors or tools, the properties of the column-operator can be used to substitute the last term ``III'' in (\ref{equ:grad_Phi_q}) with
 %
 \begin{align}
 \frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} 
@@ -769,175 +770,7 @@ The detailed view on the practical implementation aims at facilitating the under
 
 Future work includes comparative simulative evaluation against state of the art methods and inquiries on singularities and the relation to the geometric Jacobian.
 
-\section{APPENDIX}
 
-\subsection{Influence of Reciprocal Euler angles}
-\label{sec:appendix_eulerreciproc}
-
-This section derives the effect of the reciprocity of Euler-angles at the example of the kinematics description of Sec.\,\ref{sec:RecEulAng} and the frames of Fig.\,\ref{fig:frames_5dof_6dof}\,(b).
-
-An end-effector orientation $\bm{\beta}=\bm{x}_{\mathrm{r}}$ gives the rotation matrix\footnote{The matrix rotates vectors from $\ks{E}$ to $\ks{D}$} from the actual end-effector frame $\ks{E}$ to the desired end-effector frame $\ks{D}$
-%
-\begin{equation}
-\rotmat{D}{E}(\bm{\beta},\bm{q})
-= 
-\rotmat{0}{D}^\transp (\bm{\beta})\rotmat{0}{E}(\bm{q})
-\label{equ:orierr_1_rotmat}
-\end{equation}
-%
-where using the $X$-$Y$-$Z$-Euler angles yields
-%
-\begin{equation}
-\rotmat{0}{D}^\transp(\bm{\beta})
-=
-\bm{R}_z(-\beta_3) \bm{R}_y(-\beta_2) \bm{R}_x(-\beta_1)
-\end{equation}
-%
-as introduced in (\ref{equ:def_rmat_xyz}).
-With an additional rotation $-\delta$ around the $z$-axis for the desired orientation, the resulting new Euler angles are
-%
-\begin{equation}
-\beta_1'=\beta_1,  \quad \beta_2'=\beta_2,  \quad \beta_3'=\beta_3-\delta.
-\end{equation}
-%
-The additional rotation corresponds to the tool axis defined in Sec.\,\ref{sec:RecEulAng} % and does not influence 3T2R tasks.
-and leads to a new residual orientation error expressed as a rotation matrix
-%
-\begin{align}
-\rotmat{D}{E}(\bm{\beta}',\bm{q})
-&=
-\rotmat{0}{D}^\transp (\bm{\beta}') \rotmat{0}{E}(\bm{q}) \nonumber\\
-&=
-\left(\rotmat{0}{D}(\bm{\beta})\bm{R}_z(-\delta)\right)^\transp \rotmat{0}{E}(\bm{q}) \nonumber \\
-&=
-\bm{R}_z(\delta) \rotmat{0}{D}^\transp (\bm{\beta}) \rotmat{0}{E}(\bm{q}) \nonumber \\
-&=
-\bm{R}_z(\delta) \rotmat{D}{E}(\bm{\beta},\bm{q}).
-\label{equ:orierr_2_rotmat}
-\end{align}
-
-The first residual orientation error from (\ref{equ:orierr_1_rotmat}) corresponding to $\bm{\beta}$ is defined as a rotation matrix
-%
-% Quelle: equations/R1.txt (aus ikfr_paper_equations.mw)
-\begin{align}
-\rotmat{D}{E}(\bm{\beta},\bm{q})
-=
-\begin{bmatrix}
-{n_x}&{o_x}&{a_x} \\
-{n_y}&{o_y}&{a_y} \\ 
-{n_z}&{o_z}&{a_z} \\ 
-\end{bmatrix}
-\label{equ:orierr_1_rotmat_def}
-\end{align}
-%
-and as a $Z$-$Y$-$X$-Euler angle representation
-%
-% Quelle: equations/alpha1.txt (aus ikfr_paper_equations.mw)
-\begin{align}
-\bm{\alpha} =
-\begin{bmatrix}
-\arctan \left( {n_y} / { n_x} \right) \\ 
-\arctan \left( -{n_z} / \sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ 
-\arctan \left( {o_z} / {a_z} \right)
-\end{bmatrix}.
-\label{equ:alpha_xyz}
-\end{align}
-
-The second error corresponding to $\bm{\beta}'$ only differs regarding the additional rotation $\delta$. Combining (\ref{equ:orierr_2_rotmat}) and (\ref{equ:orierr_1_rotmat_def}) leads to
-%
-% Quelle: equations/R2.txt (aus ikfr_paper_equations.mw)
-\begin{align}
-&\rotmat{D}{E}(\bm{\beta}',\bm{q})
-= \\
-&\left[ \begin {array}{ccc} { C_{\delta}}\,{n_x}-{ S_{\delta}}\,{ n_y}&{ C_{\delta}}\,{o_x}-{ S_{\delta}}\,{o_y}&{ C_{\delta}}\,{ a_x}-{ S_{\delta}}\,{a_y}\\ \noalign{\medskip}{ C_{\delta}}\,{n_y}+ { S_{\delta}}\,{n_x}&{ C_{\delta}}\,{o_y}+{ S_{\delta}}\,{o_x}&{  C_{\delta}}\,{a_y}+{ S_{\delta}}\,{a_x}\\ \noalign{\medskip}{ n_z}&{o_z}&{a_z}\end {array} \right] \nonumber
-\end{align}
-%
-where $C_{\delta}=\mathrm{cos}(\delta)$ and $S_{\delta}=\mathrm{sin}(\delta)$.
-The $Z$-$Y$-$X$-Euler angles from this rotation matrix are
-%
-% Quelle: equations/alpha2.txt (aus ikfr_paper_equations.mw)
-\begin{equation}
-\bm{\alpha}' =
-\begin{bmatrix}
-\arctan \left( ({  C_{\delta}}\,{n_y}+{ S_{\delta}}\,{n_x}) / ({ C_{\delta}}\,{n_x}-{  S_{\delta}}\,{n_y}) \right) \\
-\arctan \left( -{n_z} / \sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\
-\arctan \left( {o_z} / {a_z} \right)
-\end{bmatrix}
-\end{equation}
-%
-where $\delta$  only influences the first component $\alpha_1$.
-This allows the conclusion, that $\beta_3$ only influences $\alpha_1$ and results in the dependencies
-%
-\begin{align}
-\alpha_1'&=\alpha_1'(\bm{q},\beta_1,\beta_2,\beta_3)\\
-\alpha_2'&=\alpha_2'(\bm{q},\beta_1,\beta_2) =\alpha_2\\
-\alpha_3'&=\alpha_3'(\bm{q},\beta_1,\beta_2) =\alpha_3
-\end{align}
-%
-already displayed in (\ref{equ:alpha_dep_beta}) with the consequences for the kinematic modeling of robots in 3T2R tasks described in Sec.\,\ref{sec:RecEulAng_effect}.
-
-\subsection{Matrix Operations for Partial Derivatives}
-\label{sec:appendix_gradient_matrix}
-
-The single expressions derived in Sec.\,\ref{sec:RecEulAng_implement} for the serial chains and in Sec.\,\ref{sec:ParRobKinConstr} for the parallel chains can be calculated with low computational effort from the definition of the $X$-$Y$-$Z$- and $Z$-$Y$-$X$-Euler angles from (\ref{equ:def_rmat_xyz}), (\ref{equ:def_rmat_zyxr}) and (\ref{equ:alpha_xyz}).
-With $\overline{\bm{R}}=[n_x,n_y,n_z ,o_x,o_y,o_z,a_x,a_y,a_z]^\transp$ the gradient ``I'' in (\ref{equ:grad_Phi_q}) becomes
-% Quelle: equations/dalphadRb.txt (aus ikfr_paper_equations.mw)
-\begin{equation}
-\left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)^\transp
-=
- \left[ \begin {array}{ccc} -{\frac {{n_y}}{{{n_x}}^{2}+{{n_y }}^{2}}}&0&0\\ \noalign{\medskip}{\frac {{n_x}}{{{n_x}}^{2}+{{ n_y}}^{2}}}&0&0\\ \noalign{\medskip}0&-\sqrt {{{a_z}}^{2}+{{ o_z}}^{2}}&0\\ \noalign{\medskip}0&0&0\\ \noalign{\medskip}0&0&0 \\ \noalign{\medskip}0&{\frac {{n_z}\,{o_z}}{\sqrt {{{a_z}}^{ 2}+{{o_z}}^{2}}}}&{\frac {{a_z}}{{{a_z}}^{2}+{{o_z}}^{2}}} \\ \noalign{\medskip}0&0&0\\ \noalign{\medskip}0&0&0 \\ \noalign{\medskip}0&{\frac {{n_z}\,{a_z}}{\sqrt {a_z^{2}+{{o_z}}^{2}}}}&-{\frac {o_z}{a_z^{2}+o_z^{2}} }\end {array} \right] 
-\end{equation}
-%
-and the inverse gradient ``I'' in (\ref{equ:grad_Phi_x}) yields
-%
-% Quelle: equations/R2b_dxyz.txt (aus ikfr_paper_equations.mw)
-\begin{align}
-&\left(\frac{\partial \overline{\bm{R}}(\overline{\bm{\beta}})}{\partial \overline{\bm{\beta}}}\right)
-=\\
-\small
-&\begin{bmatrix}
-0&-{ S_2}\,{ C_3}&-{ C_2}\,{ S_3}
-\\ { C_1}\,{ S_2}\,{ C_3}-{ S_1}\,{ S_3}&{
-    S_1}\,{ C_2}\,{ C_3}&-{ S_1}\,{ S_2}\,{ S_3}+{ C_1}\,{
-    C_3}\\ { S_1}\,{ S_2}\,{ C_3}+{ C_1}\,{
-    S_3}&-{ C_1}\,{ C_2}\,{ C_3}&{ C_1}\,{ S_2}\,{ S_3}+{
-    S_1}\,{ C_3}\\ 0&{ S_2}\,{ S_3}&-{ C_2}\,
-{ C_3}\\ -{ C_1}\,{ S_2}\,{ S_3}-{ S_1}\,{
-    C_3}&-{ S_1}\,{ C_2}\,{ S_3}&-{ S_1}\,{ S_2}\,{ C_3}-{
-    C_1}\,{ S_3}\\ -{ S_1}\,{ S_2}\,{ S_3}+{
-    C_1}\,{ C_3}&{ C_1}\,{ C_2}\,{ S_3}&{ C_1}\,{ S_2}\,{
-    C_3}-{ S_1}\,{ S_3}\\ 0&{ C_2}&0
-\\ -{ C_1}\,{ C_2}&{ S_1}\,{ S_2}&0
-\\ -{ S_1}\,{ C_2}&-{ C_1}\,{ S_2}&0
-\end {bmatrix}  \nonumber
-\end{align}
-%
-with $C_i=\mathrm{cos}(\beta_i)$, $S_i=\mathrm{sin}(\beta_i)$.
-The gradient of the matrix product (\ref{equ:matprod}) w.r.t. the second factor used in (\ref{equ:grad_Phi_x}) term ``III'' and (\ref{equ:grad_Phi_q}) term ``II'' is
-%
-\begin{equation}
-\frac{\partial }{\partial \overline{\bm{R}}_2}
-\overline{\prod}\left( \overline{\bm{R}}_1, \overline{\bm{R}}_2\right)
-=
-\begin{bmatrix}
-\bm{R}_1 & \bm{0} & \bm{0} \\
-\bm{0} & \bm{R}_1 & \bm{0} \\
-\bm{0} & \bm{0} & \bm{R}_1  \\
-\end{bmatrix}
-\end{equation}
-%
-and the gradient w.r.t. the first factor used in (\ref{equ:ee_rotation_gradq}) term ``I'' is
-%
-\begin{equation}
-\frac{\partial }{\partial \overline{\bm{R}}_1}
-\overline{\prod}\left( \overline{\bm{R}}_1, \overline{\bm{R}}_2\right)
-=
-\begin{bmatrix}
-{\mathrm{diag}}(n_x)&{\mathrm{diag}}(o_x)&{\mathrm{diag}}(a_x) \\ {\mathrm{diag}}(n_y)&{\mathrm{diag}}(o_y)&{\mathrm{diag}}(a_y)\\ {\mathrm{diag}}(n_z)&{\mathrm{diag}}(o_z)&{\mathrm{diag}}(a_z)
-\end{bmatrix}
-\end{equation}
-%
-where $n_x,n_y,...$ are the entries of $\bm{R}_2$ and the $\mathrm{diag}$-matrices are $3 \times 3$.
 \section{Acknowledgements}
 
 The financial support from the Deutsche Forschungsgemeinschaft (German Research Foundation, DFG) under grant number OR 196/33-1 is gracefully acknowledged.
