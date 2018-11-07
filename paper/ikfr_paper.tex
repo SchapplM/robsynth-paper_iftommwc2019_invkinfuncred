@@ -72,7 +72,7 @@ The kinematics of \emph{functionally} redundant robots performing tasks with fiv
 These tasks comprise amongst others arc welding \cite{HuoBar2005}, drilling \cite{ZhuQuCaoYan2013,GuoDonKe2015}, spray-painting \cite{FromGra2010}, laser-cutting, milling and glueing and are transfered to a greater extend to robotic manipulators in the automotive or aviation industry.
 
 Since standard industrial robots have six DoF, one degree of \emph{functional} redundancy exists which allows to improve performance characteristics of the robots while achieving a valid pose to perform one of the aforementioned tasks.
-To be able to incorporate performance optimization into inverse kinematics via the well-established gradient projection method \cite{Yoshikawa1984}, either the joint space can be augmented or the task space can be reduced.% \cite{Huo2009}.
+To be able to incorporate performance optimization into inverse kinematics via the well-established gradient projection method \cite{Yoshikawa1984}, either the joint space can be augmented or the task space can be reduced. % \cite{Huo2009}.
 Augmenting the joint space is possible by inserting an additional joint for the rotation around the task's axis of symmetry (``tool axis'') \cite{Baron2000}.
 Reducing the task space can be performed by orthogonal decomposition of the end-effector twist \cite{HuoBar2005}, removing the row of the ``task frame Jacobian'' corresponding to the tool axis \cite{Zlajpah2017}, the construction of the Jacobian Nullspace based upon geometric properties of the task \cite{LegerAng2016} or constructing a cone or pyramid resulting from the tool axis with an additional range of tolerance for tilt angles \cite{FromGra2010}.
 
@@ -107,7 +107,7 @@ The contributions of this paper are
     \item remarks on the implementation of gradients of and w.r.t. rotation matrices and its performance.
 \end{itemize}
 
-The remainder of the paper is structured as follows: The idea of a kinematics description using sets of reciprocal Euler angles is elaborated upon in Sec.\, \ref{sec:RecEulAng}.
+The remainder of the paper is structured as follows: The idea of a kinematic description using sets of reciprocal Euler angles is elaborated upon in Sec.\,\ref{sec:RecEulAng}.
 Their application in inverse kinematics of 3T2R tasks and in resolving the functional redundancy is shown in Sec.\,\ref{sec:RecEulAng_3T2R_app} and \ref{sec:ResFuncRed}.
 Sec.\,\ref{sec:Conclusion} concludes the paper.
 
@@ -160,7 +160,7 @@ and orientation
 \label{equ:xr_def_rotmat}
 \end{equation}  
 % 
-with respect to the base frame $\ks{0}$ expressed without loss of generality with a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles\footnote{Other sets of Euler angles with the same properties may be used as well.}
+with respect to the base frame $\ks{0}$ expressed without loss of generality with a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles\footnote{Other sets of Euler angles with the same $\bm{\alpha}$ / $\bm{\beta}$ properties may be used as well.}
 %
 \begin{equation}
 \bm{x}_{\mathrm{r}}
@@ -207,7 +207,8 @@ and the rotational part
 \end{align}
 %
 of this ``residual vector'' is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}, that is calculated from the rotation matrices in (\ref{equ:Phir_def}).
-The Euler angle convention of the residual $\bm{\alpha}$ can be chosen independently of the choice for the orientation representation in  $\bm{x}_{\mathrm{r}}$.
+In the following, $\bm{\alpha}$ will always refer to the rotation error/residual and $\bm{\beta}$ to an orientation relative to the base frame.
+The Euler angle convention of $\bm{\alpha}$ can be chosen independently of the choice for the orientation representation in  $\bm{\beta}$.
 The intuitive approach of choosing
 %
 \begin{equation}
@@ -229,7 +230,7 @@ the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\
 \end{figure} 
 
 
-Using $\bm{\alpha}$ as defined in the previous subsection\,\ref{sec:RecEulAng_KinDesc}, all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required in the task.
+Using $\bm{\alpha}$ as defined in (\ref{equ:alpha_convention_xyz}), all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required in the task.
 %
 To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orientation error is now chosen to be 
 %
@@ -245,7 +246,7 @@ The reciprocity only refers to the switched order of the elementary axes $X$, $Y
 Since $\bm{\alpha}$ and $\bm{\beta}$ describe different rotation matrices, the respective intermediate rotation axes are different.
 
 % from (\ref{equ:xt_def}),(\ref{equ:xr_def})
-Similar to the six end-effector operational space coordinates $\bm{x}$ the task space is defined to have the five coordinates
+Similar to the six end-effector operational space coordinates $\bm{x}$ the task space is defined to have five coordinates
 %
 \begin{equation}
 \bm{\eta}
@@ -253,10 +254,10 @@ Similar to the six end-effector operational space coordinates $\bm{x}$ the task 
 \begin{bmatrix}
 \bm{\eta}_{\mathrm{t}}^\transp & 
 \bm{\eta}_{\mathrm{r}}^\transp
-\end{bmatrix}^\transp
+\end{bmatrix}^\transp.
 \end{equation}  
 %
-with the unchanged translational part
+The translational part
 %
 \begin{equation}
 \bm{\eta}_{\mathrm{t}}
@@ -266,7 +267,7 @@ with the unchanged translational part
 \ortvek{0}{r}{}{D}
 \end{equation}  
 %
-compared to $\bm{x}$ and the modified rotational part
+remains unchanged and the rotational part
 %
 \begin{equation}
 \bm{\eta}_{\mathrm{r}}
@@ -283,9 +284,11 @@ compared to $\bm{x}$ and the modified rotational part
 \label{equ:etar_def}
 \end{equation}
 %
-where the last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily (from the kinematic point of view).
+is modified compared to $\bm{x}$.
+The last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily (from the kinematic point of view).
 
-Distinguishing the frames $\ks{A1}$ and $\ks{A2}$ resulting from intermediate elementary rotations, sketched in Fig.\,\ref{fig:frames_5dof_6dof}\,(b), gives the partial frame rotation to the desired frame
+The frames $\ks{A1}$ and $\ks{A2}$ result from intermediate elementary rotations, as sketched in Fig.\,\ref{fig:frames_5dof_6dof}\,(b).
+These intermediate frames are the partial frame rotation to the former 3T3R desired frame $\ks{D}$
 %
 \begin{align}
 \rotmat{0}{A1} 
@@ -311,7 +314,7 @@ and the partial frame rotation
 \end{align}
 %
 from the actual frame and the $x$- and $y$-axis error components.
-
+%
 The frames $\ks{A1}$, $\ks{A2}$ and $\ks{D}$ all share the same $z$-axis
 %
 \begin{equation}
@@ -323,7 +326,7 @@ The frames $\ks{A1}$, $\ks{A2}$ and $\ks{D}$ all share the same $z$-axis
 \label{equ:z_axis_equal}
 \end{equation}
 %
-which is also the tool axis, since transformations between these frames are rotations $\bm{R}_z$ around the $z$-axes from (\ref{equ:z_axis_equal}).
+which is also the tool axis, since transformations between these frames are only rotations $\bm{R}_z$ around the $z$-axes from (\ref{equ:z_axis_equal}).
 
 Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_1$ are defined around the same axis, $\beta_3$ only influences $\alpha_1$ and not $\alpha_2$ and $\alpha_3$, which can be expressed by
 %
@@ -354,7 +357,7 @@ It can be derived by symbolically comparing $\bm{\alpha}$ for two different desi
 \section{Application on the Inverse Kinematics of 3T2R Tasks}
 \label{sec:RecEulAng_3T2R_app}
 
-The standard methods introduced in Sec.\,\ref{sec:Intro} for solving the inverse kinematics for 3T2R tasks and exploiting the functional redundancy struggle with the definition of a Jacobian matrix with appropriate dimensions.
+The standard methods, introduced in Sec.\,\ref{sec:Intro} for solving the inverse kinematics for 3T2R tasks and exploiting the functional redundancy, struggle with the definition of a Jacobian matrix with appropriate dimensions.
 
 \subsection{Jacobian for Gradient-based Inverse Kinematics}
 
@@ -389,15 +392,20 @@ equal to (\ref{equ:Phit_def}) and the adapted rotational part
     0 & 0 & 1
     \end{bmatrix}}_{=\bm{P}_{\Psi}}
  \bm{\Phi}_{\mathrm{r}} (\bm{q},\bm{x})
+ \in {\mathbb{R}}^{2}
 \label{equ:Psir_def}
 \end{align}
 %
 from (\ref{equ:Phir_def}). 
-The dependence on $\bm{\eta}$ and not on $\bm{x}$ can be explained by using (\ref{equ:alpha_dep_beta}) and (\ref{equ:etar_def}) which results to
+The dependence on $\bm{\eta}$ and not on $\bm{x}$ can be explained by using (\ref{equ:alpha_dep_beta}) and (\ref{equ:etar_def}) together with $\rotmat{A1}{A2}=\bm{R}_z(\beta_3+\alpha_1)$ which results to
 %
-\begin{equation}
-\bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta}) = \bm{P}_{\Psi} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{E}(\bm{q})\right) \in {\mathbb{R}}^{2}.
-\end{equation}
+\begin{align}
+\bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta})
+&=
+\bm{P}_{\Psi} \bm{\alpha}\left(\rotmat{A2}{E}(\bm{q},\bm{\eta}_{\mathrm{r}},\alpha_1,\beta_3)\right) \nonumber\\
+&=
+\bm{P}_{\Psi} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{E}(\bm{q})\right).
+\end{align}
 
 
 The condition $\bm{\Phi}=\bm{0}$ or $\bm{\Psi}=\bm{0}$ leads to a valid configuration of the end-effector position and the complete orientation of the end-effector (using $\bm{\Phi}$) or the orientation only of the tool-axis (using $\bm{\Psi}$).
@@ -411,7 +419,7 @@ Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial
 \label{equ:taylor_phi}
 \end{equation}
 %
-where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is called the ``Jacobian matrix corresponding to the residual vector'' ($\bm{\Phi}$) in \cite{GoldenbergBenFen1985}.
+where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is called the ``Jacobian matrix corresponding to the residual vector'' ($\bm{\Phi}$) in \cite{GoldenbergBenFen1985} and $\bm{q}^0$ is regarded as given.
 %
 For 3T2R tasks
 %
@@ -434,12 +442,12 @@ for solution of the inverse kinematics in the next step $k+1$. The increment
 \begin{equation}
 \Delta \bm{q}^k
 =
-\left(\frac{\partial \bm{\Psi}(\bm{q},\bm{x})}{\partial \bm{q}}\biggr\rvert_{\bm{q}^k}\right)^{\dagger}
+\left(\frac{\partial \bm{\Psi}(\bm{q},\bm{\eta})}{\partial \bm{q}}\biggr\rvert_{\bm{q}^k}\right)^{\dagger}
 (\bm{0} - \bm{\Psi}(\bm{q}^{k},\bm{\eta}))
 \label{equ:deltaq_psi}
 \end{equation}
 %
-of the joint angles towards this solution can be used in iterative algorithms well-known in robotics literature like Newton-Raphson.
+of the joint angles towards this solution can be used in iterative algorithms like Newton-Raphson together with methods to adapt the step sizes to ensure convergence.
 Depending on the dimension of the matrix, $(\cdot)^\dagger$ denotes the matrix inverse or the pseudo-inverse.
 
 \subsection{Discussion of Singularities}
@@ -469,51 +477,70 @@ The column operator $\overline{\bm{R}}$ for matrices is defined with
 \bm{R}=\begin{bmatrix}
 \bm{n} & \bm{o} & \bm{a}
 \end{bmatrix}
- \in {\mathbb{R}}^{3 \times 3}
+=
+\begin{bmatrix}
+{n_x}&{o_x}&{a_x} \\
+{n_y}&{o_y}&{a_y} \\ 
+{n_z}&{o_z}&{a_z} \\ 
+\end{bmatrix}
+ \in \mathrm{SO}(3)
 \end{equation}
 %
 to avoid differentiating matrices or w.r.t. matrices.
-Matrix multiplication is then expressed with the product operator
+Matrix multiplication is then expressed with the matrix product operator $\overline{\Pi}$
+%
+such that
 %
 \begin{equation}
-\overline{\Pi}: {\mathbb{R}}^{9} \times {\mathbb{R}}^{9} \rightarrow {\mathbb{R}}^{9}
-\label{equ:matprod_def}
-\end{equation}
-%
-with
-%
-\begin{equation}
+\rotmato{1}{3}
+=
+\overline{\prod}\left( \rotmato{1}{2}, \rotmato{2}{3}\right)
+=
+\overline{\bm{R}}(\rotmat{1}{3})
+\quad
+\mathrm{with}
+\quad
 \rotmat{1}{3}
 =
 \rotmat{1}{2}
 \rotmat{2}{3}
-\Rightarrow
-\rotmato{1}{3}
-=
-\overline{\prod}\left( \rotmato{1}{2}, \rotmato{2}{3}\right).
 \label{equ:matprod}
 \end{equation}
 %
-The transposition operator $\bm{P}_\transp$ is a $9 \times 9$ permutation matrix with
+The transposition operator $\bm{P}_\transp$ is a $9 \times 9$ permutation matrix such that
 %
 \begin{equation}
+\rotmato{2}{1}
+=
+\bm{P}_\transp \rotmato{1}{2}
+\quad
+\mathrm{with}
+\quad
 \rotmat{2}{1}
 =
 \rotmat{1}{2}^\transp
-\Rightarrow
-\rotmato{2}{1}
-=
-\bm{P}_\transp \rotmato{1}{2}.
+\quad
+\mathrm{and}
+\quad
+\rotmato{1}{2}=\overline{\bm{R}}(\rotmat{1}{2})
+.
 \end{equation}
 %
 The Euler angles can be calculated from a rotation matrix in the same way as before using these operators with the notation
 %
 \begin{equation}
-\overline{\bm{\alpha}}(\overline{\bm{R}})
+\bm{\alpha}(\overline{\bm{R}})
 =
-\bm{\alpha}(\bm{R}).
+\bm{\alpha}(\bm{R})
+=
+\begin{bmatrix}
+\arctan \left( {n_y} / { n_x} \right) \\ 
+\arctan \left( -{n_z} / \sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ 
+\arctan \left( {o_z} / {a_z} \right)
+\end{bmatrix}
 \end{equation}
 %
+at the Z-Y-X example.
 Finally applying this to the rotational part of the residual vector Jacobian and using the chain rule for differentiation yields
 %
 \begin{align}
@@ -521,22 +548,24 @@ Finally applying this to the rotational part of the residual vector Jacobian and
 &=
 \frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\rotmat{0}{D}^\transp(\bm{x}) \rotmat{0}{E}(\bm{q})\right) \label{equ:grad_Phi_q}\\
 &=
-\frac{\partial}{\partial \bm{q}} \overline{\bm{\alpha}}\left(\overline{\prod}\left( \rotmato{0}{D}^\transp(\bm{x}), \rotmato{0}{E}(\bm{q})\right)\right) \nonumber \\
+\frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\overline{\prod}\left( \rotmato{0}{D}^\transp(\bm{x}), \rotmato{0}{E}(\bm{q})\right)\right) \nonumber \\
 &=
 %underbrace für Geschweifte Klammern drunter, vphantom nur für vertikale Größe des mittleren Terms
-\underbrace{\vphantom{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}\left(\frac{\partial \overline{\bm{\alpha}}}{\partial \overline{\bm{R}}}\right)}_{\mathrm{I}}
+\underbrace{\vphantom{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}\left(\frac{\partial \bm{\alpha}}{\partial \overline{\bm{R}}}\right)}_{\mathrm{I}}
 \underbrace{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}_{\mathrm{II}}
 \underbrace{\vphantom{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}\left(\frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} \right)}_{\mathrm{III}}.  \nonumber
 \end{align}
+%
+The two first partial derivatives ``I'' and ``II'' from (\ref{equ:grad_Phi_q}) are sparse matrices of low complexity where the elements of $\rotmat{D}{E}$ and $\rotmat{0}{D}$ have to be inserted.
+The last partial derivative ``III'' can be derived efficiently with computer algebra systems.
+
 The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\partial \bm{\Phi}_{\mathrm{t}} / \partial \bm{q}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ is enclosed in the geometric Jacobian of the manipulator and is not regarded at this point to focus on the rotational aspects.
 The gradient 
 $\bm{\Psi}_{\mathrm{r}, \partial\bm{q}}=\partial \bm{\Psi}_{\mathrm{r}} / \partial \bm{q}=\bm{P}_{\Psi}\bm{\Phi}_{\mathrm{r},\partial\bm{q}}$
 is obtained from the results of (\ref{equ:grad_Phi_q}) with the selection matrix $\bm{P}_{\Psi}$ from (\ref{equ:Psir_def}).
 
-The two first partial derivatives ``I'' and ``II'' from (\ref{equ:grad_Phi_q}) are sparse matrices of low complexity.
-The last partial derivative ``III'' can be derived efficiently with computer algebra systems.
-
-If a rotation $\rotmat{0}{N}(\bm{q})$ to the last robot link frame and a constant rotation $\rotmat{N}{E}$ to the end-effector frame are used to account for exchangeable end-effectors or tools, the properties of the column-operator can be used to substitute the last term ``III'' in (\ref{equ:grad_Phi_q}) with
+To account for exchangeable end-effectors or tools, a distinguished frame rotation $\rotmat{0}{N}(\bm{q})$ to the last robot link frame and a constant frame rotation $\rotmat{N}{E}$ to the end-effector frame can be used.
+The properties of the column-operator allow then to substitute the last term ``III'' in (\ref{equ:grad_Phi_q}) with
 %
 \begin{align}
 \frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} 
@@ -552,13 +581,13 @@ If a rotation $\rotmat{0}{N}(\bm{q})$ to the last robot link frame and a constan
 
 %with $\mathrm{dim}(\bm{\Psi})=5$
 
-The inverse kinematics formalism (\ref{equ:deltaq_psi}) described in the previous section \ref{sec:RecEulAng_3T2R_app} does not yet take into account the functional redundancy.
+The inverse kinematics formalism (\ref{equ:deltaq_psi}), described in the previous section \ref{sec:RecEulAng_3T2R_app}, does not take into account the functional redundancy yet.
 
 The typical scenario for 3T2R tasks in industry is a serial link robot with $\mathrm{dim}(\bm{q})>5$.
 Most commonly a classical industrial robot with $\mathrm{dim}(\bm{q})=6$ will be used.
-Since $\mathrm{dim}(\bm{\Psi})=5$ at least one DoF is free for optimization of additional criteria.
+Since $\mathrm{dim}(\bm{\Psi})=5$, at least one DoF is free for optimization of additional criteria.
 
-For the sake of simplicity as an additional criterion the summed $\bm{W}$-weighted quadratic distances
+For the sake of simplicity, as an additional criterion the summed $\bm{W}$-weighted quadratic distances
 %
 \begin{equation}
 h(\bm{q})
@@ -605,7 +634,7 @@ This ``pointing configuration'' can also not be addressed by the nullspace proje
 \end{equation}
 %
 only projects the gradient $h_{\partial\bm{q}}$ of additional criteria onto the last joint.
-Therefore the method does only work if the tool is mounted in a different configuration (``side'' or ``hanging'' in \cite{GuoDonKe2015}), which might be unfavorable for some end-effectors or tasks.
+Therefore, the method does only work if the tool is mounted in a different configuration (``side'' or ``hanging'' in \cite{GuoDonKe2015}), which might be unfavorable for some end-effectors or tasks.
 
 \section{Conclusions}
 \label{sec:Conclusion}
