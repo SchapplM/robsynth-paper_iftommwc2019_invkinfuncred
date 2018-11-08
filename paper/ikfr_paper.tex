@@ -59,7 +59,7 @@ This is done by using a set of reciprocal Euler angles to describe the end-effec
 
 %KEYWORDS
 \begin{keywords}
-functional redundancy, reciprocal Euler angles, \\ inverse kinematics, robots, five-DoF task, 3T2R task
+functional redundancy, reciprocal Euler angles, \\ inverse kinematics, robot manipulators, five-DoF task, 3T2R task
 \end{keywords}
 
 \section{Introduction}
@@ -73,7 +73,7 @@ These tasks comprise amongst others arc welding \cite{HuoBar2005}, drilling \cit
 
 Since standard industrial robots have six DoF, one degree of \emph{functional} redundancy exists which allows to improve performance characteristics of the robots while achieving a valid pose to perform one of the aforementioned tasks.
 To be able to incorporate performance optimization into inverse kinematics via the well-established gradient projection method \cite{Yoshikawa1984}, either the joint space can be augmented or the task space can be reduced. % \cite{Huo2009}.
-Augmenting the joint space is possible by inserting an additional joint for the rotation around the task's axis of symmetry (``tool axis'') \cite{Baron2000}.
+Augmenting the joint space is possible by virtually inserting an additional joint for the rotation around the task's axis of symmetry (``tool axis'') \cite{Baron2000}.
 Reducing the task space can be performed by orthogonal decomposition of the end-effector twist \cite{HuoBar2005}, removing the row of the ``task frame Jacobian'' corresponding to the tool axis \cite{Zlajpah2017}, the construction of the Jacobian Nullspace based upon geometric properties of the task \cite{LegerAng2016} or constructing a cone or pyramid resulting from the tool axis with an additional range of tolerance for tilt angles \cite{FromGra2010}.
 
 Another possibility for the resolution of the functional redundancy is a cascaded optimization where the inner loop calculates the inverse kinematics with standard methods and the outer loop optimizes the performance index.
@@ -111,7 +111,7 @@ The remainder of the paper is structured as follows: The idea of a kinematic des
 Their application in inverse kinematics of 3T2R tasks and in resolving the functional redundancy is shown in Sec.\,\ref{sec:RecEulAng_3T2R_app} and \ref{sec:ResFuncRed}.
 Sec.\,\ref{sec:Conclusion} concludes the paper.
 
-\section{Using reciprocal Euler Angles for Robot Kinematics}
+\section{Using Reciprocal Euler Angles for Robot Kinematics}
 \label{sec:RecEulAng}
 
 The core of solving the inverse kinematics problem of robot manipulators for tasks with only two rotational degrees of freedom is the nonlinearity of rotation.
@@ -160,7 +160,7 @@ and orientation
 \label{equ:xr_def_rotmat}
 \end{equation}  
 % 
-with respect to the base frame $\ks{0}$ expressed without loss of generality with a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles\footnote{Other sets of Euler angles with the same $\bm{\alpha}$ / $\bm{\beta}$ properties may be used as well.}
+with respect to the base frame $\ks{0}$ expressed without loss of generality with a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles\footnote{Other sets of Euler angles may be used as well.}
 %
 \begin{equation}
 \bm{x}_{\mathrm{r}}
@@ -198,10 +198,11 @@ The vector from $\ks{D}$ to $\ks{E}$ is the translational part
 and the rotational part
 %
 \begin{align}
-\bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) &= \begin{bmatrix}
+\bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) 
+= \begin{bmatrix}
 \alpha_1  & \alpha_2 & \alpha_3
 \end{bmatrix}^\transp
-=\bm{\alpha}\left(\rotmat{D}{E}\right)\nonumber \\
+&=\bm{\alpha}\left(\rotmat{D}{E}(\bm{x}_{\mathrm{r}},\bm{q})\right)\nonumber \\
 &=\bm{\alpha}\left(\rotmat{0}{D}^\transp (\bm{x}_{\mathrm{r}})\rotmat{0}{E}(\bm{q})\right) \in {\mathbb{R}}^{3}
 \label{equ:Phir_def}
 \end{align}
@@ -219,7 +220,7 @@ The intuitive approach of choosing
 the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\,\ref{fig:frames_5dof_6dof}\,(a) where the intermediate steps of the single elementary rotations are omitted since they have no technical meaning.
 %
 
-\subsection{Effect of the reciprocal Euler Angles}
+\subsection{Effect of the Reciprocal Euler Angles}
 \label{sec:RecEulAng_effect}
 
 
@@ -290,28 +291,28 @@ The last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ 
 The frames $\ks{A1}$ and $\ks{A2}$ result from intermediate elementary rotations, as sketched in Fig.\,\ref{fig:frames_5dof_6dof}\,(b).
 These intermediate frames are the partial frame rotation to the former 3T3R desired frame $\ks{D}$
 %
-\begin{align}
+\begin{equation}
 \rotmat{0}{A1} 
-&= 
-\bm{R}_x(\beta_1) \bm{R}_y(\beta_2)\\
-&=
+= 
+\bm{R}_x(\beta_1) \bm{R}_y(\beta_2)
+=
 \begin{bmatrix}
 \vek{n}{}{A1} & \vek{o}{}{A1} & \vek{a}{}{A1}
-\end{bmatrix} \nonumber
-\end{align}
+\end{bmatrix}
+\end{equation}
 %
 and the partial frame rotation
 %
-\begin{align}
+\begin{equation}
 \rotmat{0}{A2} 
-&= 
+= 
 \rotmat{0}{E}(\bm{q})
-\left(\bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3)\right)^\transp \\ 
-&=
+\left(\bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3)\right)^\transp 
+=
 \begin{bmatrix}
 \vek{n}{}{A2} & \vek{o}{}{A2} & \vek{a}{}{A2}
-\end{bmatrix}\nonumber
-\end{align}
+\end{bmatrix}
+\end{equation}
 %
 from the actual frame and the $x$- and $y$-axis error components.
 %
@@ -352,7 +353,7 @@ Since the tool axis rotation $\beta_3$ and the orientation error component $\alp
 \end{align}
 %
 This property of the reciprocal Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections.
-It can be derived by symbolically comparing $\bm{\alpha}$ for two different desired rotations $\bm{\beta}$ which only differ regarding a rotation $\beta_3$ around the tool axis.
+It can be derived by symbolically comparing $\bm{\alpha}$ of (\ref{equ:alpha_def_rotmat_zyx}) for two different desired rotations $\bm{\beta}$ which only differ regarding a rotation $\beta_3$ around the tool axis.
 
 \section{Application on the Inverse Kinematics of 3T2R Tasks}
 \label{sec:RecEulAng_3T2R_app}
@@ -361,7 +362,7 @@ The standard methods, introduced in Sec.\,\ref{sec:Intro} for solving the invers
 
 \subsection{Jacobian for Gradient-based Inverse Kinematics}
 
-To obtain a Jacobian with minimal row dimension the kinematic condition for the 3T2R problem in the coordinates $\bm{\eta}$ is now described as
+To obtain a Jacobian with minimal row dimension, the kinematic condition for the 3T2R problem in the coordinates $\bm{\eta}$ is now described as
 %
 \begin{equation}
 \bm{\Psi}=\begin{bmatrix}
@@ -381,12 +382,12 @@ following the definition for $\bm{\Phi}$ from (\ref{equ:Phi_def}) with the trans
 %
 equal to (\ref{equ:Phit_def}) and the adapted rotational part
 %
-\begin{align}
+\begin{equation}
 \bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta}) &= 
 \begin{bmatrix}
 \alpha_2  & \alpha_3
-\end{bmatrix}^\transp \nonumber \\
-&=
+\end{bmatrix}^\transp
+=
 \underbrace{\begin{bmatrix}
     0 & 1 & 0  \\ 
     0 & 0 & 1
@@ -394,7 +395,7 @@ equal to (\ref{equ:Phit_def}) and the adapted rotational part
  \bm{\Phi}_{\mathrm{r}} (\bm{q},\bm{x})
  \in {\mathbb{R}}^{2}
 \label{equ:Psir_def}
-\end{align}
+\end{equation}
 %
 from (\ref{equ:Phir_def}). 
 The dependence on $\bm{\eta}$ and not on $\bm{x}$ can be explained by using (\ref{equ:alpha_dep_beta}) and (\ref{equ:etar_def}) together with $\rotmat{A1}{A2}=\bm{R}_z(\beta_3+\alpha_1)$ which results to
@@ -409,7 +410,7 @@ The dependence on $\bm{\eta}$ and not on $\bm{x}$ can be explained by using (\re
 
 
 The condition $\bm{\Phi}=\bm{0}$ or $\bm{\Psi}=\bm{0}$ leads to a valid configuration of the end-effector position and the complete orientation of the end-effector (using $\bm{\Phi}$) or the orientation only of the tool-axis (using $\bm{\Psi}$).
-Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots with 6-DoF at the iterative step $k+1$ can be derived with the Taylor series expansion of $\bm{\Phi}(\bm{q},\bm{x})$ to
+Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots with 6-DoF at the iterative step $k+1$ can be derived with the linear approximation of the Taylor series expansion of $\bm{\Phi}(\bm{q},\bm{x})$ to
 %
 \begin{equation}
 \bm{\Phi}(\bm{q}^{k+1},\bm{x}) = 
@@ -442,6 +443,8 @@ for solution of the inverse kinematics in the next step $k+1$. The increment
 \begin{equation}
 \Delta \bm{q}^k
 =
+(\bm{q}^{k+1} - \bm{q}^k)
+=
 \left(\frac{\partial \bm{\Psi}(\bm{q},\bm{\eta})}{\partial \bm{q}}\biggr\rvert_{\bm{q}^k}\right)^{\dagger}
 (\bm{0} - \bm{\Psi}(\bm{q}^{k},\bm{\eta}))
 \label{equ:deltaq_psi}
@@ -452,9 +455,9 @@ Depending on the dimension of the matrix, $(\cdot)^\dagger$ denotes the matrix i
 
 \subsection{Discussion of Singularities}
 
-In \cite{Zlajpah2017} quaternions were used in favor of Euler angles for the orientation error with the reasons that a singularity-free representation of $\bm{\Phi}=\bm{0}$ is needed.
+In \cite{Zlajpah2017}, quaternions were used in favor of Euler angles for the orientation error with the reasons that a singularity-free representation of $\bm{\Phi}=\bm{0}$ is needed.
 This is the case for Tait-Bryan angles\footnote{Tait-Bryan angles are referred to as $A$-$B$-$C$-Euler angles with axes $A \ne C$ as opposed to ``proper Euler angles'' with $A = C$. The elementary axes are $A,B,C \in \{ X,Y,Z\}$.} like e.\,g. the $Z$-$Y$-$X$ notation used here for $\bm{\alpha}$.
-For control purposes it can be assumed that the components of the orientation error $\bm{\alpha}$ always stay below 90$^\circ$, which avoids the ``gimbal lock'' representation singularity of Euler angles.
+For control purposes it can be assumed that the components of the orientation error $\bm{\alpha}$ always stay below $\pm$90$^\circ$, which avoids the ``gimbal lock'' representation singularity of Euler angles.
 This assumption can be justified by the consideration that active and effective position and orientation tracking will only produce small errors.
 A singularity-free representation of the absolute orientation $\bm{\beta}$ has to be ensured at the phase of motion planning, as well as avoiding discontinuities of the trajectory.
 
@@ -538,9 +541,10 @@ The Euler angles can be calculated from a rotation matrix in the same way as bef
 \arctan \left( -{n_z} / \sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ 
 \arctan \left( {o_z} / {a_z} \right)
 \end{bmatrix}
+\label{equ:alpha_def_rotmat_zyx}
 \end{equation}
 %
-at the Z-Y-X example.
+at the $Z$-$Y$-$X$ example.
 Finally applying this to the rotational part of the residual vector Jacobian and using the chain rule for differentiation yields
 %
 \begin{align}
@@ -575,8 +579,10 @@ The properties of the column-operator allow then to substitute the last term ``I
 \underbrace{\left(\frac{\partial}{\partial \rotmato{0}{N}} \overline{\prod}\left( \rotmato{0}{N}, \rotmato{N}{E}\right)\right)}_{\mathrm{I}}
 \underbrace{\left(\frac{\partial}{\partial \bm{q}} \rotmato{0}{N}(\bm{q})\right)}_{\mathrm{II}}. \nonumber
 \end{align}
+%
+The gradient ``I'' in (\ref{equ:ee_rotation_gradq}) matrix with linear entries where $\rotmat{N}{E}$ can be inserted directly similar to ``II'' in (\ref{equ:grad_Phi_q}).
 
-\section{Resolving functional Redundancy for 3T2R Tasks}
+\section{Resolving Functional Redundancy for 3T2R Tasks}
 \label{sec:ResFuncRed}
 
 %with $\mathrm{dim}(\bm{\Psi})=5$
@@ -644,7 +650,7 @@ This exploits the properties of Euler angles to reduce the number of coordinates
 Applications to the inverse kinematics of serial robots are given.
 The detailed view on the practical implementation aims at facilitating the understanding of the approach and at reducing the barrier for potential users.
 
-Future work includes comparative simulative evaluation against state of the art methods and inquiries on singularities and the relation to the geometric Jacobian as well as the application on parallel robots.
+Future work includes comparative simulative evaluation against state of the art methods and inquiries on singularities and the relation to the geometric Jacobian as well as the application to parallel robots.
 
 
 \section*{Acknowledgements}
