@@ -1,5 +1,5 @@
 %%
-%% This is file `spmpsci.bst',
+%% This is file `spmpsci_unsrt.bst',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
@@ -12,6 +12,10 @@
 %%   publications.                                                                %%
 %% Report bugs and improvements to: Joylene Vette-Guillaume or Frank Holzwarth    %%
 %%                                              Springer-Verlag 2004/10/15        %%
+%%                                                                                %%
+%% Sorting of keys made inoperative, the bibitems occur according the sequence    %%
+%% they are cited in the main text  (Frank Holzwarth, Springer-Verlag 2010/08/24) %%
+%%                                                                                %%
 %%                                                                                %%
 %%********************************************************************************%%
 %%
@@ -1461,7 +1465,7 @@ FUNCTION {presort}
   'sort.key$ :=
 }
 ITERATE {presort}
-SORT
+% SORT
 STRINGS { longest.label }
 INTEGERS { number.label longest.label.width }
 FUNCTION {initialize.longest.label}
