@@ -1,4 +1,9 @@
 % Teste die inverse Kinematik mit 3T2R mit verschiedenen Systemen
+% Untersuche insbesondere, wie die Eigenschaften der reziproken
+% Euler-Winkel sich verhalten
+
+% Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-08
+% (C) Institut für mechatronische Systeme, Universität Hannover
 
 clear
 clc
@@ -17,6 +22,7 @@ for mdlname2 = RobotNames
                       'sigma', TSS.sigma, ...
                       'pkin', TSS.pkin, ...
                       'm', TSS.m, 'mrSges', TSS.mrSges, 'Ifges', TSS.Ifges, ...
+                      'mu', TSS.mu, ...
                       'NJ', TSS.NJ, 'NL', TSS.NL, 'NQJ', TSS.NQJ);
   RS = SerRob(Par_struct, mdlname);
   RS = RS.fill_fcn_handles();
@@ -34,16 +40,12 @@ for mdlname2 = RobotNames
         T_E = RS.fkineEE(q);
         xE = [T_E(1:3,4); r2eulxyz(T_E(1:3,1:3))];
         q0 = q-10*pi/180*(0.5-rand(RS.NQJ,1)); % Anfangswinkel 20° neben der Endstellung
-        if m == 1
-          q_test = RS.invkin1(xE, q0);
-        else
-          q_test = RS.invkin2(xE, q0);
-        end
+        q_test = RS.invkin(xE, q0, struct('constr_m', m));
         T_E_test = RS.fkineEE(q_test);
         test_T = T_E\T_E_test - eye(4);
         % test_q = q-q_test
         % [q, q_test]
-        if any(abs(test_T(:)) > 1e-10)
+        if any(abs(test_T(:)) > 1e-9)
           error('DK/IK stimmt nicht');
         end
       end
@@ -89,11 +91,11 @@ for mdlname2 = RobotNames
     xE(6) = 0; % Rotation um z-Achse des EE interessiert nicht.
     q0 = q-20*pi/180*(0.5-rand(RS.NQJ,1)); % Anfangswinkel 20° neben der Endstellung
     T_E0 = RS.fkineEE(q0);
-    q_test = RS.invkin2(xE, q0, true);
+    q_test = RS.invkin(xE, q0, struct('constr_m', 2, 'task_red', true));
     T_E_test = RS.fkineEE(q_test);
     test_T = T_E\T_E_test - eye(4);
     test_T = test_T(:,[3,4]); % Spalten mit x-y-Einheitsvektoren lassen sich nicht vergleichen.
-    if any(abs(test_T(:)) > 1e-10) || any(isnan(test_T(:)))
+    if any(abs(test_T(:)) > 1e-9) || any(isnan(test_T(:)))
       % Teilweise konvergiert die IK nicht, wenn der Abstand zu groß ist.
       warning on
       warning('DK/IK stimmt nicht für Aufgabenredundanz. Delta_x = %1.5e, Delta_z = %1.5e', norm(test_T(:,2)), norm(test_T(:,1)));
