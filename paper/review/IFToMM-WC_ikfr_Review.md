@@ -25,7 +25,8 @@
 
 * Equation 27 shows the transpose of R matrix. The \"T\" identification, for transposition, should be added.
 
-* In equation 30 is not mentioned anything about the second solution for the angles.
+* [x] In equation 30 is not mentioned anything about the second solution for the angles.
+  * Hinweis zu arctan2
 
 * [N] Maybe a numerical development in this paper could make clear the contributions and how can be used the proposes reciprocal Euler approach.
   * Dafür ist kein Platz

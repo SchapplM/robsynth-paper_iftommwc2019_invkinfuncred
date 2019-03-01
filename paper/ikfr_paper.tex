@@ -5,7 +5,7 @@
 \usepackage{amssymb}
 \usepackage{calrsfs} % Für Kalligraphie-F 
 \newcommand{\bm}[1]{\boldsymbol{#1}}
-
+\DeclareMathOperator{\arctantwo}{arctan2}
 % Latex-Makros für häufig verwendete Formelzeichen
 \newcommand{\ortvek}[4]{{ }_{(#1)}{\boldsymbol{#2}}^{#3}_{#4} }
 \newcommand{\vek}[3]{\boldsymbol{#1}^{#2}_{#3}}
@@ -532,7 +532,7 @@ The transposition operator $\bm{P}_\transp$ is a $9 \times 9$ permutation matrix
 .
 \end{equation}
 %
-The Euler angles can be calculated from a rotation matrix in the same way as before using these operators with the notation
+The Euler angles can be calculated from a rotation matrix in the same way as before\footnote{Utilizing the sign-aware operator $\arctantwo(y,x)$ instead of $\arctan(y/x)$ allows angles to be in $(-\pi,+\pi]$ and removes ambiguities in the solution.} using these operators with the notation
 %
 \begin{equation}
 \bm{\alpha}(\overline{\bm{R}})
@@ -540,9 +540,9 @@ The Euler angles can be calculated from a rotation matrix in the same way as bef
 \bm{\alpha}(\bm{R})
 =
 \begin{bmatrix}
-\arctan \left( {n_y} / { n_x} \right) \\ 
-\arctan \left( -{n_z} / \sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ 
-\arctan \left( {o_z} / {a_z} \right)
+\arctantwo \left( {n_y} , { n_x} \right) \\ 
+\arctantwo \left( -{n_z} , \sqrt {{{a_z}}^{2}+{{ o_z}}^{2}} \right) \\ 
+\arctantwo \left( {o_z} , {a_z} \right)
 \end{bmatrix}
 \label{equ:alpha_def_rotmat_zyx}
 \end{equation}
