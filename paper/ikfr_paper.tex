@@ -125,6 +125,7 @@ In contrast to all other notations, consecutive elementary rotations like Euler 
 \label{sec:RecEulAng_KinDesc}
 
 A serial kinematic chain is described with the joint positions $\bm{q}$ and the forward kinematics
+\vspace{-0.5em}
 %
 \begin{equation}
 \bm{x} (\bm{q})
@@ -133,8 +134,9 @@ A serial kinematic chain is described with the joint positions $\bm{q}$ and the 
 \label{equ:dirkin}
 \end{equation}
 %
-giving the position and orientation of the actual end-effector frame $\ks{E}$.
-The general pose of the robot end-effector
+giving the configuration-dependent position and orientation $\bm{x} (\bm{q})$ of the actual end-effector (``E'') frame $\ks{E}$.
+In the following, the general, joint-independent, pose $\bm{x}$ of the robot end-effector is defined as the \emph{desired} (``D'') end-effector pose in the inverse kinematics problem and will be termed with ``$\bm{x}$'' without further supplements for the sake of compactness of the equations.
+This general pose
 %
 \begin{equation}
 \bm{x}
@@ -142,35 +144,41 @@ The general pose of the robot end-effector
 \begin{bmatrix}
 \bm{x}_{\mathrm{t}}^\transp & \bm{x}_{\mathrm{r}}^\transp
 \end{bmatrix}^\transp
+\in {\mathbb{R}}^{6}
 \label{equ:x_def}
 \end{equation}
 %
-describes the robot end-effector frames $\ks{D}$ position 
+describes the desired robot end-effector frames $\ks{D}$ position 
 %
 \begin{equation}
 \bm{x}_{\mathrm{t}}
 =
 \ortvek{0}{r}{}{D}
+\in {\mathbb{R}}^{3}
 \label{equ:xt_def}
 \end{equation}  
 %
 and orientation 
+\vspace{-0.5em}
 %
 \begin{equation}
 \rotmat{0}{D} (\bm{x}_{\mathrm{r}})
 =
-\begin{bmatrix}\vek{n}{}{D} & \vek{o}{}{D} & \vek{a}{}{D}\end{bmatrix}
+\begin{bmatrix}\vek{n}{}{D} & \vek{o}{}{D} & \vek{a}{}{D}\end{bmatrix} \in \mathrm{SO(3)}
 \label{equ:xr_def_rotmat}
 \end{equation}  
 % 
-with respect to the base frame $\ks{0}$ expressed without loss of generality with a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles\footnote{Other sets of Euler angles may be used as well.}
+with respect to the base frame $\ks{0}$, which is marked with left subscript ``$(0)$'' for vectors and left superscript ``$0$'' for rotation matrices.
+The rotation (\ref{equ:xr_def_rotmat}) is expressed without loss of generality with a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles
+%\footnote{Other sets of Euler angles may be used as well.}
 %
 \begin{equation}
 \bm{x}_{\mathrm{r}}
 =
 \begin{bmatrix}
 \beta_1  & \beta_2 & \beta_3
-\end{bmatrix}^{\mathrm{T}},
+\end{bmatrix}^{\mathrm{T}}
+\in {\mathbb{R}}^{3},
 \label{equ:xr_def}
 \end{equation} 
 %
@@ -179,26 +187,30 @@ with respect to the base frame $\ks{0}$ expressed without loss of generality wit
 \label{equ:def_rmat_xyz}
 \end{equation}
 %
-In the following, the general pose $\bm{x}$ of the robot end-effector is regarded independent of the forward kinematics $\bm{f}(\bm{q})$ in (\ref{equ:dirkin}).
-If the general pose is identical to the actual pose, the frames $\ks{D}$ and $\ks{E}$ are identical.
-The general pose is the \emph{desired} (``D'') end-effector pose in the inverse kinematics problem and will be termed with ``$\bm{x}$'' without further supplements for the sake of compactness of the equations.
-The deviation $\bm{\Phi}$ between the desired end-effector frame $\ks{D}$ expressed with $\bm{x}$ and the actual robots end-effector frame $\ks{E}$ expressed with $\bm{f}(\bm{q})$ is defined as
+The deviation $\bm{\Phi}$ between the desired end-effector frame $\ks{D}$ expressed with $\bm{x}$ of (\ref{equ:x_def}) and the actual robots end-effector frame $\ks{E}$ expressed with $\bm{f}(\bm{q})$ of (\ref{equ:dirkin}) is defined as
+\vspace{-0.5em}
 %
 \begin{equation}
 \bm{\Phi}=\begin{bmatrix}
 \bm{\Phi}_{\mathrm{t}}^\transp & \bm{\Phi}_{\mathrm{r}}^\transp
-\end{bmatrix}^\transp \in {\mathbb{R}}^{6}.
+\end{bmatrix}^\transp \in {\mathbb{R}}^{6},
 \label{equ:Phi_def}
 \end{equation}
 %
-The vector from $\ks{D}$ to $\ks{E}$ is the translational part 
+which is the residual vector of the inverse kinematics problem.
+The vector
 %
 \begin{equation}
-\bm{\Phi}_{\mathrm{t}}(\bm{q},\bm{x}) = - \bm{x}_{\mathrm{t}} + \ortvek{0}{r}{}{E}(\bm{q}) \in {\mathbb{R}}^{3}
+\bm{\Phi}_{\mathrm{t}}(\bm{q},\bm{x})
+=
+- \ortvek{0}{r}{}{D} + \ortvek{0}{r}{}{E}(\bm{q})
+=
+- \bm{x}_{\mathrm{t}} + \ortvek{0}{r}{}{E}(\bm{q})
+ \in {\mathbb{R}}^{3}
 \label{equ:Phit_def}
 \end{equation}
 %
-and the rotational part
+from the origins of $\ks{D}$ to $\ks{E}$ is the translational part and the rotational part
 %
 \begin{align}
 \bm{\Phi}_{\mathrm{r}}(\bm{q},\bm{x}) 
@@ -210,8 +222,8 @@ and the rotational part
 \label{equ:Phir_def}
 \end{align}
 %
-of this ``residual vector'' is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}, that is calculated from the rotation matrices in (\ref{equ:Phir_def}).
-In the following, $\bm{\alpha}$ will always refer to the rotation error/residual and $\bm{\beta}$ to an orientation relative to the base frame.
+is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}, that is calculated from the rotation matrices in (\ref{equ:Phir_def}).
+In the following, ``$\bm{\alpha}$'' will always refer to the rotation error/residual and ``$\bm{\beta}$'' to an orientation relative to the base frame.
 The Euler angle convention of $\bm{\alpha}$ can be chosen independently of the choice for the orientation representation in  $\bm{\beta}$.
 The intuitive approach of choosing
 %
@@ -221,6 +233,7 @@ The intuitive approach of choosing
 \end{equation}
 %
 the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\,\ref{fig:frames_5dof_6dof}\,(a) where the intermediate steps of the single elementary rotations are omitted since they have no technical meaning.
+The upperscript in $\bm{\alpha}^*$ in (\ref{equ:alpha_convention_xyz}) demarcates this specific example and following elaborations on the calculation of $\bm{\alpha}$.
 %
 
 \subsection{Effect of the Reciprocal Euler Angles}
@@ -234,9 +247,10 @@ the same way as $\bm{\beta}$ leads to a set of transformations depicted in Fig.\
 \end{figure} 
 
 
-Using $\bm{\alpha}$ as defined in (\ref{equ:alpha_convention_xyz}), all three components of $\bm{x}_{\mathrm{r}}=\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required in the task.
+Using $\bm{\Phi}_{\mathrm{r}}{=}\bm{\alpha}$ as defined in (\ref{equ:alpha_convention_xyz}), all three components of $\bm{x}_{\mathrm{r}}{=}\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required in the task.
 %
-To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orientation error is now chosen to be 
+To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orientation error is now chosen to be
+\vspace{-0.5em}
 %
 \begin{equation}
 \bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3) \in \mathrm{SO(3)}
@@ -246,11 +260,10 @@ To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orient
 instead of the definition from (\ref{equ:alpha_convention_xyz}).
 This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the $X$-$Y$-$Z$-convention of $\bm{\beta}$ for the absolute orientation.
 %
-The reciprocity only refers to the switched order of the elementary axes $X$, $Y$ and $Z$.
-Since $\bm{\alpha}$ and $\bm{\beta}$ describe different rotation matrices, the respective intermediate rotation axes are different.
-
-% from (\ref{equ:xt_def}),(\ref{equ:xr_def})
-Similar to the six end-effector operational space coordinates $\bm{x}$ the task space is defined to have five coordinates
+The reciprocity refers to the switched order of the elementary axes $X$, $Y$ and $Z$ in the combination of the sets $\bm{\alpha}$ \emph{and} $\bm{\beta}$.
+One set of Euler angles alone can not be declared as reciprocal without reference to another set of angles.
+%
+Similar to the six end-effector operational space coordinates $\bm{x}$, the task space of 3T2R tasks is defined to have five coordinates
 %
 \begin{equation}
 \bm{\eta}
@@ -258,10 +271,12 @@ Similar to the six end-effector operational space coordinates $\bm{x}$ the task 
 \begin{bmatrix}
 \bm{\eta}_{\mathrm{t}}^\transp & 
 \bm{\eta}_{\mathrm{r}}^\transp
-\end{bmatrix}^\transp.
+\end{bmatrix}^\transp
+\in {\mathbb{R}}^{5}.
 \end{equation}  
 %
 The translational part
+\vspace{-0.5em}
 %
 \begin{equation}
 \bm{\eta}_{\mathrm{t}}
@@ -269,6 +284,7 @@ The translational part
 \bm{x}_{\mathrm{t}}
 =
 \ortvek{0}{r}{}{D}
+\in {\mathbb{R}}^{3}
 \end{equation}  
 %
 remains unchanged and the rotational part
@@ -285,11 +301,12 @@ remains unchanged and the rotational part
 0 & 1 & 0
 \end{bmatrix}}_{=\bm{P}_{\eta}}
 \bm{x}_{\mathrm{r}}
+\in {\mathbb{R}}^{2}
 \label{equ:etar_def}
 \end{equation}
 %
 is modified compared to $\bm{x}$.
-The last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is not included since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom which can be set arbitrarily (from the kinematic point of view).
+The last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is excluded by the selection matrix $\bm{P}_{\eta}$, since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom of the operational space which can be set arbitrarily (from the kinematic point of view).
 
 The frames $\ks{A1}$ and $\ks{A2}$ result from intermediate elementary rotations, as sketched in Fig.\,\ref{fig:frames_5dof_6dof}\,(b).
 These intermediate frames are the partial frame rotation to the former 3T3R desired frame $\ks{D}$
