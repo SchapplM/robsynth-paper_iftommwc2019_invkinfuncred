@@ -23,7 +23,8 @@
 
 * The term \"regarded\", is not used, as well as several words along the text. Please use scientific writing.
 
-* Equation 27 shows the transpose of R matrix. The \"T\" identification, for transposition, should be added.
+* [x] Equation 27 shows the transpose of R matrix. The \"T\" identification, for transposition, should be added.
+  * Stapel-Operator noch ausführlicher und konkret auf Rotationsmatrizen erklärt. Mehr auf Dimensionen eingegangen.
 
 * [x] In equation 30 is not mentioned anything about the second solution for the angles.
   * Hinweis zu arctan2

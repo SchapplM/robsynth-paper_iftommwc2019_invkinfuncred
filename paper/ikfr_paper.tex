@@ -471,7 +471,7 @@ The Jacobians $\bm{\Phi}_{\partial\bm{q}}$ of (\ref{equ:taylor_phi}) or $\bm{\Ps
 %
 However, $\bm{\Phi}_{\partial\bm{q}}$ can be implemented efficiently by exploiting the chain rule and sparsity of the matrices with partial derivatives as shown in the following.
 
-The column operator $\overline{\bm{R}}$ for matrices is defined with
+The column operator $\overline{\bm{R}}$ for rotation matrices $\bm{R}$ to stack the coordinate systems unit vectors $\bm{n},\bm{o},\bm{a} \in {\mathbb{R}}^{3}$ vertically instead of horizontally is defined as
 %
 \begin{equation}
 \overline{\bm{R}}(\bm{R})=\begin{bmatrix}
@@ -490,6 +490,7 @@ The column operator $\overline{\bm{R}}$ for matrices is defined with
 {n_z}&{o_z}&{a_z} \\ 
 \end{bmatrix}
  \in \mathrm{SO}(3)
+\label{equ:def_rotmat}
 \end{equation}
 %
 to avoid differentiating matrices or w.r.t. matrices.
@@ -509,7 +510,7 @@ such that
 \rotmat{1}{3}
 =
 \rotmat{1}{2}
-\rotmat{2}{3}
+\rotmat{2}{3}.
 \label{equ:matprod}
 \end{equation}
 %
@@ -519,20 +520,22 @@ The transposition operator $\bm{P}_\transp$ is a $9 \times 9$ permutation matrix
 \rotmato{2}{1}
 =
 \bm{P}_\transp \rotmato{1}{2}
-\quad
+\in {\mathbb{R}}^{9}
+\enspace
 \mathrm{with}
-\quad
+\enspace
 \rotmat{2}{1}
 =
 \rotmat{1}{2}^\transp
-\quad
+\in \mathrm{SO}(3)
+\enspace
 \mathrm{and}
-\quad
+\enspace
 \rotmato{1}{2}=\overline{\bm{R}}(\rotmat{1}{2})
 .
 \end{equation}
 %
-The Euler angles can be calculated from a rotation matrix in the same way as before\footnote{Utilizing the sign-aware operator $\arctantwo(y,x)$ instead of $\arctan(y/x)$ allows angles to be in $(-\pi,+\pi]$ and removes ambiguities in the solution.} using these operators with the notation
+The Euler angles can be calculated from the general rotation matrix $\bm{R}$ of (\ref{equ:def_rotmat}) in the same way as before\footnote{Utilizing the sign-aware operator $\arctantwo(y,x)$ instead of $\arctan(y/x)$ allows angles to be in $(-\pi,+\pi]$, removes ambiguities and provides global differentiability.} using these operators with the notation
 %
 \begin{equation}
 \bm{\alpha}(\overline{\bm{R}})
@@ -558,9 +561,9 @@ Finally applying this to the rotational part of the residual vector Jacobian and
 \frac{\partial}{\partial \bm{q}} \bm{\alpha}\left(\overline{\prod}\left( \rotmato{0}{D}^\transp(\bm{x}), \rotmato{0}{E}(\bm{q})\right)\right) \nonumber \\
 &=
 %underbrace für Geschweifte Klammern drunter, vphantom nur für vertikale Größe des mittleren Terms
-\underbrace{\vphantom{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}\left(\frac{\partial \bm{\alpha}}{\partial \overline{\bm{R}}}\right)}_{\mathrm{I}}
-\underbrace{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}_{\mathrm{II}}
-\underbrace{\vphantom{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}\left(\frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} \right)}_{\mathrm{III}}.  \nonumber
+\underbrace{\vphantom{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}\left(\frac{\partial \bm{\alpha}}{\partial \overline{\bm{R}}}\right)}_{\mathrm{I} \in {\mathbb{R}}^{3 \times 9}}
+\underbrace{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}_{\mathrm{II} \in {\mathbb{R}}^{9 \times 9}}
+\underbrace{\vphantom{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}\left(\frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} \right)}_{\mathrm{III} \in {\mathbb{R}}^{9 \times \mathrm{dim}(\bm{q})}}.  \nonumber
 \end{align}
 %
 The two first partial derivatives ``I'' and ``II'' from (\ref{equ:grad_Phi_q}) are sparse matrices of low complexity where the elements of $\rotmat{D}{E}$ and $\rotmat{0}{D}$ have to be inserted.
