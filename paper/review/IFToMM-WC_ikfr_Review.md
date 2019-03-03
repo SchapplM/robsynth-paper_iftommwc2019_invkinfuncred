@@ -5,7 +5,8 @@
 
 # Review 2
 
-* The variables FE e FD are not clear in equations 2 and 3. Index E and D are the same.
+* [x] The variables FE e FD are not clear in equations 2 and 3. Index E and D are the same.
+  * Sollte mit anderen Anmerkungen zusammen jetzt klarer sein, dass E und D nicht gleich sind.
 
 * [x] The text (0) in equation 3 is not clear. The variable should be presented in the text as they are presented.
   * Satz zu Indizes für Referenz-KS der Vektoren und Rotationsmatrizen
@@ -20,15 +21,17 @@
   * Satz dazu ergänzt
 
 * [x] In the text, it is said that \"alpha\" is reciprocal Euler angles. It is not clear in what sense such reciprocity emerges.
-  * Klargestellt: Reziprozität bezieht sich auf die Kombination zweier Euler-Winkel.
+  * Klargestellt: Reziprozität bezieht sich auf die Kombination zweier Euler-Winkel-Sätze.
 
 * [N] The authors said \"degree of freedom which can be set arbitrarily\". If I consider that the last angle is arbitrary, thus I do not have a problem with redundancies. Please review this sentence and make it clear.
   * Zusatz: DoF of Operational Space
   * Review-Kommentar geht am Inhalt vorbei: Die Redundanz ist kein Problem, sondern etwas, was man mathematisch bestmöglich beschreiben möchte, um es auszunutzen.
 
-* The matrix \"P\"psi\" in Equation 21 is different from the \"P\"n\" in equation 14. It is not clear.
+* [x] The matrix \"P\"psi\" in Equation 21 is different from the \"P\"n\" in equation 14. It is not clear.
+  * weiter ausgeführt. Text jetzt hoffentlich verständlicher.
 
-* The term \"regarded\", is not used, as well as several words along the text. Please use scientific writing.
+* [x] The term \"regarded\", is not used, as well as several words along the text. Please use scientific writing.
+  * regarded entfernt. Weitere "unwissenschaftliche Sprache" wird beim kritischen Lesen am Ende nochmal geprüft.
 
 * [x] Equation 27 shows the transpose of R matrix. The \"T\" identification, for transposition, should be added.
   * Stapel-Operator noch ausführlicher und konkret auf Rotationsmatrizen erklärt. Mehr auf Dimensionen eingegangen.

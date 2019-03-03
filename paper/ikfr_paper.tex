@@ -1,3 +1,5 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX spellcheck = en_US
 \documentclass{svproc}
 
 \usepackage{paralist}
@@ -222,7 +224,7 @@ from the origins of $\ks{D}$ to $\ks{E}$ is the translational part and the rotat
 \label{equ:Phir_def}
 \end{align}
 %
-is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}, that is calculated from the rotation matrices in (\ref{equ:Phir_def}).
+is also chosen as a set of Euler angles $\bm{\alpha}$ \cite{GoldenbergBenFen1985}, that is calculated from the rotation matrix in (\ref{equ:Phir_def}).
 In the following, ``$\bm{\alpha}$'' will always refer to the rotation error/residual and ``$\bm{\beta}$'' to an orientation relative to the base frame.
 The Euler angle convention of $\bm{\alpha}$ can be chosen independently of the choice for the orientation representation in  $\bm{\beta}$.
 The intuitive approach of choosing
@@ -247,9 +249,9 @@ The upperscript in $\bm{\alpha}^*$ in (\ref{equ:alpha_convention_xyz}) demarcate
 \end{figure} 
 
 
-Using $\bm{\Phi}_{\mathrm{r}}{=}\bm{\alpha}$ as defined in (\ref{equ:alpha_convention_xyz}), all three components of $\bm{x}_{\mathrm{r}}{=}\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required in the task.
+Using $\bm{\Phi}_{\mathrm{r}}{=}\bm{\alpha}^*$ as defined in (\ref{equ:alpha_convention_xyz}), all three components of $\bm{x}_{\mathrm{r}}{=}\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required in the task.
 %
-To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orientation error is now chosen to be
+To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orientation error $\bm{\Phi}_{\mathrm{r}}$ is now chosen to be
 \vspace{-0.5em}
 %
 \begin{equation}
@@ -258,7 +260,7 @@ To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orient
 \end{equation}
 %
 instead of the definition from (\ref{equ:alpha_convention_xyz}).
-This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the $X$-$Y$-$Z$-convention of $\bm{\beta}$ for the absolute orientation.
+This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the set of $X$-$Y$-$Z$-Euler angles of $\bm{\beta}$ for the absolute orientation.
 %
 The reciprocity refers to the switched order of the elementary axes $X$, $Y$ and $Z$ in the combination of the sets $\bm{\alpha}$ \emph{and} $\bm{\beta}$.
 One set of Euler angles alone can not be declared as reciprocal without reference to another set of angles.
@@ -306,7 +308,7 @@ remains unchanged and the rotational part
 \end{equation}
 %
 is modified compared to $\bm{x}$.
-The last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is excluded by the selection matrix $\bm{P}_{\eta}$, since it corresponds to a rotation around the tool axis in 3T2R tasks and is a degree of freedom of the operational space which can be set arbitrarily (from the kinematic point of view).
+The last rotation $\beta_3$ around the $z$-axis $\bm{a}_{D}$ of $\rotmat{0}{D}$ is excluded from the task space by the selection matrix $\bm{P}_{\eta}$, since it corresponds to a rotation around the tool axis in 3T2R tasks and is a DoF of the operational space which can be set arbitrarily (from the kinematic point of view).
 
 The frames $\ks{A1}$ and $\ks{A2}$ result from intermediate elementary rotations, as sketched in Fig.\,\ref{fig:frames_5dof_6dof}\,(b).
 These intermediate frames are the partial frame rotation to the former 3T3R desired frame $\ks{D}$
@@ -372,7 +374,7 @@ Since the tool axis rotation $\beta_3$ and the orientation error component $\alp
 \label{equ:alpha_dep_beta}.
 \end{align}
 %
-This property of the reciprocal Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections.
+This property of the reciprocal sets of Euler angles allows a kinematic description of robots in 3T2R tasks, as elaborated in the next sections.
 It can be derived by symbolically comparing $\bm{\alpha}$ of (\ref{equ:alpha_def_rotmat_zyx}) for two different desired rotations $\bm{\beta}$ which only differ regarding a rotation $\beta_3$ around the tool axis.
 
 \section{Application on the Inverse Kinematics of 3T2R Tasks}
@@ -382,7 +384,7 @@ The standard methods, introduced in Sec.\,\ref{sec:Intro} for solving the invers
 
 \subsection{Jacobian for Gradient-based Inverse Kinematics}
 
-To obtain a Jacobian with minimal row dimension, the kinematic condition for the 3T2R problem in the coordinates $\bm{\eta}$ is now described as
+To obtain a Jacobian with minimal row dimension, the kinematic condition for the 3T2R problem in the coordinates $\bm{\eta}$ is now defined as
 %
 \begin{equation}
 \bm{\Psi}=\begin{bmatrix}
@@ -390,7 +392,8 @@ To obtain a Jacobian with minimal row dimension, the kinematic condition for the
 \end{bmatrix}^\transp \in {\mathbb{R}}^{5}
 \end{equation}
 %
-following the definition for $\bm{\Phi}$ from (\ref{equ:Phi_def}) with the translational part
+following the definition for $\bm{\Phi}$ from (\ref{equ:Phi_def}).
+The translational part
 %
 \begin{equation}
 \bm{\Psi}_{\mathrm{t}}(\bm{q},\bm{\eta}) 
@@ -400,25 +403,26 @@ following the definition for $\bm{\Phi}$ from (\ref{equ:Phi_def}) with the trans
 - \bm{\eta}_{\mathrm{t}} + \ortvek{0}{r}{}{E}(\bm{q}) \in {\mathbb{R}}^{3}
 \end{equation}
 %
-equal to (\ref{equ:Phit_def}) and the adapted rotational part
+remains unchanged to (\ref{equ:Phit_def}).
+The first component of the rotational part from (\ref{equ:Phir_def}) is omitted by the selection matrix $\bm{P}_{\Psi}$, since it corresponds to the orientation error $\alpha_1$ around the tool axis, leaving
+\vspace{-1.5em}
 %
 \begin{equation}
-\bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta}) &= 
+\bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta}) = 
 \begin{bmatrix}
 \alpha_2  & \alpha_3
 \end{bmatrix}^\transp
 =
-\underbrace{\begin{bmatrix}
+\overbrace{\begin{bmatrix}
     0 & 1 & 0  \\ 
     0 & 0 & 1
-    \end{bmatrix}}_{=\bm{P}_{\Psi}}
+    \end{bmatrix}}^{=\bm{P}_{\Psi}}
  \bm{\Phi}_{\mathrm{r}} (\bm{q},\bm{x})
- \in {\mathbb{R}}^{2}
+ \in {\mathbb{R}}^{2}.
 \label{equ:Psir_def}
 \end{equation}
 %
-from (\ref{equ:Phir_def}). 
-The dependence on $\bm{\eta}$ and not on $\bm{x}$ can be explained by using (\ref{equ:alpha_dep_beta}) and (\ref{equ:etar_def}) together with $\rotmat{A1}{A2}=\bm{R}_z(\beta_3+\alpha_1)$ which results to
+The dependence on $\bm{\eta}$ and not on $\bm{x}$ can be explained by using (\ref{equ:alpha_dep_beta}) and (\ref{equ:etar_def}) together with $\rotmat{A1}{A2}=\bm{R}_z(\beta_3+\alpha_1)$ from Fig.\,\ref{fig:frames_5dof_6dof}\,(b) which results to
 %
 \begin{align}
 \bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta})
@@ -440,7 +444,7 @@ Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial
 \label{equ:taylor_phi}
 \end{equation}
 %
-where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is called the ``Jacobian matrix corresponding to the residual vector'' ($\bm{\Phi}$) in \cite{GoldenbergBenFen1985} and $\bm{q}^0$ is regarded as given.
+where $\bm{\Phi}_{\partial\bm{q}}=(\partial \bm{\Phi} / \partial \bm{q})$ is called the ``Jacobian matrix corresponding to the residual vector'' ($\bm{\Phi}$) in \cite{GoldenbergBenFen1985} and $\bm{q}^0$ is assumed as given.
 %
 For 3T2R tasks
 %
@@ -568,7 +572,7 @@ The Euler angles can be calculated from the general rotation matrix $\bm{R}$ of 
 \end{equation}
 %
 at the $Z$-$Y$-$X$ example.
-Finally applying this to the rotational part of the residual vector Jacobian and using the chain rule for differentiation yields
+Finally, applying this to the rotational part of the residual vector Jacobian and using the chain rule for differentiation yields
 %
 \begin{align}
 \frac{\partial}{\partial \bm{q}}\bm{\Phi}_{\mathrm{r}}
@@ -586,7 +590,7 @@ Finally applying this to the rotational part of the residual vector Jacobian and
 The two first partial derivatives ``I'' and ``II'' from (\ref{equ:grad_Phi_q}) are sparse matrices of low complexity where the elements of $\rotmat{D}{E}$ and $\rotmat{0}{D}$ have to be inserted.
 The last partial derivative ``III'' can be derived efficiently with computer algebra systems.
 
-The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\partial \bm{\Phi}_{\mathrm{t}} / \partial \bm{q}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ is enclosed in the geometric Jacobian of the manipulator and is not regarded at this point to focus on the rotational aspects.
+The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\partial \bm{\Phi}_{\mathrm{t}} / \partial \bm{q}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ is enclosed in the geometric Jacobian of the manipulator and is not considered at this point to focus on the rotational aspects.
 The gradient 
 $\bm{\Psi}_{\mathrm{r}, \partial\bm{q}}=\partial \bm{\Psi}_{\mathrm{r}} / \partial \bm{q}=\bm{P}_{\Psi}\bm{\Phi}_{\mathrm{r},\partial\bm{q}}$
 is obtained from the results of (\ref{equ:grad_Phi_q}) with the selection matrix $\bm{P}_{\Psi}$ from (\ref{equ:Psir_def}).
