@@ -98,7 +98,7 @@ The existing methods each have drawbacks that are avoided by using the new metho
 \end{compactitem}
 
 This paper transfers the velocity level approach from \cite{Zlajpah2017} to the position level and the orientation error is expressed in Euler angles instead of quaternions:
-%
+
 The absolute orientation of the end-effector and the corresponding orientation error between desired and actual end-effector orientation are expressed with two sets of Euler angles which are mutually reciprocal.
 Reciprocity for sets of Euler angles is defined in this paper as successive rotations around intrinsic elementary axes of switched order.
 By this definition, the rotation component belonging to the tool axis in 3T2R tasks is always the same for the absolute orientation and for the orientation error, respectively.
@@ -127,7 +127,7 @@ In contrast to all other notations, consecutive elementary rotations like Euler 
 \label{sec:RecEulAng_KinDesc}
 
 A serial kinematic chain is described with the joint positions $\bm{q}$ and the forward kinematics
-\vspace{-0.5em}
+\vspace{-0.2em}
 %
 \begin{equation}
 \bm{x} (\bm{q})
@@ -161,15 +161,15 @@ describes the desired robot end-effector frames $\ks{D}$ position
 \end{equation}  
 %
 and orientation 
-\vspace{-0.5em}
+%\vspace{-0.5em}
 %
 \begin{equation}
 \rotmat{0}{D} (\bm{x}_{\mathrm{r}})
 =
 \begin{bmatrix}\vek{n}{}{D} & \vek{o}{}{D} & \vek{a}{}{D}\end{bmatrix} \in \mathrm{SO(3)}
 \label{equ:xr_def_rotmat}
-\end{equation}  
-% 
+\end{equation}
+%
 with respect to the base frame $\ks{0}$, which is marked with left subscript ``$(0)$'' for vectors and left superscript ``$0$'' for rotation matrices.
 The rotation (\ref{equ:xr_def_rotmat}) is expressed without loss of generality with a set $\bm{\beta}$ of $X$-$Y$-$Z$-Euler angles
 %\footnote{Other sets of Euler angles may be used as well.}
@@ -190,7 +190,7 @@ The rotation (\ref{equ:xr_def_rotmat}) is expressed without loss of generality w
 \end{equation}
 %
 The deviation $\bm{\Phi}$ between the desired end-effector frame $\ks{D}$ expressed with $\bm{x}$ of (\ref{equ:x_def}) and the actual robots end-effector frame $\ks{E}$ expressed with $\bm{f}(\bm{q})$ of (\ref{equ:dirkin}) is defined as
-\vspace{-0.5em}
+%\vspace{-0.5em}
 %
 \begin{equation}
 \bm{\Phi}=\begin{bmatrix}
@@ -252,7 +252,7 @@ The upperscript in $\bm{\alpha}^*$ in (\ref{equ:alpha_convention_xyz}) demarcate
 Using $\bm{\Phi}_{\mathrm{r}}{=}\bm{\alpha}^*$ as defined in (\ref{equ:alpha_convention_xyz}), all three components of $\bm{x}_{\mathrm{r}}{=}\bm{\beta}$ affect the rotation matrix $\rotmat{D}{E}$, which makes it impossible to remove one rotational coordinate from the kinematic description, even if it is not required in the task.
 %
 To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orientation error $\bm{\Phi}_{\mathrm{r}}$ is now chosen to be
-\vspace{-0.5em}
+\vspace{-0.1em}
 %
 \begin{equation}
 \bm{R}(\bm{\alpha}) := \bm{R}_z(\alpha_1) \bm{R}_y(\alpha_2) \bm{R}_x(\alpha_3) \in \mathrm{SO(3)}
@@ -261,7 +261,7 @@ To encounter this issue, the Euler angle convention $\bm{\alpha}$ for the orient
 %
 instead of the definition from (\ref{equ:alpha_convention_xyz}).
 This set of $Z$-$Y$-$X$-Euler angles $\bm{\alpha}$ is defined in this paper as being \emph{reciprocal} to the set of $X$-$Y$-$Z$-Euler angles of $\bm{\beta}$ for the absolute orientation.
-%
+
 The reciprocity refers to the switched order of the elementary axes $X$, $Y$ and $Z$ in the combination of the sets $\bm{\alpha}$ \emph{and} $\bm{\beta}$.
 One set of Euler angles alone can not be declared as reciprocal without reference to another set of angles.
 %
@@ -278,7 +278,7 @@ Similar to the six end-effector operational space coordinates $\bm{x}$, the task
 \end{equation}  
 %
 The translational part
-\vspace{-0.5em}
+%\vspace{-0.5em}
 %
 \begin{equation}
 \bm{\eta}_{\mathrm{t}}
@@ -350,7 +350,7 @@ The frames $\ks{A1}$, $\ks{A2}$ and $\ks{D}$ all share the same $z$-axis
 \end{equation}
 %
 which is also the tool axis, since transformations between these frames are only rotations $\bm{R}_z$ around the $z$-axes from (\ref{equ:z_axis_equal}).
-
+\newpage
 Since the tool axis rotation $\beta_3$ and the orientation error component $\alpha_1$ are defined around the same axis, $\beta_3$ only influences $\alpha_1$ and not $\alpha_2$ and $\alpha_3$, which can be expressed by
 %
 \begin{align}
@@ -405,7 +405,7 @@ The translational part
 %
 remains unchanged to (\ref{equ:Phit_def}).
 The first component of the rotational part from (\ref{equ:Phir_def}) is omitted by the selection matrix $\bm{P}_{\Psi}$, since it corresponds to the orientation error $\alpha_1$ around the tool axis, leaving
-\vspace{-1.5em}
+%\vspace{-0.5em}
 %
 \begin{equation}
 \bm{\Psi}_{\mathrm{r}}(\bm{q},\bm{\eta}) = 
@@ -432,9 +432,9 @@ The dependence on $\bm{\eta}$ and not on $\bm{x}$ can be explained by using (\re
 \bm{P}_{\Psi} \bm{\alpha}\left(\rotmat{0}{A1}^\transp (\bm{\eta}_{\mathrm{r}})\rotmat{0}{E}(\bm{q})\right).
 \end{align}
 
-
 The condition $\bm{\Phi}=\bm{0}$ or $\bm{\Psi}=\bm{0}$ leads to a valid configuration of the end-effector position and the complete orientation of the end-effector (using $\bm{\Phi}$) or the orientation only of the tool-axis (using $\bm{\Psi}$).
-Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots with 6-DoF at the iterative step $k+1$ can be derived with the linear approximation of the Taylor series expansion of $\bm{\Phi}(\bm{q},\bm{x})$ to
+
+Following \cite{GoldenbergBenFen1985}, the inverse kinematics problem for serial link robots in 6-DoF tasks at the iterative step $k+1$ can be derived with the linear approximation of the Taylor series expansion of $\bm{\Phi}(\bm{q},\bm{x})$ to
 %
 \begin{equation}
 \bm{\Phi}(\bm{q}^{k+1},\bm{x}) = 
@@ -489,7 +489,7 @@ A singularity-free representation of the absolute orientation $\bm{\beta}$ has t
 \label{sec:RecEulAng_implement}
 
 The Jacobians $\bm{\Phi}_{\partial\bm{q}}$ of (\ref{equ:taylor_phi}) or $\bm{\Psi}_{\partial\bm{q}}$ of (\ref{equ:taylor_psi}) consist of nested non-linear functions and do not use the geometric Jacobian of the serial link manipulator for the rotational part, which is easy to calculate. 
-%
+
 However, $\bm{\Phi}_{\partial\bm{q}}$ can be implemented efficiently by exploiting the chain rule and sparsity of the matrices with partial derivatives as shown in the following.
 
 The column operator $\overline{\bm{R}}$ for rotation matrices $\bm{R}$ to stack the coordinate systems unit vectors $\bm{n},\bm{o},\bm{a} \in {\mathbb{R}}^{3}$ vertically instead of horizontally is defined as
@@ -587,7 +587,7 @@ Finally, applying this to the rotational part of the residual vector Jacobian an
 \underbrace{\vphantom{\left(\frac{\partial \overline{\prod}\left(\rotmato{0}{D}^\transp, \rotmato{0}{E}\right)}{\partial \rotmato{0}{E}}\right)}\left(\frac{\partial \rotmato{0}{E}(\bm{q})}{\partial \bm{q}} \right)}_{\mathrm{III} \in {\mathbb{R}}^{9 \times \mathrm{dim}(\bm{q})}}.  \nonumber
 \end{align}
 %
-The two first partial derivatives ``I'' and ``II'' from (\ref{equ:grad_Phi_q}) are sparse matrices of low complexity where the elements of $\rotmat{D}{E}$ and $\rotmat{0}{D}$ have to be inserted.
+The first two partial derivatives ``I'' and ``II'' from (\ref{equ:grad_Phi_q}) are sparse matrices of low complexity where the elements of $\rotmat{D}{E}$ and $\rotmat{0}{D}$ have to be inserted.
 The last partial derivative ``III'' can be derived efficiently with computer algebra systems.
 
 The translational part $\bm{\Phi}_{\mathrm{t},\partial\bm{q}}=\partial \bm{\Phi}_{\mathrm{t}} / \partial \bm{q}=\bm{\Psi}_{\mathrm{t},\partial\bm{q}}$ is enclosed in the geometric Jacobian of the manipulator and is not considered at this point to focus on the rotational aspects.
@@ -621,6 +621,7 @@ Most commonly a classical industrial robot with $\mathrm{dim}(\bm{q})=6$ will be
 Since $\mathrm{dim}(\bm{\Psi})=5$, at least one DoF is free for optimization of additional criteria.
 
 For the sake of simplicity, as an additional criterion the summed $\bm{W}$-weighted quadratic distances
+\vspace{-0.1em}
 %
 \begin{equation}
 h(\bm{q})
@@ -631,6 +632,7 @@ h(\bm{q})
 of the joint positions $\bm{q}$ from their respective reference position $\bar{\bm{q}}$ will be used.
 Minimizing $h(\bm{q})$ avoids the risk of joints reaching their technical limits.
 The gradient
+\vspace{-0.1em}
 %
 \begin{equation}
 h_{\partial\bm{q}}
@@ -641,14 +643,15 @@ h_{\partial\bm{q}}
 \end{equation}
 %
 can be used to include this additional minimization into the solution of the inverse kinematics.
-The gradient $h_{\partial\bm{q}}=\partial h/\partial \bm{q}$ is projected into the nullspace of $\bm{\Psi}_{\partial\bm{q}}=\partial \bm{\Psi}/\partial \bm{q}$ with
+The gradient $h_{\partial\bm{q}}$ is projected into the nullspace of $\bm{\Psi}_{\partial\bm{q}}$ with
+\vspace{-0.1em}
 %
 \begin{align}
 {\Delta}\bm{q}
 &=
 {\Delta}\bm{q}_{\mathrm{T}} + {\Delta}\bm{q}_{\mathrm{N}} \nonumber \\
 &=
-\bm{\Psi}_{\partial\bm{q}}^{\dagger} (-\bm{\Psi}) +  (\bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}) \bm{h}_{\partial\bm{q}}
+\bm{\Psi}_{\partial\bm{q}}^{\dagger} (-\bm{\Psi}) +  (\bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}) h_{\partial\bm{q}}
 \label{equ:nullspace}
 \end{align}
 %
@@ -656,6 +659,7 @@ where the nullspace incremental motion ${\Delta}\bm{q}_{\mathrm{N}}$ does not af
 
 It is reported in \cite{GuoDonKe2015} that their optimization does not work for industrial robots where the tool axis is aligned parallel to the last robot joint axis.
 This ``pointing configuration'' can also not be addressed by the nullspace projection from (\ref{equ:nullspace}), since the nullspace corresponds to the last robot axis and (in the case of a six-DoF robot)
+\vspace{-0.1em}
 %
 \begin{equation}
 \bm{1}-\bm{\Psi}_{\partial\bm{q}}^{\dagger}\bm{\Psi}_{\partial\bm{q}}
@@ -671,18 +675,18 @@ Therefore, the method does only work if the tool is mounted in a different confi
 
 \section{Conclusions}
 \label{sec:Conclusion}
-
-This paper presented a novel concept to formulate the inverse kinematics problem of serial kinematic chains using reciprocal Euler angles.
+\vspace{-0.2em}
+This paper presented a novel concept to formulate the inverse kinematics problem of serial kinematic chains using reciprocal sets of Euler angles.
 This exploits the properties of Euler angles to reduce the number of coordinates required for 3T2R tasks which are of high industrial relevance.
 Applications to the inverse kinematics of serial robots are given.
 %The detailed view on the practical implementation aims at facilitating the understanding of the approach and at reducing the barrier for potential users.
 %
-Future work includes comparative simulative evaluation against state of the art methods and inquiries on singularities and the relation to the geometric Jacobian as well as the application to parallel robots.
-
+Future works will include comparative simulative evaluation against state of the art methods, inquiries on singularities and the relation to the geometric Jacobian and the application to parallel robots.
 
 \section*{Acknowledgements}
-
-The financial support from the Deutsche Forschungsgemeinschaft (German Research Foundation, DFG) under grant number OR 196/33-1 is gracefully acknowledged.
+\vspace{-0.2em}
+The financial support from the Deutsche Forschungsgemeinschaft (DFG) under grant number OR 196/33-1 is gracefully acknowledged.
+\vspace{-0.2em}
 
 % BIBLIOGRAPHY
 \bibliographystyle{spmpsci_unsrt}
