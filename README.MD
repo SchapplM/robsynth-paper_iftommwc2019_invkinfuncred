@@ -40,9 +40,10 @@ This repository contains Maple worksheets to reproduce the equations and validat
   * tests the frame transformations from Fig. 1
   * tests the gradient matrix from Equ. 22 with Equ. 18
 
-## Other Implementations
+## Other Implementations and Further Tests
 
 The method described in the paper is employed in the [robotics toolbox](https://github.com/SchapplM/robotics-toolbox) and is used in other related research projects as well, e.g. [the combined structural and dimensional robot synthesis](https://github.com/SchapplM/robsynth-paper_iftommdach2020) or the inverse kinematics of parallel robots.
+The functionality of the gradient calculation and the inverse kinematics algorithm is tested to more extent in the test scripts `SerRob_constraints_test.m` and `SerRob_IK_test.m` in the [robotics toolbox](https://github.com/SchapplM/robotics-toolbox).
 
 ## Prerequisites
 
