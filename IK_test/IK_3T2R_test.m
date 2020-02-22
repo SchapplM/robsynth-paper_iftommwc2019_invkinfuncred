@@ -8,30 +8,55 @@
 clear
 clc
 
-RobotNames = {'kuka6dof', 'kuka5dof', 'S_UPS1', 'lwr4p'};
+%% Benutzereingaben
+% Prüfung repräsentativer Roboter
 
+Robots = {{'S4RRPR1', 'S4RRPR1_KUKA1'}, ... % 4DoF SCARA
+          {'S5RRRRR1', 'S5RRRRR1_KUKA1'}, ... % 5DoF Paletizer
+          {'S6RRRRRR10V2', 'S6RRRRRR10V2_KUKA1'}, ... % 6DoF Industrial Robot
+          {'S7RRRRRRR1', 'S7RRRRRRR1_LWR4P'}}; % 7DoF Lightweight Robot
+% Folgende Zeilen zur Prüfung einzelner Roboter einkommentieren:
+% Robots = {{'S4RRPR1', 'S4RRPR1_KUKA1'}};
+% Robots = {{'S5RRRRR1', 'S5RRRRR1_KUKA1'}};
+% Robots = {{'S6RRRRRR10V2', 'S6RRRRRR10V2_KUKA1'}};
+% Robots = {{'S7RRRRRRR1', 'S7RRRRRRR1_LWR4P'}};
+
+% Einstellungen
+use_mex_functions = true; % mit mex geht es etwas schneller, dafür ist debuggen schwieriger
+minimal_test = true; % Nur sehr wenige zufällige Winkel testen (geht schneller)
+% Endeffektor-Transformation ungleich Null festlegen, um zu prüfen, ob die
+% Implementierung davon richtig ist
+r_W_E = [0.1;0.2;0.3];
+phi_W_E = [20; 40; 50]*pi/180;
 %% Alle Robotermodelle durchgehen
-for mdlname2 = RobotNames
-  mdlname = mdlname2{1};
-  
-  eval(sprintf('TSS = %s_varpar_testfunctions_parameter();', mdlname));
-  
+for Robot_Data = Robots
+  SName = Robot_Data{1}{1};
+  RName = Robot_Data{1}{2}; 
   %% Klasse für seriellen Roboter erstellen
-  Par_struct = struct('alpha', TSS.alpha, 'a', TSS.a, ...
-                      'theta', TSS.theta, 'd', TSS.d, ...
-                      'sigma', TSS.sigma, ...
-                      'pkin', TSS.pkin, ...
-                      'm', TSS.m, 'mrSges', TSS.mrSges, 'Ifges', TSS.Ifges, ...
-                      'mu', TSS.mu, ...
-                      'NJ', TSS.NJ, 'NL', TSS.NL, 'NQJ', TSS.NQJ);
-  RS = SerRob(Par_struct, mdlname);
-  RS = RS.fill_fcn_handles();
+  % Instanz der Roboterklasse erstellen
+  RS = serroblib_create_robot_class(SName, RName);
+  RS.fill_fcn_handles(use_mex_functions, true);
   
-  %% Init
-  q = TSS.Q(1,:)';
+  % Grenzen festlegen (für Zusatz-Optimierung)
+  RS.qlim = repmat([-pi, pi], RS.NQJ, 1);
+  RS.update_EE(r_W_E, phi_W_E, []);
+  
+  % Test-Einstellungen generieren
+  TSS = RS.gen_testsettings(true, false);
+  if minimal_test
+    TSS.Q = TSS.Q(1:3,:);
+  end
+  fprintf('Starte Untersuchung für %s\n', RS.descr);
+  
+  %% Init 
+  % Bereich reduzieren: Bei Addition von Zufallswinkeln darf nicht pi
+  % überschritten werden.
+  TSS.Q(abs(TSS.Q(:))>150*pi/180) = 0;
   
   %% Funktionen testweise aufrufen
-  
+  q0 = TSS.Q(1,:)';
+  RS.fkine(q0);
+  RS.jacobig(q0);
   %% Normale Inverse Kinematik prüfen
   for m = 1:2 % Nach zwei Methoden prüfen
     if RS.NJ >= 6 % Normale IK geht nur mit 6 Roboter-FG oder mehr
@@ -49,20 +74,21 @@ for mdlname2 = RobotNames
           error('DK/IK stimmt nicht');
         end
       end
-      fprintf('%s: Inverse Kinematik Variante %d getestet\n', mdlname, m);
+      fprintf('%s: Inverse Kinematik Variante %d getestet\n', SName, m);
     else
-      fprintf('%s: Inverse Kinematik Variante %d nicht getestet\n', mdlname, m);
+      fprintf('%s: Inverse Kinematik Variante %d nicht getestet\n', SName, m);
     end
   end
   
   %% Aufgabenredundanz: Prüfe, ob die Jacobi-Matrix durch beta3 beeinflusst wird
+  % Entspricht Prüfung von Gl. 18 und Gl. 22
   for i = 1:size(TSS.Q,1)
     q = TSS.Q(i,:)';
     xE_soll = rand(6,1);
     for j = 1:10
       xE_soll(6) = rand(); % zufälliger neuer EE-Winkel
       % Prüfe Jacobi-Matrix
-      dpq=RS.constr2grad_rq(q, xE_soll);
+      dpq=RS.constr2grad_rq(q, xE_soll, true);
       dqp_IK = dpq(1:2,:);
       if j > 2
         if any(abs(dqp_IK_alt(:) - dqp_IK(:)) > 1e-10)
@@ -71,7 +97,7 @@ for mdlname2 = RobotNames
       end
       dqp_IK_alt = dqp_IK;
       % Prüfe ZB
-      Phi = RS.constr2(q, xE_soll);
+      Phi = RS.constr2(q, xE_soll, true);
       Phi_IK = Phi(5:6,:);
       if j > 2
         if any(abs(Phi_IK(:) - Phi_IK_alt(:)) > 1e-10)
@@ -82,6 +108,7 @@ for mdlname2 = RobotNames
     end
   end
   %% Prüfe IK mit Aufgabenredundanz
+  % Siehe Sec. 3.1 im Paper
   n_iO = 0;
   for i = 1:size(TSS.Q,1)
     warning off
@@ -104,7 +131,7 @@ for mdlname2 = RobotNames
     end
   end
   fprintf('%s: Inverse Kinematik Variante 2 mit Aufgabenredundanz=1 getestet. %d/%d erfolgreich\n', ...
-    mdlname, n_iO, size(TSS.Q,1));
+    SName, n_iO, size(TSS.Q,1));
   
   %% Vergleich Zwangsbedingungen mit selbst berechneten Winkeln
   % Diese Berechnung ist Roboterunabhängig
@@ -121,8 +148,9 @@ for mdlname2 = RobotNames
     R_0_Eq = T_E(1:3,1:3);
     
     % Zwangsbedingungen auf Weg 1 (volle Euler-Winkelkonvention)
-    Phi1 = RS.constr2(q, xE);
+    Phi1 = RS.constr2(q, xE, true);
     %% Versuch 1: Nachvollziehen der vollen Transformation
+    % Siehe Fig. 1 im Paper. Berechnung des Residuums Phi mit der Formel
     % 0 -> TA -> Ex -> Eq -> 0
     % ZB auf Weg 2 (nur xy-Winkel auf beiden Wegen)
     % Bild 3, Weg 0 -> TA (über beta1,beta2)
@@ -151,8 +179,10 @@ for mdlname2 = RobotNames
     end
 
     %% Versuch 2: Nachvollziehen der Transformation nur über Symm.-Achse
+    % Siehe Fig. 1 im Paper. Händisches berechnen der Transformation aus
+    % dem Bild.
     % ZB auf Weg 2 (nur xy-Winkel auf alpha-Weg)
-    % Bild 4, Weg 0 -> TA1 (über beta1,beta2)
+    % Paper Fig. 1, Weg 0 -> TA1 (über beta1,beta2)
     R_0_TA1 = rotx(xE(4)) * roty(xE(5));
     
     R_TA1_Eq = (R_0_TA1*rotz(rand))' * R_0_Eq;
@@ -164,14 +194,14 @@ for mdlname2 = RobotNames
 
     Phi2 = [Phi1(1:3); NaN; alpha2; alpha1];
     
-    % Bild 4, Weg 0 -> Eq -> TA2 (über alpha2,alpha1)
+    % Paper Fig. 1, Weg 0 -> Eq -> TA2 (über alpha2,alpha1)
     R_0_TA2 = R_0_Eq * (roty(alpha2) * rotx(alpha1))';
     R_TA_test = R_0_TA1 - R_0_TA2;
     if any(abs(R_TA_test(:,3)) > 1e-10)
       error('Die z-Achse der Rotationsmatrix TA2 stimmt nicht');
     end
 
-    % Bild 4, Weg TA -> TA2 (über beta3,alpha3)
+    % Paper Fig. 1, Weg TA -> TA2 (über beta3,alpha3)
     R_TA1_TA2 = rotz(xE(6)+alpha3);
     R_0_TA1_test = R_0_TA2*R_TA1_TA2';
     R_TA1_test = R_0_TA1 - R_0_TA1_test;
@@ -183,7 +213,4 @@ for mdlname2 = RobotNames
       error('Die Winkel alpha stimmen nicht');
     end
   end
-  %% TODO: Prüfe IK mit Aufgabenredundanz und Nebenbedingungen
-  
-  %% TODO: Prüfe IK mit Aufgabenredundanz für Trajektorie
 end

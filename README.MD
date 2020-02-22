@@ -35,11 +35,23 @@ This repository contains Maple worksheets to reproduce the equations and validat
   * Results are used in [the function constr2grad.m](https://github.com/SchapplM/robsynth-modelgen/blob/master/robot_codegen_scripts/templates_num/robot_constr2grad.m.template), corresponding to Equ. 31
 * `calculations/helper/proc_rmat2vec` corresponds to Equ. 27
 * `calculations/helper/proc_rvecprod` corresponds to Equ. 28
+* `IK_test/IK_3T2R_test.m` performs tests for 4 robots (4DoF to 7DoF)
+  * calculates the gradient-based inverse kinematics according to Sec. 3
+  * tests the frame transformations from Fig. 1
+  * tests the gradient matrix from Equ. 22 with Equ. 18
+
+## Other Implementations
+
+The method described in the paper is employed in the [robotics toolbox](https://github.com/SchapplM/robotics-toolbox) and is used in other related research projects as well, e.g. [the combined structural and dimensional robot synthesis](https://github.com/SchapplM/robsynth-paper_iftommdach2020) or the inverse kinematics of parallel robots.
 
 ## Prerequisites
 
 * The Maple worksheet has been tested with Maple version 2018
-* Download Maple dependencies containing procedures for Euler angle transformations:
+* For the worksheet `ikfr_paper_equations.mw`, download Maple dependencies containing procedures for Euler angle transformations:
   * https://github.com/SchapplM/robotics-toolbox (tested with rev. bcb2e77; 2020-02-15)
   * https://github.com/SchapplM/matlab_toolbox (tested with rev. 366f149; 2020-02-15)
 * Create one path-file for each dependencies as described in the files `calculations/matlab_toolbox_path.template` and `calculations/robotics_toolbox_path.template`
+* For the testscript `IK_3T2R_test.m`, download additional dependencies
+  * https://github.com/SchapplM/robsynth-serroblib (tested with rev. dff760b; 2020-02-16)
+  * https://github.com/SchapplM/robsynth-modelgen (tested with rev. 0f11fd8; 2020-02-15)
+  * https://github.com/SchapplM/robotics-dep-ext (tested with rev. bc57a42; 2020-02-17)
