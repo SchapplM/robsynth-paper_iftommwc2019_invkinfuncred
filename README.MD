@@ -19,7 +19,7 @@ This code is supplemental material to the following submission to the IFToMM Wor
 
 ## Abstract
 
-Robotic tasks like welding or drilling with three translational and only two rotational degrees of freedom ("3T2R") are of high industrial relevance but are ra\-ther scarcely addressed in scientific publications.
+Robotic tasks like welding or drilling with three translational and only two rotational degrees of freedom ("3T2R") are of high industrial relevance but are rather scarcely addressed in scientific publications.
 Existing solutions for the resolution of the functional redundancy of robotic manipulators with more than five axes performing these tasks either expand the full kinematic formulation or reduce it in intermediate steps.
 This paper presents an approach to reduce the kinematic formulation from the start to solve the problem in a simpler way.
 This is done by using a set of reciprocal Euler angles to describe the end-effector orientation and the orientation error in inverse kinematics.
