@@ -1,0 +1,20 @@
+# Konvertiere die Rotationsmatrix allgemein als Substitutionsvariable
+
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-06
+# (C) Institut fuer mechatronische Systeme, Universitaet Hannover
+
+R_conv_t_s := proc(A_t)
+  local A_s, i, j, rx_t, rx_s, rDx_t, rDx_s:
+  A_s := A_t:
+  for i from 1 to 3 do:
+    for j from 1 to 3 do:
+      rDx_t := parse(sprintf("diff(r%d%d(t),t)", i, j)):
+      rDx_s := parse(sprintf("rD%d%ds", i, j)):
+      A_s := subs(rDx_t=rDx_s, A_s):
+      rx_t := parse(sprintf("r%d%d(t)", i, j)):
+      rx_s := parse(sprintf("r%d%ds", i, j)):
+      A_s := subs(rx_t=rx_s, A_s):
+    end do:
+  end do:
+  return A_s:
+end proc:

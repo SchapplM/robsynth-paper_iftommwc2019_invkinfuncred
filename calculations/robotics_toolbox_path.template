@@ -1,0 +1,9 @@
+# This file has to be copied to a file with the same name and without extension ("robotics_toolbox_path")
+# The content is a Maple variable that points to the location of the Robotics Toolbox on the local file system
+# The toolbox can be obtained from https://github.com/SchapplM/robotics-toolbox
+# Unter Linux:
+# robotics_toolbox_path := "/home/schappler/IMES_REPO/robotics":
+# Unter Windows: Zwei mal Backslash wegen Zeichen-Maskierung im String
+# gilt auch für Nutzung der Toolbox mit Windows-Linux-Subsystem oder Git Bash
+# robotics_toolbox_path := "X:\\Pfad\\Robotik\\Repo": # Alternative 1
+# robotics_toolbox_path := "X:/Pfad/Robotik/Repo": # Alternative 2

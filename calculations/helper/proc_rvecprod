@@ -1,0 +1,12 @@
+# Matrixmultiplikation als gestapelten Vektor schreiben
+# [SchapplerTapOrt2019], Equ. 28
+
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-06
+# (C) Institut fuer mechatronische Systeme, Universitaet Hannover
+
+rvecprod := proc(Ab, Bb)
+  local C, Cb:
+  C := rvec2mat(Ab) . rvec2mat(Bb):
+  Cb := rmat2vec(C):
+  return Cb:
+end proc:

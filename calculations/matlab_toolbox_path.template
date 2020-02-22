@@ -1,0 +1,9 @@
+# This file has to be copied to a file with the same name and without extension ("matlab_toolbox_path")
+# The content is a Maple variable that points to the location of the Matlab Toolbox on the local file system
+# The toolbox can be obtained from https://github.com/SchapplM/matlab_toolbox
+# Unter Linux:
+# matlab_toolbox_path := "/home/schappler/IMES_REPO/matlab-toolbox":
+# Unter Windows: Zwei mal Backslash wegen Zeichen-Maskierung im String
+# gilt auch für Nutzung der Toolbox mit Windows-Linux-Subsystem oder Git Bash
+# matlab_toolbox_path := "X:\\Pfad\\Matlab\\Repo": # Alternative 1
+# matlab_toolbox_path := "X:/Pfad/Matlab/Repo": # Alternative 2

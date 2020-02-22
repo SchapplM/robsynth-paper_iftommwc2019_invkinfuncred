@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet>
+<Version major="2018" minor="2"/>
+<Label-Scheme value="2" prefix=""/>
+<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+</View-Properties>
+<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<Styles>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="true"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
+<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 1" alignment="left" bullet="numeric" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 2" alignment="left" bullet="alphabetic" firstindent="0" leftmargin="36" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 3" alignment="left" bullet="roman" firstindent="0" leftmargin="72" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 4" alignment="left" bullet="ALPHABETIC" firstindent="0" leftmargin="108" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 5" alignment="left" bullet="ROMAN" firstindent="0" leftmargin="144" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Annotation Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkError" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Error" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Pencil-style name="Pencil 1" pen-color="[0,0,0]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
+<Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
+</Styles>
+<Startup-Code startupcode=""/>
+<Task-table>
+    <Task-category name="&lt;default&gt;"/>
+</Task-table>
+<Task/><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L128" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Title" layout="Title">Calculations for Reciprocal Sets of Euler Angles for Inverse Kinematics</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group labelreference="L2180" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Introduction</Text-field><Text-field style="Normal" layout="Normal">This maple worksheet has to be run with eulstr := &quot;xyz&quot; and &quot;zyx&quot; to make ikfr_paper_equations.mw run (enter below the initialization).</Text-field><Text-field style="Normal" layout="Normal"></Text-field><Text-field style="Normal" layout="Normal">Content:</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">initialization (load dependencies)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">test transformations between Euler angles and rotation matrices</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">calculate partial derivatives of Euler angles w.r.t rotation matrices and vice versa (Equ. 31 in the paper)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">generate the Matlab function for the transposition operator (Equ. 29 in the paper)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">check the properties of the stack operator for matrices as of Sec. 3.3 of the paper</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">check the principle of reciprocal Euler angles (around Equ. 18 in the paper)
+</Text-field>
+</Input>
+</Group>
+<Group labelreference="L2179" drawlabel="true">
+<Input><Text-field style="Normal" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L2181" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Autor</Text-field><Text-field style="Normal" layout="Normal">Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2019-07</Text-field><Text-field style="Normal" layout="Normal">(C) Institut fuer Mechatronische Systeme, Leibniz Universitaet Hannover</Text-field><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L2182" drawlabel="true">
+<Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal"><Font style="Text">[SchapplerTapOrt2019] Schappler, M. et al.: Resolution of Functional Redundancy for 3T2R Robot Tasks using Two Sets of Reciprocal Euler Angles, Proc. of the 15th IFToMM World Congress, 2019
+</Font></Text-field><Text-field style="Text" layout="Normal">A=Aufzeichnungen vom 19.06.2018</Text-field><Text-field style="Text" layout="Normal">B=Aufzeichnungen vom 21.06.2018
+C=Aufzeichnungen vom 13.07.2018</Text-field>
+</Input>
+</Group></Presentation-Block>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title><Presentation-Block>
+<Group labelreference="L1623" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart:</Text-field>
+</Input>
+</Group>
+<Group labelreference="L1618" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">with(LinearAlgebra):
+with(ArrayTools):
+with(codegen):
+with(CodeGeneration):
+with(StringTools):
+printlevel := 2:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2133" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Hilfsfunktionen laden (aus Robotik-Toolbox)</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2134" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;robotics_toolbox_path&quot;):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2139" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_rotx&quot;, robotics_toolbox_path)):
+read(sprintf(&quot;%s/transformation/maple/proc_roty&quot;, robotics_toolbox_path)):
+read(sprintf(&quot;%s/transformation/maple/proc_rotz&quot;, robotics_toolbox_path)):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2147" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/transformation/maple/proc_r2eulxyz&quot;, robotics_toolbox_path)):
+read(sprintf(&quot;%s/transformation/maple/proc_r2eulzyx&quot;, robotics_toolbox_path)):
+read(sprintf(&quot;%s/transformation/maple/proc_eulxyz2r&quot;, robotics_toolbox_path)):
+read(sprintf(&quot;%s/transformation/maple/proc_eulzyx2r&quot;, robotics_toolbox_path)):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2137" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Hilfsfunktionen laden (aus Matlab-Toolbox)</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2138" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;matlab_toolbox_path&quot;):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2145" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(sprintf(&quot;%s/maple/proc_MatlabExport&quot;, matlab_toolbox_path)): # for creating Matlab code</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2136" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Weitere Hilfsfunktionen aus diesem Repo</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2040" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;helper/proc_remove_assumptions_from_names&quot;):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1630" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Hilfsfunktionen f\303\274r die Transformationen</Font> aus diesem Repo</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1653" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;helper/proc_rvec2mat&quot;); # Equ. 27
+read(&quot;helper/proc_rmat2vec&quot;); # Equ. 27
+read(&quot;helper/proc_rvecprod&quot;); # Equ. 28</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1655" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;helper/proc_R_conv_t_s&quot;); # helper for time differentiation
+read(&quot;helper/proc_R_conv_s_t&quot;); # helper for time differentiation</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1682" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">read(&quot;helper/proc_skew&quot;);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1684" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">codegen_opt := 2:</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Definition der Euler-Winkel-Konvention</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L1829" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Das Arbeitsblatt ist allgemein f\303\274r alle Euler-Winkel-Konventionen anwendbar (damit wird der Code nur einmal hingeschrieben)</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2029" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">eulstr := &quot;xyz&quot;: # This has to be changed once to zyx to generate all necessary functions</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2030" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">if eulstr = &quot;xyz&quot; then
+  r2eul := r2eulxyz:
+  eul2r := eulxyz2r:
+elif eulstr = &quot;zyx&quot; then
+  r2eul := r2eulzyx:
+  eul2r := eulzyx2r:
+end if:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2033" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Probiere Hin- und R\303\274cktransformation f\303\274r Eulerwinkel
+<Font style="Text">Test f\303\274r r2eulxyz und eulxyz2r.</Font></Font></Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L2001" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Einfache Drehung</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2007" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R1 := rotz(Pi/2);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1970" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phi1 := r2eul(R1);</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2183" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Kompletter Satz Euler-Winkel</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1995" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phi := &lt;alpha; beta; gama&gt;:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1965" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2 := eul2r(phi)</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1998" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Hin- und R\303\274cktransformation. M\303\274ssten wieder die urspr\303\274nglichen Winkel sein.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1978" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phi2 := r2eul(R2);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1976" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phi2 := simplify(phi2);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2184" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Setze Annahmen, damit R\303\274cktransformation eindeutig ist</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1977" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">assume(alpha&gt;-Pi, alpha&lt;Pi);
+assume(beta&gt;-Pi/2, beta&lt;Pi/2, beta&lt;&gt;0);
+assume(gama&gt;-Pi, gama&lt;Pi);
+about(alpha);
+about(beta);
+about(gama);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1997" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Mit den Annahmen ist die Transformation umkehrbar</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1986" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phi2 := simplify(phi2);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2034" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Exportieren der Hin- und R\303\274cktransformation zum testen</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2038" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Annahmen wieder entfernen</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2041" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2;</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2039" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2 := remove_assumptions_from_names(R2):
+phi2 := remove_assumptions_from_names(phi2):</Text-field><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha := 'alpha':</Text-field><Text-field prompt="&gt; " style="Maple Input" layout="Normal">beta := 'beta':</Text-field><Text-field prompt="&gt; " style="Maple Input" layout="Normal">gama := 'gama':</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2044" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2035" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(R2, sprintf(&quot;codeexport/eul%s2r_matlab.m&quot;, eulstr), codegen_opt):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Ableitung der Euler-Winkel nach der Rotationsmatrix
+<Font style="Text">Erzeugt eul*_diff_rmatvec (Gl. 31, Term II im Paper)
+[Erzeugt </Font><Font size="12" bold="false">Gl. (B.6)]</Font></Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Herleitung \303\274ber die Zeitableitung als Matrix</Font></Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2188" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2198" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Gl. (A.24)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2191" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R_t := Matrix(3,3):
+for i from 1 to 3 do:
+  for j from 1 to 3 do:
+    R_t(i,j) := parse(sprintf(&quot;r%d%d(t)&quot;, i, j)):
+  end do:
+end do:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">R_s := R_conv_t_s(R_t);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2195" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phiR_t := r2eul(R_t);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2204" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phiR_s := simplify(r2eul(R_s));</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2194" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(phiR_s, sprintf(&quot;codeexport/r2eul%s_matlab.m&quot;, eulstr), codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2190" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(phiR_s);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2206" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RD_t := diff~(R_t, t);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2205" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phiRD_t := diff~(phiR_t, t):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2201" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Substitution der Zeit-Variablen, ausklammern</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2196" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phiRD_s := R_conv_t_s(phiRD_t);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2197" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Gl. (A.24)</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2192" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2199" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">r_vec_t := rmat2vec(R_t):
+r_vec_s := R_conv_t_s(r_vec_t):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2202" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rD_vec_t := rmat2vec(RD_t): # Spaltenweise</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2203" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rD_vec_s := R_conv_t_s(rD_vec_t):
+</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2193" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Ableitung der Euler-Winkelgeschwindigkeiten nach den Zeitableitungen der Rotationsmatrixkomponenten
+Gl. (A.31), (B.6)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2200" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat1 := Matrix(3,9):
+for i from 1 to 3 do;
+  for j from 1 to 9 do;
+    GradMat1(i,j) := diff(phiRD_s(i,1), rD_vec_s(j,1));
+  end do:
+end do:</Text-field>
+</Input>
+<Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false">GradMat1 := simplify(GradMat1);</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2189" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Andere Herleitung: Ableitung der Euler-Winkel nach den Rotationsmatrixkomponenten</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2187" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2208" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat2 := Matrix(3,9):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2209" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 3 do;
+  for j from 1 to 9 do;
+    GradMat2(i,j) := diff(phiR_s(i,1), r_vec_s(j,1));
+  end do:
+end do:
+GradMat2 := simplify(GradMat2);</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2211" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Nutze Orthonormoalit\303\244t der Rotationsmatrix aus</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2210" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for j from 1 to 3 do:
+    eqn1:=R_s(j,1)^2+R_s(j,2)^2+R_s(j,3)^2=1: # Zeile hat norm 1
+    eqn2:=R_s(1,j)^2+R_s(2,j)^2+R_s(3,j)^2=1: # Spalte hat norm 1
+    GradMat1 := subs({eqn1}, GradMat1):
+    GradMat2 := subs({eqn1}, GradMat2):
+    GradMat1 := subs({eqn2}, GradMat1):
+    GradMat2 := subs({eqn2}, GradMat2):
+end do:</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2207" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section><Presentation-Block>
+<Group view="code" labelreference="L1989" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Probe</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2212" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Teste die Rechnung \303\274ber weide Wege</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2216" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Probe: Der Ausdruck \303\274ber beide Wege muss gleich sein (\303\244quivalent zu Linear in der Geschwindigkeit)</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2217" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat1 - GradMat2;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2214" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Probe: Der Ausdruck ist linear in der Geschwindigkeit</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2215" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat_test1 := GradMat1:
+for i from 1 to 9 do:
+  GradMat_test1 := diff~(GradMat_test1, rD_vec_s(i,1));
+end do:
+GradMat_test1;</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2213" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section><Presentation-Block></Presentation-Block>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Code-Export</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2218" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Der Matlab-Code wird in der Implementierung der Invers-Kinematik-Funktionen ben\303\266tigt</Font></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2220" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat1 := <Font encoding="UTF-8">simplify(GradMat1): # Br\303\274che vereinfachen</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2223" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(GradMat1, sprintf(&quot;codeexport/eul%s_diff_rmatvec_matlab.m&quot;, eulstr), codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2221" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">GradMat := GradMat1;
+save GradMat, sprintf(&quot;codeexport/eul%s_diff_rmatvec_maple.m&quot;,eulstr);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2222" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(GradMat1);</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2219" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section><Presentation-Block></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Ableitung der Rotationsmatrix nach den Euler-Winkeln</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L1979" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L1943" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha:='alpha': beta:='beta': gama:='gama':</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2000" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">phi := &lt;alpha; beta; gama&gt;:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1999" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2 := eul2r(phi);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1931" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2b := rmat2vec(R2);</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" hide-input="false" labelreference="L1941" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2b_dphi := Matrix(9,3):
+for i from 1 to 9 do:
+  for j from 1 to 3 do:
+    R2b_dphi(i,j) := diff(R2b(i,1), phi(j,1)):
+  end do:
+end do:
+R2b_dphi;</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1948" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rvec2mat(R2b_dphi(..,1));
+rvec2mat(R2b_dphi(..,2));
+rvec2mat(R2b_dphi(..,3));</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1938" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save R2b_dphi, sprintf(&quot;codeexport/rmatvec_diff_eul%s_maple.m&quot;,eulstr); # vorher: rmatvec_rpy_diff_rpy
+save R2b_dphi, sprintf(&quot;codeexport/rmatvec_diff_eul%s_maple&quot;,eulstr);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2050" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(R2b_dphi, sprintf(&quot;codeexport/rmatvec_diff_eul%s_matlab&quot;,eulstr), codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2054" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(R2b_dphi);</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Eigenschaften des Matrix-Produktes in Vektor-Schreibweise
+<Font style="Text" encoding="UTF-8">Erzeugt rmatvecprod_diff_rmatvec1 und rmatvecprod_diff_rmatvec2 (F\303\274r die Implementierung von Gl. 31 im Paper)
+Gl. (B.7), (B.12), (B.13)</Font></Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L1993" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">A := Matrix(3,3):
+B := Matrix(3,3):
+for i from 1 to 3 do:
+  for j from 1 to 3 do:
+    A(i,j) := parse(sprintf(&quot;a%d%d&quot;, i, j)):
+    B(i,j) := parse(sprintf(&quot;b%d%d&quot;, i, j)):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1953" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ABb := rmat2vec(A.B);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1974" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Gl. (B.12), (B.13)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1960" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Ab := rmat2vec(A):
+Bb := rmat2vec(B):
+Pi_Grad1 := Matrix(9,9): # Ableitung nach dem ersten Faktor
+Pi_Grad2 := Matrix(9,9): # ... nach dem zweiten
+for i from 1 to 9 do:
+  for j from 1 to 9 do:
+    Pi_Grad1(i,j) := diff(ABb(i,1), Ab(j,1)):
+    Pi_Grad2(i,j) := diff(ABb(i,1), Bb(j,1)):
+  end do:
+end do:
+Pi_Grad1;
+Pi_Grad2;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1973" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Pi_Grad1, &quot;codeexport/rmatvecprod_diff_rmatvec1_maple.m&quot;;
+save Pi_Grad2, &quot;codeexport/rmatvecprod_diff_rmatvec2_maple.m&quot;;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1955" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Pi_Grad1, sprintf(&quot;codeexport/rmatvecprod_diff_rmatvec1_matlab.m&quot;), codegen_opt):
+MatlabExport(Pi_Grad2, sprintf(&quot;codeexport/rmatvecprod_diff_rmatvec2_matlab.m&quot;), codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2052" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(Pi_Grad2);</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Permutationsmatrix f\303\274r Rotationsmatrix Vektor zwischen Transponiert und nicht-Transponiert</Font></Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2225" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Siehe Gl. 29 im Paper</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L1971" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Gl. (B.10-11)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2005" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">RT_s := Transpose(R_s):
+RTb := rmat2vec(RT_s):
+Rb := rmat2vec(R_s):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L1984" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">PermRVecTrans := Matrix(9,9):
+for i from 1 to 9 do:
+  for j from 1 to 9 do:
+    PermRVecTrans(i,j) := diff(RTb(i,1), Rb(j,1)):
+  end do:
+end do:
+PermRVecTrans;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2023" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Probe:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2002" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">PermRVecTrans.rmat2vec(R_s) - rmat2vec(RT_s);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1969" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save PermRVecTrans, &quot;codeexport/permat_rvec_transpose_maple.m&quot;;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1987" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(PermRVecTrans, &quot;codeexport/permat_rvec_transpose_matlab.m&quot;, codegen_opt):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2055" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">latex(PermRVecTrans);</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Umrechnung des Kreuzprodukt-Operators in Stapel-Nomenklatur</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2149" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Kann benutzt werden, um die Eulersche Differentiationsregel anzuwenden</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2150" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">w := &lt;wx;wy;wz&gt;;</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2151" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Sw := skew(w);</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2152" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Swb := rmat2vec(Sw);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2153" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Swb_grad := Matrix(9,3):</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2154" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for i from 1 to 9 do;
+  for j from 1 to 3 do;
+    Swb_grad(i,j) := diff(Swb(i), w(j)):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2155" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Swb_grad;</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2157" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Swb_grad, &quot;codeexport/skewmat_vec_grad_maple.m&quot;;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2158" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(Swb_grad, &quot;codeexport/skewmat_vec_grad_matlab.m&quot;, codegen_opt):</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Matrix-Produkt-Gradienten und Assoziativit\303\244t</Font></Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2159" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Fragestellung: Lassen sich zwei Matrix-Produkt-Gradienten verkn\303\274pfen?</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2164" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Term, der in ZB-Gradient nach Gelenkwinkeln auftritt, wenn man die geometrische Jacobi-Matrix einsetzt:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2161" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Pi_Grad2 . Pi_Grad1</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2163" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">CC := A.B;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2166" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Ergebnis: In Gradienten-Produkt kommen 9x9=81 verschiedene Terme vor.</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2167" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2168" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Pr\303\274fe Assoziativit\303\244t</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2170" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R0N := Matrix(3,3):
+RNE := Matrix(3,3):
+R0E := Matrix(3,3):
+for i from 1 to 3 do:
+  for j from 1 to 3 do:
+    R0N(i,j) := parse(sprintf(&quot;r0n%d%d&quot;, i, j)):
+    RNE(i,j) := parse(sprintf(&quot;rne%d%d&quot;, i, j)):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2175" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Produkt aus Zwei Matrizen</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2173" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R0E := R0N . RNE;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2176" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Berechne Gradient aus Produkt der Gradienten (in umgekehrter Reihenfolge)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2169" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Pi_Grad10N := Pi_Grad1:
+Pi_Grad1NE := Pi_Grad1:
+Pi_Grad10E := Pi_Grad1:
+for i from 1 to 3 do:
+  for j from 1 to 3 do:
+    Pi_Grad10N := subs({B(i,j)=R0N(i,j)}, Pi_Grad10N):
+    Pi_Grad1NE := subs({B(i,j)=RNE(i,j)}, Pi_Grad1NE):
+    Pi_Grad10E := subs({B(i,j)=R0E(i,j)}, Pi_Grad10E):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2177" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnis: Stimmt \303\274berein</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2172" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Pi_Grad1NE . Pi_Grad10N - Pi_Grad10E</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">Matrix-Produkt in Vektorschreibweise f\303\274r transponierte Matrizen</Font></Text-field></Title>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Zweite Matrix Transponiert</Text-field></Title><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L1933" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Durch die Ber\303\274cksichtigung der Transponierung direkt in der Formel werden nachfolgende Berechnungen vereinfacht.</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2011" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Gl. (C.22)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2026" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ABTb := rmat2vec(A.Transpose(B));</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2024" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">PiT2_Grad1 := Matrix(9,9): # Ableitung nach dem ersten Faktor
+PiT2_Grad2 := Matrix(9,9): # ... nach dem zweiten
+for i from 1 to 9 do:
+  for j from 1 to 9 do:
+    PiT2_Grad1(i,j) := diff(ABTb(i,1), Ab(j,1)):
+    PiT2_Grad2(i,j) := diff(ABTb(i,1), Bb(j,1)):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2025" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Vergleich mit Permutationsmatrix</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L1962" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Test f\303\274r Gl. (C.23)</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2017" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">ABTb - PermRVecTrans . rmat2vec(B . Transpose(A));</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2022" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">rvecprod(Ab, PermRVecTrans.Bb) - ABTb;</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2012" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save PiT2_Grad1, &quot;codeexport/rmatvecprodT2_diff_rmatvec1_maple.m&quot;;
+save PiT2_Grad2, &quot;codeexport/rmatvecprodT2_diff_rmatvec2_maple.m&quot;;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2009" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">MatlabExport(PiT2_Grad1, sprintf(&quot;codeexport/rmatvecprodT2_diff_rmatvec1_matlab.m&quot;), codegen_opt):
+MatlabExport(PiT2_Grad2, sprintf(&quot;codeexport/rmatvecprodT2_diff_rmatvec2_matlab.m&quot;), codegen_opt):</Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="code" labelreference="L2019" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section>
+</Section>
+<Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">\303\234berpr\303\274fung des Einflusses von alpha3 und beta3</Font></Text-field></Title><Presentation-Block>
+<Group view="code" labelreference="L2072" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Durch diesen Abschnitt wird der Text um Gl. 18 im Paper validiert.
+Beliebige Matrix als Platzhalter f\303\274r R_Ex_Eq, mit der der Winkelfehler alpha berechnet wird</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2063" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">noa := [&quot;n&quot;, &quot;o&quot;, &quot;a&quot;]: xyz :=[&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]:
+Rxy := Matrix(3,3):
+for i from 1 to 3 do:
+  for j from 1 to 3 do:
+      Rxy(i,j) := parse(sprintf(&quot;%s%s&quot;, noa[j], xyz[i])):
+  end do:
+end do:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2070" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">Rxy;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2077" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save Rxy, &quot;codeexport/rmat_standard&quot;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2073" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal">Winkelfehler alpha aus dieser Matrix mit ZYX-Euler-Konvention (feste Achsen)</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2069" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alphatmp := simplify(r2eulzyx(Rxy)):
+alpha := alphatmp([3,2,1]);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2076" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">save alpha, &quot;codeexport/rmat_diff_eulzyxrev&quot;:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2074" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Modifizierte Rotationsmatrix mit zus\303\244tzlicher Rotation delta um die symmetrische z-Achse</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2064" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R2 := rotz(delta) . Rxy;</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2075" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Winkelfehler mit dieser zus\303\244tzlichen z-Achse</Font></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2058" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2tmp := simplify(r2eulzyx(R2)):</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L2065" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">alpha2 := alpha2tmp([3,2,1],1);</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L2071" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnis: nur die letzte Komponente (alpha3) wird beeinflusst. Die ersten beiden werden nicht ver\303\244ndert.
+Siehe </Font>[SchapplerTapOrt2019], Text um Gl. (18).</Text-field>
+</Input>
+</Group></Presentation-Block>
+</Section><Presentation-Block>
+<Group view="code" labelreference="L2061" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Worksheet>

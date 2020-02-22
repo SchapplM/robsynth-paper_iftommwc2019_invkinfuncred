@@ -1,0 +1,11 @@
+remove_assumptions_from_names := proc(expression)
+  local nms, nmsS, L, L1, S, expression2:
+  # Quelle: http://www.mapleprimes.com/questions/207601-Remove-Assumptions
+  nms:=convert(indets(expression,name),list): # Liste der Symbole
+  nmsS:=convert~(nms,string): # Liste der Symbole als String
+  L:=StringTools:-Substitute~(nmsS,"~",""): #Removing "~"
+  L1:=parse~(L):
+  S:=nms=~L1:
+  expression2:=subs(S,expression):
+  return expression2:
+end proc:

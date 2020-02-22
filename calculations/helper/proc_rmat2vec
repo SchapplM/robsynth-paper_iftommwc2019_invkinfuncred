@@ -1,0 +1,11 @@
+# Rotationsmatrix als Vektor schreiben
+# [SchapplerTapOrt2019], Equ. 27
+
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-06
+# (C) Institut fuer mechatronische Systeme, Universitaet Hannover
+
+rmat2vec := proc(R)
+  local Rb:
+  Rb := Reshape(R, 9,1):
+  return Rb:
+end proc:

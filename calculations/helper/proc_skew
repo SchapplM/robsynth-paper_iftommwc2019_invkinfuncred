@@ -1,0 +1,17 @@
+# Schiefsymmetrische Matrix aus Vektor v berechnen
+#
+#      |  0  -vz   vy |
+#   S= | vz    0  -vx |
+#      |-vy   vx    0 |
+#
+# Siehe auch:
+# * skew.m
+
+# Moritz Schappler, moritz.schappler@imes.uni-hannover.de, 2018-04
+# (C) Institut fuer mechatronische Systeme, Universitaet Hannover
+
+skew := proc(v)
+  local S:
+  S:=Matrix(3,3, <<0 | -v(3) | v(2)>; <v(3) | 0 | -v(1)>; <-v(2) | v(1) | 0>>):
+  return S:
+end proc:
