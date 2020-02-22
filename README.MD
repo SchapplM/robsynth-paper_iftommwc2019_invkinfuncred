@@ -1,4 +1,4 @@
-# Exploiting Dynamics Parameter Linearity for Design Optimization in Combined Structural and Dimensional Robot Synthesis
+# Resolution of Functional Redundancy for 3T2R Robot Tasks using Two Sets of Reciprocal Euler Angles
 
 
 Authors:  
@@ -26,7 +26,7 @@ This is done by using a set of reciprocal Euler angles to describe the end-effec
 
 ## Contents
 
-This repository contains Maple worksheets to reproduce the equations and validate the theory of the paper:  
+This repository contains a Maple worksheet and a Matlab script to reproduce the equations and validate the theory of the paper:  
 
 * `calculations/ikfr_paper_equations.mw`
   * validates the statement around Equ. 18. (core hypothesis of the paper)
@@ -52,6 +52,7 @@ The functionality of the gradient calculation and the inverse kinematics algorit
   * https://github.com/SchapplM/robotics-toolbox (tested with rev. bcb2e77; 2020-02-15)
   * https://github.com/SchapplM/matlab_toolbox (tested with rev. 366f149; 2020-02-15)
 * Create one path-file for each dependencies as described in the files `calculations/matlab_toolbox_path.template` and `calculations/robotics_toolbox_path.template`
+* The Matlab script has been tested with Matlab version R2019a
 * For the testscript `IK_3T2R_test.m`, download additional dependencies
   * https://github.com/SchapplM/robsynth-serroblib (tested with rev. dff760b; 2020-02-16)
   * https://github.com/SchapplM/robsynth-modelgen (tested with rev. 0f11fd8; 2020-02-15)
