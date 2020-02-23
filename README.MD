@@ -28,7 +28,7 @@ This is done by using a set of reciprocal Euler angles to describe the end-effec
 
 This repository contains a Maple worksheet and a Matlab script to reproduce the equations and validate the theory of the paper:  
 
-* `calculations/ikfr_paper_equations.mw`
+* `calculations/reciprocal_euler_angles.mw`
   * validates the statement around Equ. 18. (core hypothesis of the paper)
   * creates Matlab functions for Equ. 29
   * creates terms for the implementation of Equ. 31

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Worksheet>
-<Version major="2018" minor="2"/>
+<Version major="2019" minor="2"/>
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
 </View-Properties>
-<MapleNet-Properties prettyprint="3" warnlevel="3" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="10" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1050" rtablesize="[10, 10]" useclientjvm="true" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
 <Styles>
 <Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -93,7 +93,7 @@
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group labelreference="L2180" drawlabel="true">
-<Input><Text-field style="Heading 2" layout="Heading 2">Introduction</Text-field><Text-field style="Normal" layout="Normal">This maple worksheet has to be run with eulstr := &quot;xyz&quot; and &quot;zyx&quot; to make ikfr_paper_equations.mw run (enter below the initialization).</Text-field><Text-field style="Normal" layout="Normal"></Text-field><Text-field style="Normal" layout="Normal">Content:</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">initialization (load dependencies)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">test transformations between Euler angles and rotation matrices</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">calculate partial derivatives of Euler angles w.r.t rotation matrices and vice versa (Equ. 31 in the paper)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">generate the Matlab function for the transposition operator (Equ. 29 in the paper)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">check the properties of the stack operator for matrices as of Sec. 3.3 of the paper</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">check the principle of reciprocal Euler angles (around Equ. 18 in the paper)
+<Input><Text-field style="Heading 2" layout="Heading 2">Introduction</Text-field><Text-field style="Normal" layout="Normal">This maple worksheet has to be run with eulstr := &quot;xyz&quot; and &quot;zyx&quot; to calculate all necessary terms for further calculations (enter below the initialization).</Text-field><Text-field style="Normal" layout="Normal"></Text-field><Text-field style="Normal" layout="Normal">Content:</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">initialization (load dependencies)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">test transformations between Euler angles and rotation matrices</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">calculate partial derivatives of Euler angles w.r.t rotation matrices and vice versa (Equ. 31 in the paper)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">generate the Matlab function for the transposition operator (Equ. 29 in the paper)</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">check the properties of the stack operator for matrices as of Sec. 3.3 of the paper</Text-field><Text-field style="Normal" layout="Normal" bullet="dot">check the principle of reciprocal Euler angles (around Equ. 18 in the paper)
 </Text-field>
 </Input>
 </Group>
@@ -107,8 +107,8 @@
 </Group>
 <Group labelreference="L2182" drawlabel="true">
 <Input><Text-field style="Heading 2" layout="Heading 2">Sources</Text-field><Text-field style="Normal" layout="Normal"><Font style="Text">[SchapplerTapOrt2019] Schappler, M. et al.: Resolution of Functional Redundancy for 3T2R Robot Tasks using Two Sets of Reciprocal Euler Angles, Proc. of the 15th IFToMM World Congress, 2019
-</Font></Text-field><Text-field style="Text" layout="Normal">A=Aufzeichnungen vom 19.06.2018</Text-field><Text-field style="Text" layout="Normal">B=Aufzeichnungen vom 21.06.2018
-C=Aufzeichnungen vom 13.07.2018</Text-field>
+</Font></Text-field><Text-field style="Normal" layout="Normal"><Font style="Text">[A] Hand-written documentation from 19.06.2018</Font></Text-field><Text-field style="Text" layout="Normal">[B] Hand-written documentation from 21.06.2018
+[C] Hand-written documentation from 13.07.2018</Text-field>
 </Input>
 </Group></Presentation-Block>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Initialisierung</Text-field></Title><Presentation-Block>
@@ -304,7 +304,7 @@ phi2 := remove_assumptions_from_names(phi2):</Text-field><Text-field prompt="&gt
 [Erzeugt </Font><Font size="12" bold="false">Gl. (B.6)]</Font></Text-field></Title>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2"><Font encoding="UTF-8">Herleitung \303\274ber die Zeitableitung als Matrix</Font></Text-field></Title><Presentation-Block>
 <Group view="presentation" inline-output="false" labelreference="L2188" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
+<Input><Text-field style="Text" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block><Presentation-Block>
 <Group view="code" labelreference="L2198" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -434,11 +434,7 @@ end do:</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block>
-</Section><Presentation-Block>
-<Group view="code" labelreference="L1989" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"></Text-field>
-</Input>
-</Group></Presentation-Block>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Probe</Text-field></Title><Presentation-Block>
 <Group view="presentation" inline-output="false" labelreference="L2212" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Teste die Rechnung \303\274ber weide Wege</Font></Text-field>
@@ -468,7 +464,7 @@ GradMat_test1;</Text-field>
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block>
-</Section><Presentation-Block></Presentation-Block>
+</Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 2" layout="Heading 2">Code-Export</Text-field></Title><Presentation-Block>
 <Group view="presentation" inline-output="false" labelreference="L2218" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Der Matlab-Code wird in der Implementierung der Invers-Kinematik-Funktionen ben\303\266tigt</Font></Text-field>
@@ -495,7 +491,7 @@ save GradMat, sprintf(&quot;codeexport/eul%s_diff_rmatvec_maple.m&quot;,eulstr);
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
 </Group></Presentation-Block>
-</Section><Presentation-Block></Presentation-Block>
+</Section>
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Ableitung der Rotationsmatrix nach den Euler-Winkeln</Text-field></Title><Presentation-Block>
 <Group view="presentation" inline-output="false" labelreference="L1979" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -550,7 +546,7 @@ save R2b_dphi, sprintf(&quot;codeexport/rmatvec_diff_eul%s_maple&quot;,eulstr);<
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1">Eigenschaften des Matrix-Produktes in Vektor-Schreibweise
 <Font style="Text" encoding="UTF-8">Erzeugt rmatvecprod_diff_rmatvec1 und rmatvecprod_diff_rmatvec2 (F\303\274r die Implementierung von Gl. 31 im Paper)
-Gl. (B.7), (B.12), (B.13)</Font></Text-field></Title><Presentation-Block>
+</Font><Font style="Text">Gl. (B.7), (B.12), (B.13)</Font></Text-field></Title><Presentation-Block>
 <Group view="code" labelreference="L1993" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">A := Matrix(3,3):
 B := Matrix(3,3):
@@ -822,8 +818,8 @@ MatlabExport(PiT2_Grad2, sprintf(&quot;codeexport/rmatvecprodT2_diff_rmatvec2_ma
 </Section>
 <Section collapsed="false" isCollapsible="true" drawButton="true" MultipleChoiceAnswerIndex="-1" MultipleChoiceRandomizeChoices="false" TrueFalseAnswerIndex="-1" EssayAnswerRows="5" EssayAnswerColumns="60"><Title><Text-field style="Heading 1" layout="Heading 1"><Font encoding="UTF-8">\303\234berpr\303\274fung des Einflusses von alpha3 und beta3</Font></Text-field></Title><Presentation-Block>
 <Group view="code" labelreference="L2072" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Durch diesen Abschnitt wird der Text um Gl. 18 im Paper validiert.
-Beliebige Matrix als Platzhalter f\303\274r R_Ex_Eq, mit der der Winkelfehler alpha berechnet wird</Font></Text-field>
+<Input><Text-field style="Text" layout="Normal">Durch diesen Abschnitt wird der Text um Gl. 18 im Paper validiert.
+<Font encoding="UTF-8">Beliebige Matrix als Platzhalter f\303\274r R_Ex_Eq, mit der der Winkelfehler alpha berechnet wird</Font></Text-field>
 </Input>
 </Group>
 <Group view="code" labelreference="L2063" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
@@ -879,12 +875,16 @@ alpha := alphatmp([3,2,1]);</Text-field>
 </Group>
 <Group view="code" labelreference="L2071" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field style="Text" layout="Normal"><Font encoding="UTF-8">Ergebnis: nur die letzte Komponente (alpha3) wird beeinflusst. Die ersten beiden werden nicht ver\303\244ndert.
-Siehe </Font>[SchapplerTapOrt2019], Text um Gl. (18).</Text-field>
+</Font>Siehe [SchapplerTapOrt2019], Text um Gl. (18).</Text-field>
 </Input>
 </Group></Presentation-Block>
 </Section><Presentation-Block>
 <Group view="code" labelreference="L2061" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L2" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbWlHRiQ2I1EhRicvJStleGVjdXRhYmxlR1EmZmFsc2VGJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRic=">JSFH</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
